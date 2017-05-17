@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Ayan Shafqat's Personal Website - Ayan Shafqat</title><link>/</link><description>My thoughts and writing</description><lastBuildDate>Tue, 16 May 2017 19:50:00 -0400</lastBuildDate><item><title>Hello, world!</title><link>/hello-world.html</link><description>&lt;p&gt;Hello! This is my first post. So...&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;(gcc -x c -o /tmp/r - &amp;lt;&amp;lt; EOF) 2&amp;gt;/dev/null &amp;amp;&amp;amp; /tmp/r
+main() {
+  printf(&amp;quot;Hello, world!\n&amp;quot;);
+}
+EOF
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Which should output:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Hello, world!
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Ayan Shafqat</dc:creator><pubDate>Tue, 16 May 2017 19:50:00 -0400</pubDate><guid isPermaLink="false">tag:None,2017-05-16:/hello-world.html</guid><category>hello world</category></item></channel></rss>
