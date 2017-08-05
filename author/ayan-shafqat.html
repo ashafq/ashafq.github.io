@@ -105,7 +105,7 @@
   </header>
   <div>
       <p>Hello! This is my first post. So...</p>
-<div class="highlight"><pre><span></span>(gcc -x c -o /tmp/r - &lt;&lt; EOF) 2&gt;/dev/null &amp;&amp; /tmp/r
+<div class="highlight"><pre><span></span>tmp=`mktemp`; gcc -x c -o $tmp - &lt;&lt; EOF &amp;&gt; /dev/null &amp;&amp; $tmp
 main() {
   printf(&quot;Hello, world!\n&quot;);
 }

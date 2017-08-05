@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0"><channel><title>Ayan Shafqat - Ayan Shafqat</title><link>http://shafq.at/</link><description>My personal website</description><lastBuildDate>Tue, 16 May 2017 19:50:00 -0400</lastBuildDate><item><title>Hello, world!</title><link>http://shafq.at/hello-world.html</link><description>&lt;p&gt;Hello! This is my first post. So...&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;(gcc -x c -o /tmp/r - &amp;lt;&amp;lt; EOF) 2&amp;gt;/dev/null &amp;amp;&amp;amp; /tmp/r
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;tmp=`mktemp`; gcc -x c -o $tmp - &amp;lt;&amp;lt; EOF &amp;amp;&amp;gt; /dev/null &amp;amp;&amp;amp; $tmp
 main() {
   printf(&amp;quot;Hello, world!\n&amp;quot;);
 }
