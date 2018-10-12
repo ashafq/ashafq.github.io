@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Ayan Shafqat - Ayan Shafqat</title><link>http://shafq.at/</link><description>My personal website</description><lastBuildDate>Tue, 16 May 2017 19:50:00 -0400</lastBuildDate><item><title>Hello, world!</title><link>http://shafq.at/hello-world.html</link><description>&lt;p&gt;Hello! This is my first post. So...&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ayan Shafqat - Ayan Shafqat</title><link>https://shafq.at/</link><description>My personal website</description><atom:link href="https://shafq.at/feeds/ayan-shafqat.rss.xml" rel="self"></atom:link><lastBuildDate>Tue, 16 May 2017 19:50:00 -0400</lastBuildDate><item><title>Hello, world!</title><link>https://shafq.at/hello-world.html</link><description>&lt;p&gt;Hello! This is my first post. So...&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;tmp=`mktemp`; gcc -x c -o $tmp - &amp;lt;&amp;lt; EOF &amp;amp;&amp;gt; /dev/null &amp;amp;&amp;amp; $tmp
 main() {
   printf(&amp;quot;Hello, world!\n&amp;quot;);
@@ -10,4 +10,4 @@ EOF
 
 &lt;p&gt;Which should output:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Hello, world!
-&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Ayan Shafqat</dc:creator><pubDate>Tue, 16 May 2017 19:50:00 -0400</pubDate><guid isPermaLink="false">tag:shafq.at,2017-05-16:/hello-world.html</guid><category>hello world</category></item></channel></rss>
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Ayan Shafqat</dc:creator><pubDate>Tue, 16 May 2017 19:50:00 -0400</pubDate><guid>tag:shafq.at,2017-05-16:/hello-world.html/</guid><category>hello world</category></item></channel></rss>
