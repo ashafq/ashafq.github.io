@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Ayan Shafqat - misc</title><link href="https://shafq.at/" rel="alternate"></link><link href="https://shafq.at/feeds/misc.atom.xml" rel="self"></link><id>https://shafq.at/</id><updated>2017-05-16T19:50:00-04:00</updated><entry><title>Hello, world!</title><link href="https://shafq.at/hello-world.html" rel="alternate"></link><published>2017-05-16T19:50:00-04:00</published><author><name>Ayan Shafqat</name></author><id>tag:shafq.at,2017-05-16:/hello-world.html/</id><summary type="html">&lt;p&gt;Hello! This is my first post. So...&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;tmp=`mktemp`; gcc -x c -o $tmp - &amp;lt;&amp;lt; EOF &amp;amp;&amp;gt; /dev/null &amp;amp;&amp;amp; $tmp
-main() {
-  printf(&amp;quot;Hello, world!\n&amp;quot;);
-}
-EOF
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Ayan Shafqat - misc</title><link href="https://shafq.at/" rel="alternate"></link><link href="https://shafq.at/feeds/misc.atom.xml" rel="self"></link><id>https://shafq.at/</id><updated>2016-05-17T00:00:00-04:00</updated><subtitle>My personal website</subtitle><subtitle>My personal website</subtitle><entry><title>Hello, world!</title><link href="https://shafq.at/hello-world.html" rel="alternate"></link><published>2016-05-17T00:00:00-04:00</published><updated>2016-05-17T00:00:00-04:00</updated><author><name>Ayan Shafqat</name></author><id>tag:shafq.at,2016-05-17:/hello-world.html</id><content type="html">&lt;p&gt;Hello! This is my first post. So...&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;tmp&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;mktemp&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; gcc -x c -o &lt;span class="nv"&gt;$tmp&lt;/span&gt; - &lt;span class="s"&gt;&amp;lt;&amp;lt; EOF &amp;amp;&amp;gt; /dev/null &amp;amp;&amp;amp; $tmp&lt;/span&gt;
+&lt;span class="s"&gt;#include &amp;lt;stdio.h&amp;gt;&lt;/span&gt;
+&lt;span class="s"&gt;int main() {&lt;/span&gt;
+&lt;span class="s"&gt;  printf(&amp;quot;Hello, world!\n&amp;quot;);&lt;/span&gt;
+&lt;span class="s"&gt;}&lt;/span&gt;
+&lt;span class="s"&gt;EOF&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;Which should output:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Hello, world!
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="hello world"></category></entry></feed>
+&lt;/pre&gt;&lt;/div&gt;
+</content><category term="misc"></category><category term="programming"></category></entry></feed>

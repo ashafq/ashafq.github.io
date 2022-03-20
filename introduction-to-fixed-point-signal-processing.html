@@ -1,0 +1,1099 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="./theme/stylesheet/style.min.css">
+
+
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+          href="./theme/pygments/lovelace.min.css">
+
+
+  <link rel="stylesheet" type="text/css" href="./theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="./theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="./theme/font-awesome/css/solid.css">
+
+
+    <link href="https://shafq.at/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Ayan Shafqat Atom">
+
+
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+
+  
+
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#333333">
+
+ 
+
+<meta name="author" content="Ayan Shafqat" />
+<meta name="description" content="Introduction In 1927, Alan Turing’s paper discussed a class of numbers called finite and computable numbers. This allowed for the construction of digital computer. Signal processing, in essence, is the study of converting real-world signal into finite and computable numbers, and processing them with the fewest bits possible. What …" />
+<meta name="keywords" content="filters, signal processing, dsp, fir, iir, fixed-point">
+
+
+  <meta property="og:site_name" content="Ayan Shafqat"/>
+  <meta property="og:title" content="Introduction to Fixed Point Signal Processing"/>
+  <meta property="og:description" content="Introduction In 1927, Alan Turing’s paper discussed a class of numbers called finite and computable numbers. This allowed for the construction of digital computer. Signal processing, in essence, is the study of converting real-world signal into finite and computable numbers, and processing them with the fewest bits possible. What …"/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:url" content="./introduction-to-fixed-point-signal-processing.html"/>
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2020-12-09 00:00:00-05:00"/>
+  <meta property="article:modified_time" content="2020-12-09 00:00:00-05:00"/>
+  <meta property="article:author" content="./author/ayan-shafqat.html">
+  <meta property="article:section" content="signal-processing"/>
+  <meta property="article:tag" content="filters"/>
+  <meta property="article:tag" content="signal processing"/>
+  <meta property="article:tag" content="dsp"/>
+  <meta property="article:tag" content="fir"/>
+  <meta property="article:tag" content="iir"/>
+  <meta property="article:tag" content="fixed-point"/>
+  <meta property="og:image" content="/images/profile.png">
+
+  <title>Ayan Shafqat &ndash; Introduction to Fixed Point Signal Processing</title>
+
+</head>
+<body class="light-theme">
+  <aside>
+    <div>
+      <a href="./">
+        <img src="/images/profile.png" alt="Ayan Shafqat" title="Ayan Shafqat">
+      </a>
+
+      <h1>
+        <a href="./">Ayan Shafqat</a>
+      </h1>
+
+<p>My personal website</p>
+
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="./pages/about.html#about">
+                  About
+                </a>
+              </li>
+              <li>
+                <a target="_self"
+                   href="./pages/papers.html#papers">
+                  Papers
+                </a>
+              </li>
+              <li>
+                <a target="_self"
+                   href="./pages/projects.html#projects">
+                  Projects
+                </a>
+              </li>
+              <li>
+                <a target="_self"
+                   href="./pages/resume.html#resume">
+                  Résumé
+                </a>
+              </li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-envelope" href="mailto:ayan.x.shafqat@gmail.com" target="_blank">
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-github" href="https://github.com/ashafq" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-stack-overflow" href="http://stackoverflow.com/users/6744189/ayan-shafqat" target="_blank">
+              <i class="fab fa-stack-overflow"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-linkedin" href="https://www.linkedin.com/in/ayanshafqat" target="_blank">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="./">Home</a>
+
+      <a href="/archives.html">Archives</a>
+      <a href="/categories.html">Categories</a>
+      <a href="/tags.html">Tags</a>
+
+      <a href="https://shafq.at/feeds/all.atom.xml">Atom</a>
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="introduction-to-fixed-point-signal-processing">Introduction to Fixed Point Signal Processing</h1>
+    <p>
+      Posted on Wed 09 December 2020 in <a href="./category/signal-processing.html">signal-processing</a>
+
+    </p>
+  </header>
+
+
+  <div>
+    <div class="section" id="introduction">
+<h2>Introduction</h2>
+<p>In 1927, Alan Turing’s paper discussed a class of numbers called <em>finite
+and computable numbers</em>. This allowed for the construction of digital
+computer. Signal processing, in essence, is the study of converting
+real-world signal into finite and computable numbers, and processing
+them with the fewest bits possible.</p>
+</div>
+<div class="section" id="what-are-fixed-point-numbers">
+<h2>What are fixed-point numbers?</h2>
+<ul class="simple">
+<li>Over the years, computers had different encoding schemes for
+representing and processing numerical data<ul>
+<li><strong>Binary coded decimal</strong>: Still used today for financial
+calculations, inefficient.</li>
+<li><strong>Binary one’s complement</strong>: Used by early computers like <a class="reference external" href="https://en.wikipedia.org/wiki/Apollo_Guidance_Computer">Apollo
+Guidance
+Computer</a>.
+Very rare to see a computer with this numeric encoding for
+integers. However, <a class="reference external" href="https://en.wikipedia.org/wiki/IEEE_754">IEEE
+754</a> floating point
+encoding are indeed one’s complement.</li>
+<li><strong>Binary two’s complement</strong>: Most common implementation for
+integers for all major architectures, including x86, ARM, RISC-V
+and many DSP</li>
+<li><strong>Floating point</strong>: Makes writing math expressions easy, there are
+several standards and extension. <a class="reference external" href="https://en.wikipedia.org/wiki/IEEE_754">IEEE
+754</a>, <a class="reference external" href="https://en.wikipedia.org/wiki/Unum_(number_format)#Unum_III">Posit Unum
+III</a></li>
+<li><strong>Bignum</strong>: Arbitrary precission arithmetic, used for
+cryptography, mathmatics, etc.</li>
+<li>There are otheres: Logarithmic numbers, Computer algebra system
+(CAS), etc.</li>
+</ul>
+</li>
+<li><strong>Fixed-point</strong> in this context means binary two’s complement numbers
+with scaling factor for fractions.</li>
+</ul>
+</div>
+<div class="section" id="its-the-2020s-do-we-still-need-fixed-point-arithmetic-for-signal-processing">
+<h2>It’s the 2020’s, do we still need fixed point arithmetic for signal processing?</h2>
+<ul class="simple">
+<li>Floating point machines are more common now, but that was not the
+case all the time.</li>
+<li>FPUs (a.k.a math coprocessor) were expensive and slow!<ul>
+<li>Intel 8087 costed around <a class="reference external" href="https://books.google.com/books?id=0C4EAAAAMBAJ&amp;lpg=PA27&amp;ots=z8RRGv5UvJ&amp;dq=intel%20personal%20computer%20enhancement%208087%20price&amp;pg=PA27#v=onepage&amp;q=intel%20personal%20computer%20enhancement%208087%20price&amp;f=false">$375 in
+1985</a>,
+<a class="reference external" href="https://www.usdinflation.com/amount/375">$915.15 in 2020 USD</a></li>
+<li>FPU was uncommon in desktop computers (extra headache for
+programmers)</li>
+</ul>
+</li>
+<li>Most programs were written without the support of FPU</li>
+<li>In the past, fixed point signal processing was mainstream<ul>
+<li>Speak &amp; Spell used
+<a class="reference external" href="https://en.wikipedia.org/wiki/Texas_Instruments_LPC_Speech_Chips">TMS5100</a>
+for speech synthesis (70’s)</li>
+<li>AT&amp;T’s used
+<a class="reference external" href="https://www.computerhistory.org/siliconengine/single-chip-digital-signal-processor-introduced/">DSP1</a>
+for call routing (80’s)</li>
+<li>NeXTcube and ProTools used <a class="reference external" href="https://www.computerhistory.org/siliconengine/single-chip-digital-signal-processor-introduced/">Motorola
+56001</a>
+DSP to process image and audio (90’s)</li>
+</ul>
+</li>
+<li>To answer the question: It depends on various costs and benefits</li>
+</ul>
+</div>
+<div class="section" id="pros-and-cons">
+<h2>Pros and cons</h2>
+<ul class="simple">
+<li>On one hand, doing signal processing in floating point offers:<ul>
+<li>Greater dynamic range</li>
+<li>Less development time</li>
+<li>Precision</li>
+</ul>
+</li>
+<li>Fixed point is still best at:<ul>
+<li>Minimizing cost of parts: Less logic gates are needed to operate on
+integers than floating point</li>
+<li>Efficient power utilization</li>
+<li>More bandwidth utilization (less bits)</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="where-are-fixed-point-arithmetic-done-today">
+<h2>Where are fixed point arithmetic done today?</h2>
+<ul class="simple">
+<li>Your phones modem: 3G, LTE, and now 5G, where FPGAs are involved for
+software defined radios</li>
+<li>Wearable electronics: BlueTooth earbuds, smart watch, smart glasses,
+etc.</li>
+<li>Physical layer network communication: Fiber-optic, Satellite, etc.</li>
+<li>Special purpose accelerators: Convolutional neural network engines,
+audio/video codec, image processors</li>
+<li>Operating systems kernel (i.e.&nbsp;Linux, XNU): Cannot execute floating
+point math in kernel-mode in the Linux Kernel (Well, you can, but
+it's a lot harder)</li>
+</ul>
+</div>
+<div class="section" id="getting-started-with-fixed-point-arithmetic">
+<h2>Getting Started with Fixed-point Arithmetic</h2>
+<ul class="simple">
+<li>Know the Q notation</li>
+<li>The Q notation convention describes binary fixed point number scaling
+and bits</li>
+<li>Written as Q<strong>m</strong>.<strong>n</strong>, where <strong>m</strong> is the number of bits
+reserved for integer portion and **n* is the number of bits
+reserved for fractional portion.</li>
+<li>Sometimes <strong>m</strong> is not indicated in the notation if there are no bits
+reserved for integer bits or sign bit<ul>
+<li>For example <tt class="docutils literal">Q15</tt> is used to decribe the format of 16-bit PCM
+format used by CDs (you know… those shiny disks). <tt class="docutils literal">Q15</tt> can also
+be written as <tt class="docutils literal">Q1.15</tt>, where there are 15 bits reserved for
+fraction and 1 bit for sign.</li>
+<li>CD audio has a range of <tt class="docutils literal"><span class="pre">[-1.0,</span> +0.999969482421875]</tt></li>
+<li>What happened to +1.0?</li>
+</ul>
+</li>
+<li>Sometimes <strong>U</strong> is used to describe unsigned<ul>
+<li>8-bit PCM samples tend have a bias (<span class="math">\(s + 127\)</span>) in their
+format, typically <tt class="docutils literal">U8</tt> is used to describe that format.</li>
+</ul>
+</li>
+<li>Sometimes <tt class="docutils literal">S16</tt> is used to represent <tt class="docutils literal">Q1.15</tt> as well</li>
+</ul>
+<div class="section" id="how-to-get-the-range-of-values-for-a-certain-fixed-point-type">
+<h3>How to get the range of values for a certain fixed-point type:</h3>
+<div class="math">
+\begin{equation*}
+Q(m,n) \in \mathbb{R} : -2^{m-1} \leq Q(m,n) \leq 2^{m-1} - 2^{-n}
+\end{equation*}
+</div>
+</div>
+<div class="section" id="what-is-the-resolution-of-a-certain-fixed-point-type">
+<h3>What is the resolution of a certain fixed-point type:</h3>
+<div class="math">
+\begin{equation*}
+2^{-n}
+\end{equation*}
+</div>
+<p>What is the resolution for a 32-bit floating point type? Extra credit.</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">qrange</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get numeric range of _signed_ Qm.n integers</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        m: Number of bits for integer portion</span>
+<span class="sd">        n: Number of bits for fraction portion</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple(min_value, max_value)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">ldexp</span>
+    <span class="n">min_value</span> <span class="o">=</span> <span class="n">ldexp</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">max_value</span> <span class="o">=</span> <span class="n">ldexp</span><span class="p">(</span><span class="o">+</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">ldexp</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="n">n</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">min_value</span><span class="p">,</span> <span class="n">max_value</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-to-convert-decimal-to-fixed-point">
+<h2>How to convert decimal to fixed point</h2>
+<p>Given <span class="math">\(Q(m, n)\)</span>, for a given value <span class="math">\(x\)</span>, quantized fixed
+point value, <span class="math">\(y\)</span> is:</p>
+<div class="math">
+\begin{equation*}
+y = \lceil2^{n}x\rfloor
+\end{equation*}
+</div>
+<p>May want to saturate the results so they don’t overflow in fixed point:</p>
+<div class="math">
+\begin{equation*}
+\text{clip}\left(x, m, n\right) := \max\left(-2^{m - 1}, \min\left(x, 2^{m - 1} - 2^{-n}\right)\right)
+\end{equation*}
+</div>
+<p>So final expression:</p>
+<div class="math">
+\begin{equation*}
+y = \lceil2^{n}\text{clip}\left(x, m, n\right)\rfloor
+\end{equation*}
+</div>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">clip</span><span class="p">,</span> <span class="n">ldexp</span><span class="p">,</span> <span class="n">rint</span>
+
+
+<span class="k">def</span> <span class="nf">ftoq</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert a float value to fractional integer</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        x: A double/float value</span>
+<span class="sd">        m: Bits for integer portion</span>
+<span class="sd">        n: Scaling factor from Q notation</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        np.array_like(int)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="n">qrange</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">rint</span><span class="p">(</span><span class="n">ldexp</span><span class="p">(</span><span class="n">clip</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">),</span> <span class="n">n</span><span class="p">)))</span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">qtof</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert a fractional integer to float</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        x: A double/float value</span>
+<span class="sd">        m: Number of bits for integer portion</span>
+<span class="sd">        n: Number of bits for fraction portion</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        np.array_like(float)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="n">qrange</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">clip</span><span class="p">(</span><span class="n">ldexp</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="o">-</span><span class="n">n</span><span class="p">),</span> <span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">)</span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">vectorize</span>
+
+<span class="n">vftoq</span> <span class="o">=</span> <span class="n">vectorize</span><span class="p">(</span><span class="n">ftoq</span><span class="p">)</span>
+<span class="n">vqtof</span> <span class="o">=</span> <span class="n">vectorize</span><span class="p">(</span><span class="n">qtof</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">vquantize</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">vqtof</span><span class="p">(</span><span class="n">vftoq</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">n</span><span class="si">:</span><span class="s2"> 1.08f</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">ftoq</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span><span class="si">:</span><span class="s2"> 6d</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.707</span><span class="p">,</span> <span class="mf">0.99999999</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">n</span><span class="si">:</span><span class="s2"> 6d</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">qtof</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span><span class="si">:</span><span class="s2"> 1.08f</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">16384</span><span class="p">,</span> <span class="mi">23168</span><span class="p">,</span> <span class="mi">32767</span><span class="p">)))</span>
+</pre></div>
+<pre class="literal-block">
+0.50000000 -&gt;  16384
+0.70700000 -&gt;  23167
+0.99999999 -&gt;  32767
+16384 -&gt;  0.50000000
+23168 -&gt;  0.70703125
+32767 -&gt;  0.99996948
+</pre>
+</div>
+<div class="section" id="converting-from-to-fixed-point-in-c-c">
+<h2>Converting from/to fixed-point in C, C++</h2>
+<p>Interface:</p>
+<div class="highlight"><pre><span></span><span class="cm">/* frac_convert.h */</span><span class="w"></span>
+<span class="cp">#ifndef FRAC_CONVERT_H</span>
+<span class="cp">#define FRAC_CONVERT_H</span>
+<span class="kt">double</span><span class="w"> </span><span class="nf">qminv</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">);</span><span class="w"></span>
+<span class="kt">double</span><span class="w"> </span><span class="nf">qmaxv</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">);</span><span class="w"></span>
+<span class="kt">long</span><span class="w"> </span><span class="nf">ftoq</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">);</span><span class="w"></span>
+<span class="kt">double</span><span class="w"> </span><span class="nf">qtof</span><span class="p">(</span><span class="kt">long</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">);</span><span class="w"></span>
+<span class="kt">double</span><span class="w"> </span><span class="nf">clip</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">vmin</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">vmax</span><span class="p">);</span><span class="w"></span>
+<span class="cp">#endif </span><span class="cm">/* FRAC_CONVERT_H */</span><span class="cp"></span>
+</pre></div>
+<p>Implementation:</p>
+<div class="highlight"><pre><span></span><span class="cm">/* frac_convert.c */</span><span class="w"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;math.h&gt;</span><span class="cp"></span>
+
+<span class="kt">long</span><span class="w"> </span><span class="nf">ftoq</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="kt">long</span><span class="p">)(</span><span class="n">rintl</span><span class="p">(</span><span class="n">ldexp</span><span class="p">(</span><span class="n">clip</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">qminv</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="n">qmaxv</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)),</span><span class="w"> </span><span class="n">n</span><span class="p">)));</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">double</span><span class="w"> </span><span class="nf">qtof</span><span class="p">(</span><span class="kt">long</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">clip</span><span class="p">(</span><span class="n">ldexp</span><span class="p">((</span><span class="kt">double</span><span class="p">)</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="n">qminv</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="n">qmaxv</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">));</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">double</span><span class="w"> </span><span class="nf">qmaxv</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">ldexp</span><span class="p">(</span><span class="n">one</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ldexp</span><span class="p">(</span><span class="n">one</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">n</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">double</span><span class="w"> </span><span class="nf">qminv</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="p">(</span><span class="kt">void</span><span class="p">)(</span><span class="n">n</span><span class="p">);</span><span class="w"> </span><span class="cm">/* unused parameter */</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">ldexp</span><span class="p">(</span><span class="mf">-1.0</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">double</span><span class="w"> </span><span class="nf">clip</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">vmin</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">vmax</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">fmax</span><span class="p">(</span><span class="n">vmin</span><span class="p">,</span><span class="w"> </span><span class="n">fmin</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">vmax</span><span class="p">));</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="section" id="exercise">
+<h2>Exercise</h2>
+<p>Suppose you are working on a thermostat for ACME Corporation. In order
+to reduce production and power costs, they have decided to choose a
+microprocessor without an FPU. Your job is to take temperature data from
+the sensor, which outputs in Celsius, and convert it to Fahrenheit for
+the user interface team. They want to be able to display up to 1 decimal
+place accurately. You are free to decide on the appropriate <tt class="docutils literal">QM.N</tt>
+format. Note, the formula for convertion is:</p>
+<div class="math">
+\begin{equation*}
+F = \frac{9}{5} C + 32
+\end{equation*}
+</div>
+<ol class="arabic simple">
+<li>How many bits are needed for fractional portion in order to achieve
+one decimal place of accuracy?</li>
+<li>Given temperature sensor has a range of -100° to 155° in Celsius,
+which corresponds to roughly -150° to +310° degrees Fahrenheit. How
+many bits do we need for the integer portion?</li>
+</ol>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">log2</span><span class="p">,</span> <span class="n">ceil</span>
+
+<span class="c1"># Question: How many bits do we need to compute this result?</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Decimal places</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Numbers of bits needed for </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> decimal places accuracy: </span><span class="si">{</span><span class="n">ceil</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">log2</span><span class="p">(</span><span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="n">n</span><span class="p">))))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Question: Given temperature sensor has a range of -100 to 155 in Celsius,</span>
+<span class="c1"># which corresponds to roughly -150 to +310 degrees Fahrenheit. How many bits</span>
+<span class="c1"># do we need for the integer portion?</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">310</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bits needed to store up to </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">ceil</span><span class="p">(</span><span class="n">log2</span><span class="p">(</span><span class="n">n</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Let&#39;s give it some room and use an extra two bits for quantization error.</span>
+<span class="c1"># Also, one extra bit is needed for sign, thus a format of Q10.6 is needed.</span>
+
+<span class="c1"># The computation can be done using 16 bit signed integers at Q10.6 format</span>
+<span class="c1"># Note the formula: F = 9/5 * C + 32</span>
+</pre></div>
+<pre class="literal-block">
+Numbers of bits needed for 1 decimal places accuracy: 4.0
+Bits needed to store up to 310: 9.0
+</pre>
+<div class="highlight"><pre><span></span><span class="n">ftoq</span><span class="p">(</span><span class="mi">9</span><span class="o">/</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">ftoq</span><span class="p">(</span><span class="mf">32.0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">qtof</span><span class="p">(</span><span class="o">-</span><span class="mi">7404</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+</pre></div>
+<pre class="literal-block">
+(115, 2048, -115.6875)
+</pre>
+<div class="highlight"><pre><span></span><span class="c1"># Reference function for comparison</span>
+
+<span class="k">def</span> <span class="nf">ctof_f64</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert Celsius to Fahrenheit</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        c: Celsius</span>
+
+<span class="sd">    Return:</span>
+<span class="sd">        Fahrenheit</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mi">9</span><span class="o">/</span><span class="mi">5</span> <span class="o">*</span> <span class="n">c</span> <span class="o">+</span> <span class="mf">32.0</span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ctof_q10x6</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert Celsius to Fahrenheit in Q10.6 format</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        c: Celsius in Q10.6 format</span>
+
+<span class="sd">    Return:</span>
+<span class="sd">        int16(Q10.6)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">C0</span> <span class="o">=</span> <span class="n">int16</span><span class="p">(</span><span class="n">ftoq</span><span class="p">(</span><span class="mi">9</span><span class="o">/</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">C1</span> <span class="o">=</span> <span class="n">int16</span><span class="p">(</span><span class="n">ftoq</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span>  <span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">q10x6mul</span><span class="p">(</span><span class="n">C0</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="o">+</span> <span class="n">C1</span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">int32</span><span class="p">,</span> <span class="n">int16</span><span class="p">,</span> <span class="n">clip</span>
+
+<span class="k">def</span> <span class="nf">qround</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Round an integer `a` by `b`&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+    <span class="k">return</span> <span class="n">a</span>
+
+
+<span class="k">def</span> <span class="nf">q10x6mul</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Multiply two Q10.6 integers&quot;&quot;&quot;</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">int32</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">int32</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>                   <span class="c1"># c: Q20.12</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">qround</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="mb">0b10000</span><span class="p">)</span>      <span class="c1"># Round to nearest b0.000001 bit</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">c</span> <span class="o">&gt;&gt;</span> <span class="mi">6</span>                  <span class="c1"># Rescale c to Q10.6</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">clip</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="o">-</span><span class="mi">32768</span><span class="p">,</span> <span class="mi">32767</span><span class="p">)</span>  <span class="c1"># Saturate result</span>
+    <span class="k">return</span> <span class="n">int16</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+</pre></div>
+<p>Same thing can be implemented in C as:</p>
+<div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdint.h&gt;</span><span class="cp"></span>
+
+<span class="k">typedef</span><span class="w"> </span><span class="kt">int16_t</span><span class="w"> </span><span class="n">q10x6_t</span><span class="p">;</span><span class="w"></span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">q20x12_t</span><span class="p">;</span><span class="w"></span>
+
+<span class="n">q10x6_t</span><span class="w"> </span><span class="nf">celsius_to_fahrenheit</span><span class="p">(</span><span class="n">q10x6_t</span><span class="w"> </span><span class="n">celsius</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">q10x6_t</span><span class="w"> </span><span class="n">C0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">115</span><span class="p">;</span><span class="w">  </span><span class="cm">/* 9/5 in Q10.6 */</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">q10x6_t</span><span class="w"> </span><span class="n">C1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2048</span><span class="p">;</span><span class="w"> </span><span class="cm">/* 32 in Q10.6 */</span><span class="w"></span>
+
+<span class="w">  </span><span class="cm">/* Multiplying Q10.6 by Q10.6 -&gt; Q20.12 */</span><span class="w"></span>
+<span class="w">  </span><span class="n">q20x12_t</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="n">q20x12_t</span><span class="p">)</span><span class="n">celsius</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">((</span><span class="n">q20x12_t</span><span class="p">)</span><span class="n">C0</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="cm">/* Rounding to nearest 6 bits */</span><span class="w"></span>
+<span class="w">  </span><span class="n">y</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="mh">-0x10</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="o">+</span><span class="mh">0x10</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">y</span><span class="w"> </span><span class="o">&gt;&gt;=</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span><span class="w"> </span><span class="cm">/* Q20.6 */</span><span class="w"></span>
+
+<span class="w">  </span><span class="cm">/* Add 32 to result */</span><span class="w"></span>
+<span class="w">  </span><span class="n">y</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">C1</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">q10x6_t</span><span class="p">)</span><span class="n">y</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<div class="section" id="plotting-the-errors">
+<h3>Plotting the errors</h3>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Celsius </span><span class="se">\t</span><span class="s2">Q10.6 </span><span class="se">\t\t</span><span class="s2">F64 </span><span class="se">\t\t</span><span class="s2">Error&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">155</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">15</span><span class="p">):</span>
+    <span class="n">cq10x6</span> <span class="o">=</span> <span class="n">ftoq</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+    <span class="n">fq10x6</span> <span class="o">=</span> <span class="n">ctof_q10x6</span><span class="p">(</span><span class="n">cq10x6</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">ctof_f64</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="n">fq</span> <span class="o">=</span> <span class="n">qtof</span><span class="p">(</span><span class="n">fq10x6</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+    <span class="n">perr</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">f</span> <span class="o">-</span> <span class="n">fq</span><span class="p">)</span> <span class="o">/</span> <span class="n">f</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c</span><span class="si">:</span><span class="s2"> 3.1f</span><span class="si">}</span><span class="s2">° C </span><span class="se">\t</span><span class="si">{</span><span class="n">fq</span><span class="si">:</span><span class="s2"> 3.1f</span><span class="si">}</span><span class="s2">° F </span><span class="se">\t</span><span class="si">{</span><span class="n">f</span><span class="si">:</span><span class="s2"> 3.1f</span><span class="si">}</span><span class="s2">° F </span><span class="se">\t</span><span class="s2"> </span><span class="si">{</span><span class="n">perr</span><span class="si">:</span><span class="s2"> 2.2</span><span class="si">}</span><span class="s2"> %&quot;</span><span class="p">)</span>
+</pre></div>
+<pre class="literal-block">
+Celsius     Q10.6           F64             Error
+-100.0° C   -147.7° F       -148.0° F        -0.2 %
+-81.8° C    -115.0° F       -115.2° F        -0.21 %
+-63.6° C    -82.2° F        -82.4° F         -0.22 %
+-45.4° C    -49.5° F        -49.6° F         -0.26 %
+-27.1° C    -16.8° F        -16.9° F         -0.45 %
+-8.9° C      16.0° F         15.9° F          0.15 %
+ 9.3° C      48.7° F         48.7° F          0.087 %
+ 27.5° C     81.4° F         81.5° F          0.12 %
+ 45.7° C     114.1° F        114.3° F         0.13 %
+ 63.9° C     146.9° F        147.1° F         0.14 %
+ 82.1° C     179.6° F        179.9° F         0.15 %
+ 100.4° C    212.3° F        212.6° F         0.15 %
+ 118.6° C    245.1° F        245.4° F         0.15 %
+ 136.8° C    277.8° F        278.2° F         0.16 %
+ 155.0° C    310.5° F        311.0° F         0.16 %
+</pre>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span><span class="p">,</span> <span class="n">vectorize</span>
+<span class="n">vctof_q10x6</span> <span class="o">=</span> <span class="n">vectorize</span><span class="p">(</span><span class="n">ctof_q10x6</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">155</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">512</span><span class="p">)</span>
+<span class="n">cq</span> <span class="o">=</span> <span class="n">vftoq</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="n">fq</span> <span class="o">=</span> <span class="n">vctof_q10x6</span><span class="p">(</span><span class="n">cq</span><span class="p">)</span>
+<span class="n">fq</span> <span class="o">=</span> <span class="n">vqtof</span><span class="p">(</span><span class="n">fq</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">ctof_f64</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="n">perr</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">f</span> <span class="o">-</span> <span class="n">fq</span><span class="p">)</span><span class="o">/</span><span class="mf">100.0</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">perr</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;° Celsius&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">% E</span><span class="s2">rror during conversion&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+<img alt="Percent error of fixed point to floating point" src="./images/fixed-point/output_21_0.png" />
+</div>
+</div>
+<div class="section" id="fixed-point-signal-processing">
+<h2>Fixed point signal processing</h2>
+<ul class="simple">
+<li>There are only two rules of fixed point signal processing:<ul>
+<li>Thou shalt not overflow</li>
+<li>Thou shalt not underflow</li>
+</ul>
+</li>
+<li>Always design your filters so they are within range of operation<ul>
+<li>Usually with FIR filters, it is not a problem</li>
+<li>IIR filters become a challenge, can be avoided with low order
+filters</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="fir-filters-in-fixed-point">
+<h2>FIR filters in fixed-point</h2>
+<div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdint.h&gt;</span><span class="cp"></span>
+
+<span class="k">typedef</span><span class="w"> </span><span class="kt">int16_t</span><span class="w"> </span><span class="n">q15_t</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">fir_instance_q15</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">q15_t</span><span class="w">    </span><span class="o">*</span><span class="n">coeff</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">q15_t</span><span class="w">    </span><span class="o">*</span><span class="n">state</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">index</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">taps</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">fir_q15_t</span><span class="p">;</span><span class="w"></span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">generic_fir_q15</span><span class="p">(</span><span class="n">fir_q15_t</span><span class="w">     </span><span class="o">*</span><span class="n">self</span><span class="p">,</span><span class="w"></span>
+<span class="w">                     </span><span class="n">q15_t</span><span class="w">         </span><span class="o">*</span><span class="n">dst</span><span class="p">,</span><span class="w"></span>
+<span class="w">                     </span><span class="k">const</span><span class="w"> </span><span class="n">q15_t</span><span class="w">   </span><span class="o">*</span><span class="n">src</span><span class="p">,</span><span class="w"></span>
+<span class="w">                     </span><span class="kt">uint32_t</span><span class="w">      </span><span class="n">frames</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+<ol class="arabic simple">
+<li>CMSIS DSP documentation for <a class="reference external" href="https://arm-software.github.io/CMSIS_5/DSP/html/group__FIR.html#gad9f84fdadbb59292592c7fac81adb09c">fixed-point FIR
+filter</a></li>
+<li>CMSIS DSP implementation for FIR filter
+<a class="reference external" href="https://github.com/ARM-software/CMSIS/blob/f2cad4345783c948ed4a7f5cdb02cdc0856366f1/CMSIS/DSP_Lib/Source/FilteringFunctions/arm_fir_q15.c#L603">arm_fir_q15.c</a></li>
+</ol>
+<p>Generic FIR filter implementation in C:</p>
+<div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;generic_fir_q15.h&quot;</span><span class="cp"></span>
+
+<span class="k">static</span><span class="w"> </span><span class="n">q15_t</span><span class="w"> </span><span class="nf">q15_rsat</span><span class="p">(</span><span class="n">q63_t</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">generic_fir_q15</span><span class="p">(</span><span class="n">fir_q15_t</span><span class="w"> </span><span class="o">*</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">q15_t</span><span class="w"> </span><span class="o">*</span><span class="n">dst</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">q15_t</span><span class="w"> </span><span class="o">*</span><span class="n">src</span><span class="p">,</span><span class="w"></span>
+<span class="w">                     </span><span class="kt">size_t</span><span class="w"> </span><span class="n">frames</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">taps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="o">-&gt;</span><span class="n">taps</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="o">-&gt;</span><span class="n">index</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">q15_t</span><span class="w"> </span><span class="o">*</span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="o">-&gt;</span><span class="n">state</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">q15_t</span><span class="w"> </span><span class="o">*</span><span class="n">coeff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="o">-&gt;</span><span class="n">coeff</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">frames</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+
+<span class="w">    </span><span class="cm">/* Place input in circular buffer */</span><span class="w"></span>
+<span class="w">    </span><span class="n">state</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">src</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"></span>
+
+<span class="w">    </span><span class="cm">/* Circularly increment index */</span><span class="w"></span>
+<span class="w">    </span><span class="o">++</span><span class="n">index</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">index</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">taps</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="cm">/**</span>
+<span class="cm">     * Use a large enough accumulator to avoid overflow. If coefficients</span>
+<span class="cm">     * are Q1.15 and incoming sample data are also Q1.15, then each</span>
+<span class="cm">     * multiplications will require at-least 32 bits (Q2.30), and the</span>
+<span class="cm">     * worse case scenario of each addion will be an overflow which will</span>
+<span class="cm">     * require an extra bit to capture. Without going into the assembly</span>
+<span class="cm">     * level, it is more portable to get a larger data type (int64_t).</span>
+<span class="cm">     */</span><span class="w"></span>
+<span class="w">    </span><span class="n">q63_t</span><span class="w"> </span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="cm">/* Convolution Loop */</span><span class="w"></span>
+<span class="w">    </span><span class="k">do</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">index</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="o">--</span><span class="n">k</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">acc</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="p">((</span><span class="n">q31_t</span><span class="p">)</span><span class="n">coeff</span><span class="p">[</span><span class="n">j</span><span class="p">])</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">((</span><span class="n">q31_t</span><span class="p">)</span><span class="n">state</span><span class="p">[</span><span class="n">k</span><span class="p">]);</span><span class="w"></span>
+<span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">index</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">taps</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">taps</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="o">--</span><span class="n">k</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">acc</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="p">((</span><span class="n">q31_t</span><span class="p">)</span><span class="n">coeff</span><span class="p">[</span><span class="n">j</span><span class="p">])</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">((</span><span class="n">q31_t</span><span class="p">)</span><span class="n">state</span><span class="p">[</span><span class="n">k</span><span class="p">]);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">dst</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q15_rsat</span><span class="p">(</span><span class="n">acc</span><span class="p">);</span><span class="w"> </span><span class="cm">/* Typically this is one machine instruction in DSPs */</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="cm">/* Store the updated circular buffer address */</span><span class="w"></span>
+<span class="w">  </span><span class="n">self</span><span class="o">-&gt;</span><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">index</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">static</span><span class="w"> </span><span class="n">q15_t</span><span class="w"> </span><span class="nf">q15_rsat</span><span class="p">(</span><span class="n">q63_t</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">q63_t</span><span class="w"> </span><span class="n">vmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">32767</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">q63_t</span><span class="w"> </span><span class="n">vmin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-32768</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">q63_t</span><span class="w"> </span><span class="n">rounding_value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">15</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="cm">/* Round to nearest Q1.15 */</span><span class="w"></span>
+<span class="w">  </span><span class="n">x</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">rounding_value</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="o">-</span><span class="n">rounding_value</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="cm">/* Rescale to Q1.15 */</span><span class="w"></span>
+<span class="w">  </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">15</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="cm">/* Saturate result */</span><span class="w"></span>
+<span class="w">  </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">vmax</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">vmax</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">vmin</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">vmin</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">q15_t</span><span class="p">)</span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">signal</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">zplane</span> <span class="kn">import</span> <span class="n">zplane</span>
+
+
+<span class="k">def</span> <span class="nf">plot_response</span><span class="p">(</span><span class="n">fs</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">sb</span><span class="o">=-</span><span class="mi">40</span><span class="p">):</span>
+    <span class="s2">&quot;Utility function to plot response functions&quot;</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="n">fs</span><span class="o">*</span><span class="n">w</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">20</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">h</span><span class="p">)))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">sb</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">fs</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Frequency (Hz)&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Gain (dB)&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">sos2zpk</span><span class="p">(</span><span class="n">sos</span><span class="p">):</span>
+    <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">sos2tf</span><span class="p">(</span><span class="n">sos</span><span class="p">)</span>
+    <span class="n">z</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">tf2zpk</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">z</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">k</span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="n">Fs</span> <span class="o">=</span> <span class="mf">16000.0</span>       <span class="c1"># Sample Rate: Hz</span>
+<span class="n">Fc</span> <span class="o">=</span> <span class="mf">3500.0</span>        <span class="c1"># Cutoff frequency: Hz</span>
+<span class="n">Tw</span> <span class="o">=</span> <span class="mf">500.0</span>         <span class="c1"># Transition width: Hz</span>
+<span class="n">ntaps</span> <span class="o">=</span> <span class="mi">45</span>         <span class="c1"># Filter taps</span>
+<span class="n">attenuation</span> <span class="o">=</span> <span class="mf">0.5</span>  <span class="c1"># Filter gain to avoid overflow</span>
+<span class="c1"># Generate the FIR filter</span>
+<span class="n">coeffs</span> <span class="o">=</span> <span class="n">attenuation</span> <span class="o">*</span> <span class="n">signal</span><span class="o">.</span><span class="n">remez</span><span class="p">(</span><span class="n">ntaps</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">Fc</span><span class="p">,</span> <span class="n">Fc</span> <span class="o">+</span> <span class="n">Tw</span><span class="p">,</span> <span class="n">Fs</span><span class="o">/</span><span class="mf">2.0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Hz</span><span class="o">=</span><span class="n">Fs</span><span class="p">)</span>
+<span class="n">qcoeffs</span> <span class="o">=</span> <span class="n">vquantize</span><span class="p">(</span><span class="n">coeffs</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+<span class="c1"># Get filter response</span>
+<span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">freqz</span><span class="p">(</span><span class="n">qcoeffs</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">worN</span><span class="o">=</span><span class="mi">512</span><span class="p">)</span>
+<span class="n">plot_response</span><span class="p">(</span><span class="n">Fs</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="s2">&quot;Low-pass filter&quot;</span><span class="p">,</span> <span class="n">sb</span><span class="o">=-</span><span class="mi">75</span><span class="p">)</span>
+</pre></div>
+<img alt="Frequency response of FIR filter" src="./images/fixed-point/output_25_0.png" />
+<div class="highlight"><pre><span></span><span class="n">coeff_str</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s2">d</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">vftoq</span><span class="p">(</span><span class="n">coeffs</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span>
+<span class="n">taps</span> <span class="o">=</span> <span class="n">coeffs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;/*&lt;autogen-fir&gt;*/&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;q15_t fir_coeff[</span><span class="si">{</span><span class="n">taps</span><span class="si">}</span><span class="s2">] = </span><span class="se">{{</span><span class="si">{</span><span class="n">coeff_str</span><span class="si">}</span><span class="se">}}</span><span class="s2">;&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;q15_t fir_state[</span><span class="si">{</span><span class="n">taps</span><span class="si">}</span><span class="s2">] = </span><span class="se">{{</span><span class="s2">0</span><span class="se">}}</span><span class="s2">;&quot;</span><span class="p">);</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;uint32_t fir_taps = </span><span class="si">{</span><span class="n">taps</span><span class="si">}</span><span class="s2">;&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;uint32_t fir_index = 0;&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;fir_q15_t fir_filter = </span><span class="se">{{</span><span class="s2"> fir_coeff, fir_state, fir_index, fir_taps </span><span class="se">}}</span><span class="s2">;&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;/*&lt;/autogen-fir&gt;*/&quot;</span><span class="p">)</span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="cm">/*&lt;autogen-fir&gt;*/</span><span class="w"></span>
+<span class="n">q15_t</span><span class="w"> </span><span class="n">fir_coeff</span><span class="p">[</span><span class="mi">45</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">171</span><span class="p">,</span><span class="w">  </span><span class="mi">-201</span><span class="p">,</span><span class="w">  </span><span class="mi">-209</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">    </span><span class="mi">148</span><span class="p">,</span><span class="w">  </span><span class="mi">-33</span><span class="p">,</span><span class="w">  </span><span class="mi">-230</span><span class="p">,</span><span class="w"> </span><span class="mi">-29</span><span class="p">,</span><span class="w">   </span><span class="mi">271</span><span class="p">,</span><span class="w"></span>
+<span class="w">                       </span><span class="mi">90</span><span class="p">,</span><span class="w">   </span><span class="mi">-326</span><span class="p">,</span><span class="w">  </span><span class="mi">-188</span><span class="p">,</span><span class="w"> </span><span class="mi">375</span><span class="p">,</span><span class="w">  </span><span class="mi">328</span><span class="p">,</span><span class="w">  </span><span class="mi">-420</span><span class="p">,</span><span class="w"> </span><span class="mi">-537</span><span class="p">,</span><span class="w"> </span><span class="mi">458</span><span class="p">,</span><span class="w">   </span><span class="mi">888</span><span class="p">,</span><span class="w"></span>
+<span class="w">                       </span><span class="mi">-487</span><span class="p">,</span><span class="w"> </span><span class="mi">-1643</span><span class="p">,</span><span class="w"> </span><span class="mi">506</span><span class="p">,</span><span class="w">  </span><span class="mi">5183</span><span class="p">,</span><span class="w"> </span><span class="mi">7681</span><span class="p">,</span><span class="w"> </span><span class="mi">5183</span><span class="p">,</span><span class="w"> </span><span class="mi">506</span><span class="p">,</span><span class="w">  </span><span class="mi">-1643</span><span class="p">,</span><span class="w"> </span><span class="mi">-487</span><span class="p">,</span><span class="w"></span>
+<span class="w">                       </span><span class="mi">888</span><span class="p">,</span><span class="w">  </span><span class="mi">458</span><span class="p">,</span><span class="w">   </span><span class="mi">-537</span><span class="p">,</span><span class="w"> </span><span class="mi">-420</span><span class="p">,</span><span class="w"> </span><span class="mi">328</span><span class="p">,</span><span class="w">  </span><span class="mi">375</span><span class="p">,</span><span class="w">  </span><span class="mi">-188</span><span class="p">,</span><span class="w"> </span><span class="mi">-326</span><span class="p">,</span><span class="w">  </span><span class="mi">90</span><span class="p">,</span><span class="w"></span>
+<span class="w">                       </span><span class="mi">271</span><span class="p">,</span><span class="w">  </span><span class="mi">-29</span><span class="p">,</span><span class="w">   </span><span class="mi">-230</span><span class="p">,</span><span class="w"> </span><span class="mi">-33</span><span class="p">,</span><span class="w">  </span><span class="mi">148</span><span class="p">,</span><span class="w">  </span><span class="mi">1</span><span class="p">,</span><span class="w">    </span><span class="mi">-209</span><span class="p">,</span><span class="w"> </span><span class="mi">-201</span><span class="p">,</span><span class="w">  </span><span class="mi">171</span><span class="p">};</span><span class="w"></span>
+<span class="n">q15_t</span><span class="w"> </span><span class="n">fir_state</span><span class="p">[</span><span class="mi">45</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span><span class="w"></span>
+<span class="kt">uint32_t</span><span class="w"> </span><span class="n">fir_taps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">45</span><span class="p">;</span><span class="w"></span>
+<span class="kt">uint32_t</span><span class="w"> </span><span class="n">fir_index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="n">fir_q15_t</span><span class="w"> </span><span class="n">fir_filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">fir_coeff</span><span class="p">,</span><span class="w"> </span><span class="n">fir_state</span><span class="p">,</span><span class="w"> </span><span class="n">fir_index</span><span class="p">,</span><span class="w"> </span><span class="n">fir_taps</span><span class="p">};</span><span class="w"></span>
+<span class="cm">/*&lt;/autogen-fir&gt;*/</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="section" id="iir-filters-in-fixed-point">
+<h2>IIR filters in fixed-point</h2>
+<div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdint.h&gt;</span><span class="cp"></span>
+
+<span class="k">typedef</span><span class="w"> </span><span class="kt">int16_t</span><span class="w"> </span><span class="n">q15_t</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">iir_instance_q15</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">q15_t</span><span class="w">    </span><span class="o">*</span><span class="n">coeff</span><span class="p">;</span><span class="w"> </span><span class="cm">/* b0, b1, b2, a1, a2... */</span><span class="w"></span>
+<span class="w">    </span><span class="n">q15_t</span><span class="w">    </span><span class="o">*</span><span class="n">state</span><span class="p">;</span><span class="w"> </span><span class="cm">/* x1, x2, y1, y2, ... */</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">nstage</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int32_t</span><span class="w">  </span><span class="n">shift</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">iir_q15_t</span><span class="p">;</span><span class="w"></span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">generic_iir_q15</span><span class="p">(</span><span class="n">iir_q15_t</span><span class="w">     </span><span class="o">*</span><span class="n">self</span><span class="p">,</span><span class="w"></span>
+<span class="w">                     </span><span class="n">q15_t</span><span class="w">         </span><span class="o">*</span><span class="n">dst</span><span class="p">,</span><span class="w"></span>
+<span class="w">                     </span><span class="k">const</span><span class="w"> </span><span class="n">q15_t</span><span class="w">   </span><span class="o">*</span><span class="n">src</span><span class="p">,</span><span class="w"></span>
+<span class="w">                     </span><span class="kt">uint32_t</span><span class="w">      </span><span class="n">frames</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+<ol class="arabic simple">
+<li>CCRMA’s info on <a class="reference external" href="https://ccrma.stanford.edu/~jos/filters/Direct_Form_I.html">Direct form
+I</a></li>
+<li>CMSIS DSP documentation on <a class="reference external" href="https://arm-software.github.io/CMSIS_5/DSP/html/group__BiquadCascadeDF1.html#ga27af5bfa40dad7c877e48eedc8d67558">fixed-point IIR
+filters</a></li>
+<li>CMSIS DSP implementation of IIR filter
+<a class="reference external" href="https://github.com/ARM-software/CMSIS/blob/f2cad4345783c948ed4a7f5cdb02cdc0856366f1/CMSIS/DSP_Lib/Source/FilteringFunctions/arm_biquad_cascade_df1_q15.c#L75">arm_biquad_cascade_df1_q15.c</a></li>
+</ol>
+<p>Generic IIR filter implementation in C</p>
+<div class="highlight"><pre><span></span><span class="cm">/* IIR Filter Implementation */</span><span class="w"></span>
+
+<span class="k">static</span><span class="w"> </span><span class="n">q15_t</span><span class="w"> </span><span class="nf">q15_rsat</span><span class="p">(</span><span class="n">q63_t</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">shift</span><span class="p">);</span><span class="w"></span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">generic_iir_q15</span><span class="p">(</span><span class="n">iir_q15_t</span><span class="w"> </span><span class="o">*</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">q15_t</span><span class="w"> </span><span class="o">*</span><span class="n">dst</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">q15_t</span><span class="w"> </span><span class="o">*</span><span class="n">src</span><span class="p">,</span><span class="w"></span>
+<span class="w">                     </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">frames</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">nstage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="o">-&gt;</span><span class="n">nstage</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">shift</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="o">-&gt;</span><span class="n">shift</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">q15_t</span><span class="w"> </span><span class="o">*</span><span class="n">coeff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="o">-&gt;</span><span class="n">coeff</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">q15_t</span><span class="w"> </span><span class="o">*</span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="o">-&gt;</span><span class="n">state</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">nstage</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">q31_t</span><span class="w"> </span><span class="n">b0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">coeff</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">q31_t</span><span class="w"> </span><span class="n">b1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">coeff</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">q31_t</span><span class="w"> </span><span class="n">b2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">coeff</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">q31_t</span><span class="w"> </span><span class="n">a1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">coeff</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">q31_t</span><span class="w"> </span><span class="n">a2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">coeff</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">q15_t</span><span class="w"> </span><span class="o">*</span><span class="n">xptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">dst</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">src</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">q15_t</span><span class="w"> </span><span class="o">*</span><span class="n">yptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dst</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">q31_t</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">x1</span><span class="p">,</span><span class="w"> </span><span class="n">x2</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"> </span><span class="n">y1</span><span class="p">,</span><span class="w"> </span><span class="n">y2</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">x1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="n">x2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="n">y1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="n">y2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">state</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">frames</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">q63_t</span><span class="w"> </span><span class="n">acc</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">      </span><span class="n">x0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xptr</span><span class="p">[</span><span class="n">j</span><span class="p">];</span><span class="w"></span>
+
+<span class="w">      </span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">b0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x0</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">acc</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="p">(</span><span class="n">b1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x1</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">acc</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="p">(</span><span class="n">b2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x2</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">acc</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="p">(</span><span class="n">a1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">y1</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">acc</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="p">(</span><span class="n">a2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">y2</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">y0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q15_rsat</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span><span class="w"> </span><span class="n">shift</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">      </span><span class="n">x2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x1</span><span class="p">;</span><span class="w"> </span><span class="cm">/* new x[n-1] */</span><span class="w"></span>
+<span class="w">      </span><span class="n">x1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x0</span><span class="p">;</span><span class="w"> </span><span class="cm">/* new x[n-2] */</span><span class="w"></span>
+<span class="w">      </span><span class="n">y2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y1</span><span class="p">;</span><span class="w"> </span><span class="cm">/* new y[n-1] */</span><span class="w"></span>
+<span class="w">      </span><span class="n">y1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y0</span><span class="p">;</span><span class="w"> </span><span class="cm">/* new y[n-2] */</span><span class="w"></span>
+
+<span class="w">      </span><span class="n">yptr</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x2</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">state</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y2</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">state</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">coeff</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">static</span><span class="w"> </span><span class="n">q15_t</span><span class="w"> </span><span class="nf">q15_rsat</span><span class="p">(</span><span class="n">q63_t</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">shift</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">q63_t</span><span class="w"> </span><span class="n">vmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">32767</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">q63_t</span><span class="w"> </span><span class="n">vmin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-32768</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">q63_t</span><span class="w"> </span><span class="n">rounding_value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">15</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="cm">/* Round to nearest Q1.15 */</span><span class="w"></span>
+<span class="w">  </span><span class="n">x</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">rounding_value</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="o">-</span><span class="n">rounding_value</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="cm">/* Rescale to Q by caller */</span><span class="w"></span>
+<span class="w">  </span><span class="n">x</span><span class="w"> </span><span class="o">&gt;&gt;=</span><span class="w"> </span><span class="n">shift</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="cm">/* Saturate result */</span><span class="w"></span>
+<span class="w">  </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">vmax</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">vmax</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">vmin</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">vmin</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">q15_t</span><span class="p">)</span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linalg</span> <span class="k">as</span> <span class="n">LA</span>
+
+<span class="n">Fs</span> <span class="o">=</span> <span class="mf">16000.0</span> <span class="c1"># Sample Rate: Hz</span>
+<span class="n">Fc</span> <span class="o">=</span> <span class="mf">4000.0</span>  <span class="c1"># Cutoff frequency: Hz</span>
+<span class="c1"># Create the prototype filter</span>
+<span class="n">z</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">k</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">iirfilter</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="n">Fc</span><span class="p">,</span> <span class="n">rs</span><span class="o">=</span><span class="mi">70</span><span class="p">,</span> <span class="n">rp</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">btype</span><span class="o">=</span><span class="s1">&#39;low&#39;</span><span class="p">,</span> <span class="n">analog</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ftype</span><span class="o">=</span><span class="s1">&#39;cheby2&#39;</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="n">Fs</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s1">&#39;zpk&#39;</span><span class="p">)</span>
+
+<span class="c1"># Convert it to 2nd order stages (biquad) with a gain of 1</span>
+<span class="c1"># Note keep the pairing odd for greater use of precision</span>
+<span class="n">sos</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">zpk2sos</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">pairing</span><span class="o">=</span><span class="s1">&#39;keep_odd&#39;</span><span class="p">)</span>
+
+<span class="c1"># Modify feed-forward gain until it&#39;s under -6 dB of attenuation</span>
+<span class="n">gain</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">/</span> <span class="n">sos</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">sos</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">sos</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="n">gain</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sos</span><span class="p">)</span>
+
+<span class="c1"># Quantize</span>
+<span class="n">qsos</span> <span class="o">=</span> <span class="n">vquantize</span><span class="p">(</span><span class="n">sos</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">14</span><span class="p">)</span>
+<span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">sosfreqz</span><span class="p">(</span><span class="n">qsos</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Max gain: </span><span class="si">{</span><span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">h</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">zplane</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+<span class="n">plot_response</span><span class="p">(</span><span class="n">Fs</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="s2">&quot;Low-pass filter&quot;</span><span class="p">,</span> <span class="n">sb</span><span class="o">=-</span><span class="mi">96</span><span class="p">)</span>
+</pre></div>
+<pre class="literal-block">
+[[ 0.125       0.125       0.          1.         -0.2315115   0.        ]
+ [ 0.125       0.17078507  0.125       1.         -0.52869293  0.13074684]
+ [ 0.125       0.06031606  0.125       1.         -0.70554983  0.35305028]
+ [ 0.125       0.00634657  0.125       1.         -0.96279273  0.72736088]]
+Max gain: 0.036533575929996835
+</pre>
+<img alt="Frequency response of IIR filter" src="./images/fixed-point/output_28_1.png" />
+<img alt="Pole-zero diagram of IIR filter" src="./images/fixed-point/output_28_2.png" />
+<div class="highlight"><pre><span></span><span class="c1"># Check the step response to detect any overflow over a short period of time</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">sosfilt</span><span class="p">(</span><span class="n">vquantize</span><span class="p">(</span><span class="n">sos</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">14</span><span class="p">),</span> <span class="n">signal</span><span class="o">.</span><span class="n">unit_impulse</span><span class="p">(</span><span class="mi">32</span><span class="p">))</span>
+<span class="n">ys</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">sosfilt</span><span class="p">(</span><span class="n">vquantize</span><span class="p">(</span><span class="n">sos</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">14</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">32</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Impulse response:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Step response: </span><span class="se">\n</span><span class="si">{</span><span class="n">ys</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+<pre class="literal-block">
+Impulse response:
+ [ 0.00244969  0.01305221  0.03750753  0.07332111  0.10464949  0.10941449
+  0.07655378  0.01950579 -0.03047698 -0.04673595 -0.02733165  0.00550324
+  0.02516314  0.02096245  0.00240548 -0.01281883 -0.01419637 -0.00445748
+  0.00599136  0.00902022  0.00434855 -0.00236218 -0.00543642 -0.00351961
+  0.00056275  0.00310108  0.00257681  0.0002259  -0.00165651 -0.00175919
+ -0.00048893  0.00080876]
+Step response:
+[0.00244969 0.0155019  0.05300943 0.12633054 0.23098003 0.34039452
+ 0.4169483  0.4364541  0.40597712 0.35924117 0.33190953 0.33741276
+ 0.36257591 0.38353836 0.38594384 0.37312501 0.35892864 0.35447116
+ 0.36046253 0.36948275 0.3738313  0.37146912 0.3660327  0.36251309
+ 0.36307584 0.36617691 0.36875372 0.36897963 0.36732312 0.36556393
+ 0.365075   0.36588375]
+</pre>
+<div class="highlight"><pre><span></span><span class="n">M</span><span class="p">,</span><span class="n">N</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">14</span>
+<span class="n">sos2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">sos</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>                  <span class="c1"># Remove a0 column</span>
+<span class="n">coeff_str</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s2">d</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">vftoq</span><span class="p">(</span><span class="n">sos2</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>   <span class="c1"># &quot;flatten&quot; array so it&#39;s one dimention</span>
+<span class="n">iir_stage</span> <span class="o">=</span> <span class="n">sos</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>                                    <span class="c1"># Get number of stages</span>
+<span class="n">iir_shift</span> <span class="o">=</span> <span class="n">N</span>                                               <span class="c1"># Get the shift amount</span>
+
+<span class="c1"># Write out header file</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;/*&lt;autogen-iir&gt;*/&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;#define NSTAGE (</span><span class="si">{</span><span class="n">iir_stage</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;q15_t iir_coeff[5 * NSTAGE] = </span><span class="se">{{</span><span class="si">{</span><span class="n">coeff_str</span><span class="si">}</span><span class="se">}}</span><span class="s2">;&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;q15_t iir_state[4 * NSTAGE] = </span><span class="se">{{</span><span class="s2">0</span><span class="se">}}</span><span class="s2">;&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;uint32_t iir_stage = NSTAGE;&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;int32_t iir_shift = </span><span class="si">{</span><span class="n">iir_shift</span><span class="si">}</span><span class="s2">;&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;iir_q15_t iir_filter = </span><span class="se">{{</span><span class="s2">iir_coeff, iir_state, iir_stage, iir_shift</span><span class="se">}}</span><span class="s2">;&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;/*&lt;/autogen-iir&gt;*/</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="cm">/*&lt;autogen-iir&gt;*/</span><span class="w"></span>
+<span class="cp">#define NSTAGE (4)</span>
+<span class="n">q15_t</span><span class="w"> </span><span class="n">iir_coeff</span><span class="p">[</span><span class="mi">5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">NSTAGE</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">3645</span><span class="p">,</span><span class="w"> </span><span class="mi">3645</span><span class="p">,</span><span class="w">  </span><span class="mi">0</span><span class="p">,</span><span class="w">    </span><span class="mi">-3793</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">      </span><span class="mi">3645</span><span class="p">,</span><span class="w"> </span><span class="mi">4980</span><span class="p">,</span><span class="w"></span>
+<span class="w">                               </span><span class="mi">3645</span><span class="p">,</span><span class="w"> </span><span class="mi">-8662</span><span class="p">,</span><span class="w"> </span><span class="mi">2142</span><span class="p">,</span><span class="w"> </span><span class="mi">3645</span><span class="p">,</span><span class="w">  </span><span class="mi">1759</span><span class="p">,</span><span class="w">   </span><span class="mi">3645</span><span class="p">,</span><span class="w"> </span><span class="mi">-11560</span><span class="p">,</span><span class="w"></span>
+<span class="w">                               </span><span class="mi">5784</span><span class="p">,</span><span class="w"> </span><span class="mi">3645</span><span class="p">,</span><span class="w">  </span><span class="mi">185</span><span class="p">,</span><span class="w">  </span><span class="mi">3645</span><span class="p">,</span><span class="w">  </span><span class="mi">-15774</span><span class="p">,</span><span class="w"> </span><span class="mi">11917</span><span class="p">};</span><span class="w"></span>
+<span class="n">q15_t</span><span class="w"> </span><span class="n">iir_state</span><span class="p">[</span><span class="mi">4</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">NSTAGE</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span><span class="w"></span>
+<span class="kt">uint32_t</span><span class="w"> </span><span class="n">iir_stage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NSTAGE</span><span class="p">;</span><span class="w"></span>
+<span class="kt">int32_t</span><span class="w"> </span><span class="n">iir_shift</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">14</span><span class="p">;</span><span class="w"></span>
+<span class="n">iir_q15_t</span><span class="w"> </span><span class="n">iir_filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">iir_coeff</span><span class="p">,</span><span class="w"> </span><span class="n">iir_state</span><span class="p">,</span><span class="w"> </span><span class="n">iir_stage</span><span class="p">,</span><span class="w"> </span><span class="n">iir_shift</span><span class="p">};</span><span class="w"></span>
+<span class="cm">/*&lt;/autogen-iir&gt;*/</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="section" id="other-functions">
+<h2>Other functions</h2>
+<ol class="arabic simple">
+<li>Trigonometry:
+<a class="reference external" href="https://en.wikipedia.org/wiki/Libfixmath">libfixmath</a> offers a
+great set of math functions for your fixed point needs.</li>
+<li><a class="reference external" href="https://www.arm.com/why-arm/technologies/cmsis">CMSIS</a> and
+<a class="reference external" href="https://github.com/ARM-software/CMSIS_5">CMSIS-DSP</a>, A great
+library for programming for embedded ARM environment. Supported by
+ARM!</li>
+<li>Espressif, a new player in slilcon industry from China, has a great
+set of DSP libraries
+<a class="reference external" href="https://github.com/espressif/esp-dsp">esp-dsp</a></li>
+<li><a class="reference external" href="https://github.com/pulp-platform/pulp-dsp">PLUP DSP</a> is an open
+source FPGA DSP that is based on RISC-V architecture.</li>
+<li>I have also dabbled in Trigonometry functions in fixed point with
+HiFi architecture, which can be found in my
+<a class="reference external" href="https://gist.github.com/ashafq/0578c16cf8c93ba63d9b993b496f9067">Github Gist [0578c]</a></li>
+</ol>
+</div>
+<script type='text/javascript'>if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="./tag/filters.html">filters</a>
+      <a href="./tag/signal-processing.html">signal processing</a>
+      <a href="./tag/dsp.html">dsp</a>
+      <a href="./tag/fir.html">fir</a>
+      <a href="./tag/iir.html">iir</a>
+      <a href="./tag/fixed-point.html">fixed-point</a>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>
+  &copy; 2017  - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.en_US" target="_blank">Creative Commons Attribution-ShareAlike</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Ayan Shafqat ",
+  "url" : ".",
+  "image": "/images/profile.png",
+  "description": "Personal website of Ayan Shafqat"
+}
+</script>
+
+</body>
+</html>
