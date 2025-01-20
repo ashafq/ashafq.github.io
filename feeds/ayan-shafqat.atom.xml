@@ -1,14 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Ayan Shafqat - Ayan Shafqat</title><link href="https://shafq.at/" rel="alternate"></link><link href="https://shafq.at/feeds/ayan-shafqat.atom.xml" rel="self"></link><id>https://shafq.at/</id><updated>2020-12-09T00:00:00-05:00</updated><subtitle>My personal website</subtitle><entry><title>Introduction to Fixed Point Signal Processing</title><link href="https://shafq.at/introduction-to-fixed-point-signal-processing.html" rel="alternate"></link><published>2020-12-09T00:00:00-05:00</published><updated>2020-12-09T00:00:00-05:00</updated><author><name>Ayan Shafqat</name></author><id>tag:shafq.at,2020-12-09:/introduction-to-fixed-point-signal-processing.html</id><summary type="html">&lt;div class="section" id="introduction"&gt;
-&lt;h2&gt;Introduction&lt;/h2&gt;
-&lt;p&gt;In 1927, Alan Turing’s paper discussed a class of numbers called &lt;em&gt;finite
-and computable numbers&lt;/em&gt;. This allowed for the construction of digital
-computer. Signal processing, in essence, is the study of converting
-real-world signal into finite and computable numbers, and processing
-them with the fewest bits possible.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="section" id="what-are-fixed-point-numbers"&gt;
-&lt;h2&gt;What …&lt;/h2&gt;&lt;/div&gt;</summary><content type="html">&lt;div class="section" id="introduction"&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Ayan Shafqat - Ayan Shafqat</title><link href="https://shafq.at/" rel="alternate"></link><link href="https://shafq.at/feeds/ayan-shafqat.atom.xml" rel="self"></link><id>https://shafq.at/</id><updated>2025-01-19T00:00:00-05:00</updated><subtitle>My personal website</subtitle><entry><title>Float to Q1.15: A FizzBuzz for Audio Technical Interview</title><link href="https://shafq.at/fizzbuzz-for-audio.html" rel="alternate"></link><published>2025-01-19T00:00:00-05:00</published><updated>2025-01-19T00:00:00-05:00</updated><author><name>Ayan Shafqat</name></author><id>tag:shafq.at,2025-01-19:/fizzbuzz-for-audio.html</id><summary type="html">&lt;p&gt;An easy-sounding “Float to &lt;code&gt;Q1.15&lt;/code&gt;” challenge is proposed as an audio FizzBuzz interview question.&lt;/p&gt;</summary><content type="html">&lt;p&gt;I don’t enjoy watching candidates squirm through tricky interviews any more
+than anyone else does. Let’s face it: a job interview is stressful enough! Being
+judged on every syllable over a video call (or in a room) isn’t exactly fun.
+And if I’m the interviewer, I’m also under pressure to complete my own work on
+top of conducting the interview.&lt;/p&gt;
+&lt;p&gt;It’s counterproductive to throw overly difficult questions at candidates just
+to see them fail. Instead, I like straightforward “benchmark” questions—much
+like &lt;a href="https://en.wikipedia.org/wiki/Fizz_buzz"&gt;FizzBuzz&lt;/a&gt;. FizzBuzz is trivial
+to solve in under five minutes, but it still offers a ton of room for
+improvement and optimization. Don’t believe me? Check out the &lt;a href="https://codegolf.stackexchange.com/questions/215216/high-throughput-fizz-buzz/"&gt;High throughput
+FizzBuzz&lt;/a&gt;
+code golf page, where some solutions run nearly as fast as
+&lt;a href="https://www.man7.org/linux/man-pages/man3/memcpy.3.html"&gt;&lt;code&gt;memcpy(3)&lt;/code&gt;&lt;/a&gt;!&lt;/p&gt;
+&lt;p&gt;I wanted a similar litmus test for hiring audio programming candidates, and I
+think I may have found it. Let’s dive into the “Float to Q1.16” challenge: The
+&lt;em&gt;FizzBuzz&lt;/em&gt; of audio programming:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Task:&lt;/strong&gt; Convert an array of 32-bit floating-point audio samples into 16-bit
+fixed-point format (&lt;code&gt;Q1.15&lt;/code&gt;). Specifically:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Input Range:&lt;/strong&gt; Any valid &lt;code&gt;float32&lt;/code&gt; value (i.e., the entire representable
+   range of single-precision floats).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Output Range:&lt;/strong&gt; Scale, round, and clamp so that &lt;code&gt;[-1.0, +1.0)&lt;/code&gt; in
+   floating-point maps to &lt;code&gt;[-32768, +32767)&lt;/code&gt; in &lt;code&gt;int16_t&lt;/code&gt;. Any values below
+   &lt;code&gt;-1.0&lt;/code&gt; should clamp to &lt;code&gt;-32768&lt;/code&gt;, and any values above &lt;code&gt;+1.0&lt;/code&gt; should clamp to
+   &lt;code&gt;+32767&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;A suitable function prototype might be:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;float_to_q1x15&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int16_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;dst&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;const&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;float&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;size_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;samples&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Here, I will also give a possible answer as well:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;float_to_q1x15&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int16_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;dst&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;const&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;float&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;size_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;len&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;size_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;len&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kt"&gt;float&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;0x1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;p15F&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="cm"&gt;/* Scale by 2**15 */&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="cm"&gt;/* Clamp */&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;INT16_MAX&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;INT16_MAX&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;INT16_MIN&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;INT16_MIN&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;dst&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int16_t&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="cm"&gt;/* Convert to int16_t */&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Easy, right?&lt;/strong&gt; But this is just the start. FizzBuzz is also easy—until it’s
+not. Let’s expand on the requirements:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;What if the input is 0.5? What output do we get?&lt;/li&gt;
+&lt;li&gt;What if the input is 0.50001 or 0.49995? How do we handle rounding?&lt;/li&gt;
+&lt;li&gt;Are we applying simple truncation, or do we need a specific rounding method
+  (e.g., round half up, round half to even, or
+  &lt;a href="https://en.wikipedia.org/wiki/Dither"&gt;dither&lt;/a&gt;)?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Now we’re dipping our toes into DSP theory and the quirks of floating-point
+arithmetic. Floats are straightforward to use in code but notoriously tricky to
+get fully “correct.” It’s not uncommon to encounter a mysterious &lt;code&gt;NaN&lt;/code&gt; that
+sneaks into your audio pipeline because of a filter that’s been pushed just a
+bit too far. From my experience as an audio software engineer, I can tell you
+that &lt;code&gt;NaNs&lt;/code&gt; are like nuclear bombs for an audio pipeline, and no amount of
+&lt;code&gt;-ffast-math&lt;/code&gt; will save you from the fallout.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Questions to consider next:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Given &lt;code&gt;[-1, +1)&lt;/code&gt; as your input range, how many bits of precision do you truly
+  have in &lt;code&gt;float32&lt;/code&gt; representation?&lt;/li&gt;
+&lt;li&gt;Should you always round your scaled output, or is truncation acceptable?&lt;/li&gt;
+&lt;li&gt;If rounding, which method is best for audio signals?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;By exploring these nuances, you can quickly spot which candidates have hands-on
+DSP experience—and which ones haven’t battled those late-night &lt;code&gt;NaN&lt;/code&gt; bugs
+(yet). This is exactly why I like to call this “the FizzBuzz of audio
+programming.” It starts simple but reveals deeper topics lurking just below the
+surface. Plus, I think it's a fun way to continue a conversation!&lt;/p&gt;</content><category term="Programming"></category><category term="fizzbuzz"></category><category term="interview"></category><category term="tech"></category><category term="C"></category><category term="C++"></category></entry><entry><title>Introduction to Fixed Point Signal Processing</title><link href="https://shafq.at/introduction-to-fixed-point-signal-processing.html" rel="alternate"></link><published>2020-12-09T00:00:00-05:00</published><updated>2020-12-09T00:00:00-05:00</updated><author><name>Ayan Shafqat</name></author><id>tag:shafq.at,2020-12-09:/introduction-to-fixed-point-signal-processing.html</id><summary type="html">&lt;p class="first last"&gt;Fixed-point arithmetic is central to embedded signal processing where
+resources and power are often strictly limited. This article explains
+how &lt;cite&gt;Qm.n&lt;/cite&gt; notation represents numbers with integer and fractional
+bits, highlighting range and resolution constraints. It discusses the
+trade-offs between floating-point’s easier development and
+fixed-point’s hardware cost savings. Examples illustrate clipping,
+saturation, and rounding techniques for converting between floating
+and fixed-point. A detailed walk-through of converting Celsius to
+Fahrenheit in &lt;cite&gt;Q10.6&lt;/cite&gt; format shows how to preserve precision under
+hardware constraints. Practical code snippets for FIR and IIR filter
+implementations in C and Python further demonstrate fixed-point’s
+capabilities across real-world DSP applications.&lt;/p&gt;
+</summary><content type="html">&lt;div class="section" id="introduction"&gt;
 &lt;h2&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;In 1927, Alan Turing’s paper discussed a class of numbers called &lt;em&gt;finite
 and computable numbers&lt;/em&gt;. This allowed for the construction of digital

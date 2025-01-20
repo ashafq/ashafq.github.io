@@ -47,13 +47,13 @@
 
 
 <meta name="author" content="Ayan Shafqat" />
-<meta name="description" content="Introduction In 1927, Alan Turing’s paper discussed a class of numbers called finite and computable numbers. This allowed for the construction of digital computer. Signal processing, in essence, is the study of converting real-world signal into finite and computable numbers, and processing them with the fewest bits possible. What …" />
+<meta name="description" content="Fixed-point arithmetic is central to embedded signal processing where resources and power are often strictly limited. This article explains how Qm.n notation represents numbers with integer and fractional bits, highlighting range and resolution constraints. It discusses the trade-offs between floating-point’s easier development and fixed-point’s hardware cost savings. Examples illustrate clipping, saturation, and rounding techniques for converting between floating and fixed-point. A detailed walk-through of converting Celsius to Fahrenheit in Q10.6 format shows how to preserve precision under hardware constraints. Practical code snippets for FIR and IIR filter implementations in C and Python further demonstrate fixed-point’s capabilities across real-world DSP applications." />
 <meta name="keywords" content="filters, signal processing, dsp, fir, iir, fixed-point">
 
 
   <meta property="og:site_name" content="Ayan Shafqat"/>
   <meta property="og:title" content="Introduction to Fixed Point Signal Processing"/>
-  <meta property="og:description" content="Introduction In 1927, Alan Turing’s paper discussed a class of numbers called finite and computable numbers. This allowed for the construction of digital computer. Signal processing, in essence, is the study of converting real-world signal into finite and computable numbers, and processing them with the fewest bits possible. What …"/>
+  <meta property="og:description" content="Fixed-point arithmetic is central to embedded signal processing where resources and power are often strictly limited. This article explains how Qm.n notation represents numbers with integer and fractional bits, highlighting range and resolution constraints. It discusses the trade-offs between floating-point’s easier development and fixed-point’s hardware cost savings. Examples illustrate clipping, saturation, and rounding techniques for converting between floating and fixed-point. A detailed walk-through of converting Celsius to Fahrenheit in Q10.6 format shows how to preserve precision under hardware constraints. Practical code snippets for FIR and IIR filter implementations in C and Python further demonstrate fixed-point’s capabilities across real-world DSP applications."/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:url" content="./introduction-to-fixed-point-signal-processing.html"/>
   <meta property="og:type" content="article"/>
@@ -102,12 +102,6 @@
               <a target="_self"
                  href="./pages/papers.html#papers">
                 Papers
-              </a>
-            </li>
-            <li>
-              <a target="_self"
-                 href="./pages/resume.html#resume">
-                Résumé
               </a>
             </li>
 

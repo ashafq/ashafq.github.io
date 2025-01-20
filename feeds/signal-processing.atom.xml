@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Ayan Shafqat - signal-processing</title><link href="https://shafq.at/" rel="alternate"></link><link href="https://shafq.at/feeds/signal-processing.atom.xml" rel="self"></link><id>https://shafq.at/</id><updated>2020-12-09T00:00:00-05:00</updated><subtitle>My personal website</subtitle><entry><title>Introduction to Fixed Point Signal Processing</title><link href="https://shafq.at/introduction-to-fixed-point-signal-processing.html" rel="alternate"></link><published>2020-12-09T00:00:00-05:00</published><updated>2020-12-09T00:00:00-05:00</updated><author><name>Ayan Shafqat</name></author><id>tag:shafq.at,2020-12-09:/introduction-to-fixed-point-signal-processing.html</id><summary type="html">&lt;div class="section" id="introduction"&gt;
-&lt;h2&gt;Introduction&lt;/h2&gt;
-&lt;p&gt;In 1927, Alan Turing’s paper discussed a class of numbers called &lt;em&gt;finite
-and computable numbers&lt;/em&gt;. This allowed for the construction of digital
-computer. Signal processing, in essence, is the study of converting
-real-world signal into finite and computable numbers, and processing
-them with the fewest bits possible.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="section" id="what-are-fixed-point-numbers"&gt;
-&lt;h2&gt;What …&lt;/h2&gt;&lt;/div&gt;</summary><content type="html">&lt;div class="section" id="introduction"&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Ayan Shafqat - signal-processing</title><link href="https://shafq.at/" rel="alternate"></link><link href="https://shafq.at/feeds/signal-processing.atom.xml" rel="self"></link><id>https://shafq.at/</id><updated>2020-12-09T00:00:00-05:00</updated><subtitle>My personal website</subtitle><entry><title>Introduction to Fixed Point Signal Processing</title><link href="https://shafq.at/introduction-to-fixed-point-signal-processing.html" rel="alternate"></link><published>2020-12-09T00:00:00-05:00</published><updated>2020-12-09T00:00:00-05:00</updated><author><name>Ayan Shafqat</name></author><id>tag:shafq.at,2020-12-09:/introduction-to-fixed-point-signal-processing.html</id><summary type="html">&lt;p class="first last"&gt;Fixed-point arithmetic is central to embedded signal processing where
+resources and power are often strictly limited. This article explains
+how &lt;cite&gt;Qm.n&lt;/cite&gt; notation represents numbers with integer and fractional
+bits, highlighting range and resolution constraints. It discusses the
+trade-offs between floating-point’s easier development and
+fixed-point’s hardware cost savings. Examples illustrate clipping,
+saturation, and rounding techniques for converting between floating
+and fixed-point. A detailed walk-through of converting Celsius to
+Fahrenheit in &lt;cite&gt;Q10.6&lt;/cite&gt; format shows how to preserve precision under
+hardware constraints. Practical code snippets for FIR and IIR filter
+implementations in C and Python further demonstrate fixed-point’s
+capabilities across real-world DSP applications.&lt;/p&gt;
+</summary><content type="html">&lt;div class="section" id="introduction"&gt;
 &lt;h2&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;In 1927, Alan Turing’s paper discussed a class of numbers called &lt;em&gt;finite
 and computable numbers&lt;/em&gt;. This allowed for the construction of digital

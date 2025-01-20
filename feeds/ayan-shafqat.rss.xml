@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Ayan Shafqat - Ayan Shafqat</title><link>https://shafq.at/</link><description>My personal website</description><lastBuildDate>Wed, 09 Dec 2020 00:00:00 -0500</lastBuildDate><item><title>Introduction to Fixed Point Signal Processing</title><link>https://shafq.at/introduction-to-fixed-point-signal-processing.html</link><description>&lt;div class="section" id="introduction"&gt;
-&lt;h2&gt;Introduction&lt;/h2&gt;
-&lt;p&gt;In 1927, Alan Turing’s paper discussed a class of numbers called &lt;em&gt;finite
-and computable numbers&lt;/em&gt;. This allowed for the construction of digital
-computer. Signal processing, in essence, is the study of converting
-real-world signal into finite and computable numbers, and processing
-them with the fewest bits possible.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="section" id="what-are-fixed-point-numbers"&gt;
-&lt;h2&gt;What …&lt;/h2&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Ayan Shafqat</dc:creator><pubDate>Wed, 09 Dec 2020 00:00:00 -0500</pubDate><guid isPermaLink="false">tag:shafq.at,2020-12-09:/introduction-to-fixed-point-signal-processing.html</guid><category>signal-processing</category><category>filters</category><category>signal processing</category><category>dsp</category><category>fir</category><category>iir</category><category>fixed-point</category></item><item><title>Hello, world!</title><link>https://shafq.at/hello-world.html</link><description>&lt;p&gt;Hello! This is my first post. So...&lt;/p&gt;
+<rss version="2.0"><channel><title>Ayan Shafqat - Ayan Shafqat</title><link>https://shafq.at/</link><description>My personal website</description><lastBuildDate>Sun, 19 Jan 2025 00:00:00 -0500</lastBuildDate><item><title>Float to Q1.15: A FizzBuzz for Audio Technical Interview</title><link>https://shafq.at/fizzbuzz-for-audio.html</link><description>&lt;p&gt;An easy-sounding “Float to &lt;code&gt;Q1.15&lt;/code&gt;” challenge is proposed as an audio FizzBuzz interview question.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Ayan Shafqat</dc:creator><pubDate>Sun, 19 Jan 2025 00:00:00 -0500</pubDate><guid isPermaLink="false">tag:shafq.at,2025-01-19:/fizzbuzz-for-audio.html</guid><category>Programming</category><category>fizzbuzz</category><category>interview</category><category>tech</category><category>C</category><category>C++</category></item><item><title>Introduction to Fixed Point Signal Processing</title><link>https://shafq.at/introduction-to-fixed-point-signal-processing.html</link><description>&lt;p class="first last"&gt;Fixed-point arithmetic is central to embedded signal processing where
+resources and power are often strictly limited. This article explains
+how &lt;cite&gt;Qm.n&lt;/cite&gt; notation represents numbers with integer and fractional
+bits, highlighting range and resolution constraints. It discusses the
+trade-offs between floating-point’s easier development and
+fixed-point’s hardware cost savings. Examples illustrate clipping,
+saturation, and rounding techniques for converting between floating
+and fixed-point. A detailed walk-through of converting Celsius to
+Fahrenheit in &lt;cite&gt;Q10.6&lt;/cite&gt; format shows how to preserve precision under
+hardware constraints. Practical code snippets for FIR and IIR filter
+implementations in C and Python further demonstrate fixed-point’s
+capabilities across real-world DSP applications.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Ayan Shafqat</dc:creator><pubDate>Wed, 09 Dec 2020 00:00:00 -0500</pubDate><guid isPermaLink="false">tag:shafq.at,2020-12-09:/introduction-to-fixed-point-signal-processing.html</guid><category>signal-processing</category><category>filters</category><category>signal processing</category><category>dsp</category><category>fir</category><category>iir</category><category>fixed-point</category></item><item><title>Hello, world!</title><link>https://shafq.at/hello-world.html</link><description>&lt;p&gt;Hello! This is my first post. So...&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;tmp&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;mktemp&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;gcc&lt;span class="w"&gt; &lt;/span&gt;-x&lt;span class="w"&gt; &lt;/span&gt;c&lt;span class="w"&gt; &lt;/span&gt;-o&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$tmp&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;lt;&amp;lt; EOF &amp;amp;&amp;gt; /dev/null &amp;amp;&amp;amp; $tmp&lt;/span&gt;
 &lt;span class="s"&gt;#include &amp;lt;stdio.h&amp;gt;&lt;/span&gt;
 &lt;span class="s"&gt;int main() {&lt;/span&gt;
