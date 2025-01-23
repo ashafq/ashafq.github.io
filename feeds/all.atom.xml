@@ -13,7 +13,7 @@ FizzBuzz&lt;/a&gt;
 code golf page, where some solutions run nearly as fast as
 &lt;a href="https://www.man7.org/linux/man-pages/man3/memcpy.3.html"&gt;&lt;code&gt;memcpy(3)&lt;/code&gt;&lt;/a&gt;!&lt;/p&gt;
 &lt;p&gt;I wanted a similar litmus test for hiring audio programming candidates, and I
-think I may have found it. Let’s dive into the “Float to Q1.16” challenge: The
+think I may have found it. Let’s dive into the “Float to Q1.15” challenge: The
 &lt;em&gt;FizzBuzz&lt;/em&gt; of audio programming:&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Task:&lt;/strong&gt; Convert an array of 32-bit floating-point audio samples into 16-bit
 fixed-point format (&lt;code&gt;Q1.15&lt;/code&gt;). Specifically:&lt;/p&gt;
