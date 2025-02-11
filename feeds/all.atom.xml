@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Ayan Shafqat</title><link href="https://shafq.at/" rel="alternate"></link><link href="https://shafq.at/feeds/all.atom.xml" rel="self"></link><id>https://shafq.at/</id><updated>2025-02-10T00:00:00-05:00</updated><subtitle>My personal website</subtitle><entry><title>Strange Corners of C: Entering The Twilight Zone of the C Compiler</title><link href="https://shafq.at/strange-corners-of-c.html" rel="alternate"></link><published>2025-02-10T00:00:00-05:00</published><updated>2025-01-19T00:00:00-05:00</updated><author><name>Ayan Shafqat</name></author><id>tag:shafq.at,2025-02-10:/strange-corners-of-c.html</id><summary type="html">&lt;p&gt;C is a fascinating programming language, simple enough to learn in a few days,
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Ayan Shafqat</title><link href="https://shafq.at/" rel="alternate"></link><link href="https://shafq.at/feeds/all.atom.xml" rel="self"></link><id>https://shafq.at/</id><updated>2025-02-11T00:00:00-05:00</updated><subtitle>My personal website</subtitle><entry><title>Strange Corners of C: Entering The Twilight Zone of the C Compiler</title><link href="https://shafq.at/strange-corners-of-c.html" rel="alternate"></link><published>2025-02-10T00:00:00-05:00</published><updated>2025-02-11T00:00:00-05:00</updated><author><name>Ayan Shafqat</name></author><id>tag:shafq.at,2025-02-10:/strange-corners-of-c.html</id><summary type="html">&lt;p&gt;C is a fascinating programming language, simple enough to learn in a few days,
 yet powerful enough to build the world's most complex systems. With its
 lightweight runtime, C runs everywhere! From microwave ovens to spacecrafts,
 and everything in between. Sometimes, I can’t help but wonder: &lt;em&gt;Is the universe …&lt;/em&gt;&lt;/p&gt;</summary><content type="html">&lt;p&gt;C is a fascinating programming language, simple enough to learn in a few days,
@@ -57,7 +57,7 @@ Instead, it undergoes multiple stages:&lt;/p&gt;
 &lt;li&gt;&lt;strong&gt;Linking&lt;/strong&gt;: Resolves symbols and produces an executable.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3&gt;Inline Assembly&lt;/h3&gt;
-&lt;p&gt;All basic stuff. However, compilers have evolved to to add hooks into the
+&lt;p&gt;All basic stuff. However, compilers have evolved to add hooks into the
 assembler and linker. For example, &lt;a href="https://gcc.gnu.org/"&gt;&lt;code&gt;gcc&lt;/code&gt;&lt;/a&gt; and
 &lt;a href="https://clang.llvm.org/"&gt;&lt;code&gt;clang&lt;/code&gt;&lt;/a&gt; allows ways to insert inline assembly,
 enabling developers to bypass the compiler’s usual code generation. It's a way
@@ -288,11 +288,12 @@ pattern&lt;/strong&gt; to our madness. (Isn’t it nice? 🤓)&lt;/p&gt;
 &lt;p&gt;But hey, it’s fun to pretend we’re doing &lt;strong&gt;serious security engineering&lt;/strong&gt; while
 writing machine code inside a C string. 😆&lt;/p&gt;
 &lt;h2&gt;Conclusion&lt;/h2&gt;
-&lt;p&gt;I think we have played for long enough. But, what's the point? Are these
-ever used in the wild? Yes, it is used in the wilderness of the C-level jungle.
-Some embedded targets will have common functions programmed into the ROM
-while fabrication. And, there are two ways to resolve the function address, 
-write a linker script, or do this gross thing:&lt;/p&gt;
+&lt;p&gt;I think we have played for long enough. But, what's the point? Are these ever
+used in the wild? Yes, it is used in the wilderness of the C-level jungle. In
+fact, this is how most shared objects (&lt;code&gt;.so&lt;/code&gt;, &lt;code&gt;.dll&lt;/code&gt;, or &lt;code&gt;.dylib&lt;/code&gt; files) are
+implemented. Some embedded targets will have common functions programmed into
+the ROM while fabrication. And, there are two ways to resolve the function
+address, write a linker script, or do this gross thing:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="cm"&gt;/* vendor_specific_function.c */&lt;/span&gt;
 &lt;span class="cp"&gt;#define SOME_ROM_ADDRESS (0xBADCODE)&lt;/span&gt;
 &lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;vendor_spefic_function&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;SOME_ROM_ADDRESS&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -302,7 +303,9 @@ write a linker script, or do this gross thing:&lt;/p&gt;
 language. We’ve seen how C lets you bypass almost every safety mechanism, write
 self-modifying code, and even mess with memory in ways that feel like cheating.&lt;/p&gt;
 &lt;p&gt;But as always, with great power comes greater segmentation faults—if your
-environment even has segments to fault on, right?&lt;/p&gt;</content><category term="Programming"></category><category term="techonology"></category><category term="C"></category><category term="compiler"></category><category term="linker"></category></entry><entry><title>An Alternate Present: Sound Policy, Standardization, and Global Collaboration</title><link href="https://shafq.at/an-alternate-present.html" rel="alternate"></link><published>2025-02-09T00:00:00-05:00</published><updated>2025-02-09T00:00:00-05:00</updated><author><name>Ayan Shafqat</name></author><id>tag:shafq.at,2025-02-09:/an-alternate-present.html</id><summary type="html">&lt;p&gt;It has been just over five year since the government set in motion to breakup
+environment even has segments to fault on, right?&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Discuss on &lt;a href="https://news.ycombinator.com/item?id=43008480"&gt;Hacker News&lt;/a&gt;&lt;/p&gt;</content><category term="Programming"></category><category term="techonology"></category><category term="C"></category><category term="compiler"></category><category term="linker"></category></entry><entry><title>An Alternate Present: Sound Policy, Standardization, and Global Collaboration</title><link href="https://shafq.at/an-alternate-present.html" rel="alternate"></link><published>2025-02-09T00:00:00-05:00</published><updated>2025-02-09T00:00:00-05:00</updated><author><name>Ayan Shafqat</name></author><id>tag:shafq.at,2025-02-09:/an-alternate-present.html</id><summary type="html">&lt;p&gt;It has been just over five year since the government set in motion to breakup
 up tech monopolies. It was not a dramatic revolution, but enacting a series of
 incremental policy updates, revising tax codes, and introducing new guidelines
 for technology that touches every facet of our lives. Although this …&lt;/p&gt;</summary><content type="html">&lt;p&gt;It has been just over five year since the government set in motion to breakup
@@ -406,7 +409,9 @@ remains secure and up to date. Since companies often obfuscate their
 public-facing code to protect intellectual property, part of my work involves
 decoding and refining this software. While I may not be wealthy, these
 endeavors allow me to live comfortably without the constant worry of paying the
-bills.&lt;/p&gt;</content><category term="Policy"></category><category term="policy"></category><category term="technology"></category><category term="politics"></category></entry><entry><title>Float to Q1.15: A FizzBuzz for Audio Technical Interview</title><link href="https://shafq.at/fizzbuzz-for-audio.html" rel="alternate"></link><published>2025-01-19T00:00:00-05:00</published><updated>2025-01-19T00:00:00-05:00</updated><author><name>Ayan Shafqat</name></author><id>tag:shafq.at,2025-01-19:/fizzbuzz-for-audio.html</id><summary type="html">&lt;p&gt;An easy-sounding “Float to &lt;code&gt;Q1.15&lt;/code&gt;” challenge is proposed as an audio FizzBuzz interview question.&lt;/p&gt;</summary><content type="html">&lt;p&gt;I don’t enjoy watching candidates squirm through tricky interviews any more
+bills.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Discuss on &lt;a href="https://news.ycombinator.com/item?id=43004504"&gt;Hacker News&lt;/a&gt;&lt;/p&gt;</content><category term="Policy"></category><category term="policy"></category><category term="technology"></category><category term="politics"></category></entry><entry><title>Float to Q1.15: A FizzBuzz for Audio Technical Interview</title><link href="https://shafq.at/fizzbuzz-for-audio.html" rel="alternate"></link><published>2025-01-19T00:00:00-05:00</published><updated>2025-01-19T00:00:00-05:00</updated><author><name>Ayan Shafqat</name></author><id>tag:shafq.at,2025-01-19:/fizzbuzz-for-audio.html</id><summary type="html">&lt;p&gt;An easy-sounding “Float to &lt;code&gt;Q1.15&lt;/code&gt;” challenge is proposed as an audio FizzBuzz interview question.&lt;/p&gt;</summary><content type="html">&lt;p&gt;I don’t enjoy watching candidates squirm through tricky interviews any more
 than anyone else does. Let’s face it: a job interview is stressful enough! Being
 judged on every syllable over a video call (or in a room) isn’t exactly fun.
 And if I’m the interviewer, I’m also under pressure to complete my own work on

@@ -58,7 +58,7 @@
   <meta property="og:url" content="./strange-corners-of-c.html"/>
   <meta property="og:type" content="article"/>
   <meta property="article:published_time" content="2025-02-10 00:00:00-05:00"/>
-  <meta property="article:modified_time" content="2025-01-19 00:00:00-05:00"/>
+  <meta property="article:modified_time" content="2025-02-11 00:00:00-05:00"/>
   <meta property="article:author" content="./author/ayan-shafqat.html">
   <meta property="article:section" content="Programming"/>
   <meta property="article:tag" content="techonology"/>
@@ -226,7 +226,7 @@ Instead, it undergoes multiple stages:</p>
 <li><strong>Linking</strong>: Resolves symbols and produces an executable.</li>
 </ul>
 <h3>Inline Assembly</h3>
-<p>All basic stuff. However, compilers have evolved to to add hooks into the
+<p>All basic stuff. However, compilers have evolved to add hooks into the
 assembler and linker. For example, <a href="https://gcc.gnu.org/"><code>gcc</code></a> and
 <a href="https://clang.llvm.org/"><code>clang</code></a> allows ways to insert inline assembly,
 enabling developers to bypass the compiler’s usual code generation. It's a way
@@ -457,11 +457,12 @@ pattern</strong> to our madness. (Isn’t it nice? 🤓)</p>
 <p>But hey, it’s fun to pretend we’re doing <strong>serious security engineering</strong> while
 writing machine code inside a C string. 😆</p>
 <h2>Conclusion</h2>
-<p>I think we have played for long enough. But, what's the point? Are these
-ever used in the wild? Yes, it is used in the wilderness of the C-level jungle.
-Some embedded targets will have common functions programmed into the ROM
-while fabrication. And, there are two ways to resolve the function address, 
-write a linker script, or do this gross thing:</p>
+<p>I think we have played for long enough. But, what's the point? Are these ever
+used in the wild? Yes, it is used in the wilderness of the C-level jungle. In
+fact, this is how most shared objects (<code>.so</code>, <code>.dll</code>, or <code>.dylib</code> files) are
+implemented. Some embedded targets will have common functions programmed into
+the ROM while fabrication. And, there are two ways to resolve the function
+address, write a linker script, or do this gross thing:</p>
 <div class="highlight"><pre><span></span><code><span class="cm">/* vendor_specific_function.c */</span>
 <span class="cp">#define SOME_ROM_ADDRESS (0xBADCODE)</span>
 <span class="kt">void</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">vendor_spefic_function</span><span class="p">)(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SOME_ROM_ADDRESS</span><span class="p">;</span>
@@ -472,6 +473,8 @@ language. We’ve seen how C lets you bypass almost every safety mechanism, writ
 self-modifying code, and even mess with memory in ways that feel like cheating.</p>
 <p>But as always, with great power comes greater segmentation faults—if your
 environment even has segments to fault on, right?</p>
+<hr>
+<p>Discuss on <a href="https://news.ycombinator.com/item?id=43008480">Hacker News</a></p>
   </div>
   <div class="tag-cloud">
     <p>
