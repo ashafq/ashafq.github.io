@@ -131,8 +131,8 @@ main() { return 42; }&lt;/code&gt; program. Instead of manually inspecting assem
 &amp;lt;snip&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;...&lt;span class="w"&gt; &lt;/span&gt;skipping&lt;span class="w"&gt; &lt;/span&gt;unnecessary&lt;span class="w"&gt; &lt;/span&gt;details&lt;span class="w"&gt; &lt;/span&gt;...
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;We can safely ignore &lt;code&gt;endbr64&lt;/code&gt;, as it's primarily used for security mechanisms
-like Control Flow Enforcement Technology (CET). The essential machine code for
+&lt;p&gt;We can ignore &lt;code&gt;endbr64&lt;/code&gt;, as it's not relevant for what we want to do. I also
+don't know why it's there (&lt;a href="https://stackoverflow.com/a/69226244/6744189"&gt;&lt;em&gt;something something security, I guess&lt;/em&gt;&lt;/a&gt;. The essential machine code for
 &lt;code&gt;return 42;&lt;/code&gt; is simply moving &lt;code&gt;42&lt;/code&gt; (&lt;code&gt;0x2a&lt;/code&gt;) into the &lt;code&gt;EAX&lt;/code&gt; register, followed
 by a &lt;code&gt;ret&lt;/code&gt; instruction. &lt;/p&gt;
 &lt;p&gt;Additionally, we can disregard the remaining instructions, as they are inserted
@@ -156,9 +156,8 @@ function boundary alignment, making them unnecessary for our purposes. &lt;/p&gt
 &lt;p&gt;The issue is that the linker, by default, places &lt;code&gt;const char main[]&lt;/code&gt; in the
 &lt;strong&gt;&lt;code&gt;.rodata&lt;/code&gt;&lt;/strong&gt; (read-only data) section of memory. This section is marked as
 &lt;strong&gt;non-executable&lt;/strong&gt; by the Linux kernel’s memory protection mechanisms. So, when
-the program tries to execute code stored there, &lt;strong&gt;Linux sees this as a security
-violation and immediately kills the process&lt;/strong&gt;. &lt;/p&gt;
-&lt;p&gt;In other words, our program just got flagged as malware. 🚨  &lt;/p&gt;
+the program tries to execute code stored there, &lt;strong&gt;Linux sees this as a
+segmentation violation and immediately kills the process&lt;/strong&gt;. &lt;/p&gt;
 &lt;p&gt;We can instruct the linker to place our machine code in the &lt;strong&gt;executable code
 section&lt;/strong&gt; instead of &lt;code&gt;.rodata&lt;/code&gt;. On Linux, this means placing it in the &lt;code&gt;.text&lt;/code&gt;
 segment, which is designated for executable instructions. We can achieve this
@@ -280,19 +279,19 @@ pattern&lt;/strong&gt; to our madness. (Isn’t it nice? 🤓)&lt;/p&gt;
 &lt;p&gt;This &lt;em&gt;almost&lt;/em&gt; looks like a &lt;strong&gt;primitive software licensing mechanism&lt;/strong&gt;, right?
 (Totally not a sketchy DRM system. 🙃)&lt;/p&gt;
 &lt;h3&gt;&lt;strong&gt;Is It Secure?&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;Absolutely not. 🔥
-- The obfuscation is &lt;strong&gt;weak&lt;/strong&gt; and easy to reverse-engineer.
-- XOR-based security is &lt;strong&gt;laughably&lt;/strong&gt; easy to crack.
-- Since function pointers are directly manipulated, this could easily lead to
-  &lt;strong&gt;unexpected behavior or crashes&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Absolutely not. 🔥&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The obfuscation is &lt;strong&gt;weak&lt;/strong&gt; and easy to reverse-engineer.&lt;/li&gt;
+&lt;li&gt;XOR-based security is &lt;strong&gt;laughably&lt;/strong&gt; easy to crack.&lt;/li&gt;
+&lt;li&gt;Since function pointers are directly manipulated, this could easily lead to
+  &lt;strong&gt;unexpected behavior or crashes&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;But hey, it’s fun to pretend we’re doing &lt;strong&gt;serious security engineering&lt;/strong&gt; while
 writing machine code inside a C string. 😆&lt;/p&gt;
 &lt;h2&gt;Conclusion&lt;/h2&gt;
 &lt;p&gt;I think we have played for long enough. But, what's the point? Are these ever
-used in the wild? Yes, it is used in the wilderness of the C-level jungle. In
-fact, this is how most shared objects (&lt;code&gt;.so&lt;/code&gt;, &lt;code&gt;.dll&lt;/code&gt;, or &lt;code&gt;.dylib&lt;/code&gt; files) are
-implemented. Some embedded targets will have common functions programmed into
-the ROM while fabrication. And, there are two ways to resolve the function
+used in the wild? Some embedded targets will have common functions programmed
+into the ROM while fabrication. And, there are two ways to resolve the function
 address, write a linker script, or do this gross thing:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="cm"&gt;/* vendor_specific_function.c */&lt;/span&gt;
 &lt;span class="cp"&gt;#define SOME_ROM_ADDRESS (0xBADCODE)&lt;/span&gt;

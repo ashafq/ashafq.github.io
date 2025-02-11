@@ -300,8 +300,8 @@ main() { return 42; }</code> program. Instead of manually inspecting assembly, w
 &lt;snip&gt;<span class="w"> </span>...<span class="w"> </span>skipping<span class="w"> </span>unnecessary<span class="w"> </span>details<span class="w"> </span>...
 </code></pre></div>
 
-<p>We can safely ignore <code>endbr64</code>, as it's primarily used for security mechanisms
-like Control Flow Enforcement Technology (CET). The essential machine code for
+<p>We can ignore <code>endbr64</code>, as it's not relevant for what we want to do. I also
+don't know why it's there (<a href="https://stackoverflow.com/a/69226244/6744189"><em>something something security, I guess</em></a>. The essential machine code for
 <code>return 42;</code> is simply moving <code>42</code> (<code>0x2a</code>) into the <code>EAX</code> register, followed
 by a <code>ret</code> instruction. </p>
 <p>Additionally, we can disregard the remaining instructions, as they are inserted
@@ -325,9 +325,8 @@ function boundary alignment, making them unnecessary for our purposes. </p>
 <p>The issue is that the linker, by default, places <code>const char main[]</code> in the
 <strong><code>.rodata</code></strong> (read-only data) section of memory. This section is marked as
 <strong>non-executable</strong> by the Linux kernel’s memory protection mechanisms. So, when
-the program tries to execute code stored there, <strong>Linux sees this as a security
-violation and immediately kills the process</strong>. </p>
-<p>In other words, our program just got flagged as malware. 🚨  </p>
+the program tries to execute code stored there, <strong>Linux sees this as a
+segmentation violation and immediately kills the process</strong>. </p>
 <p>We can instruct the linker to place our machine code in the <strong>executable code
 section</strong> instead of <code>.rodata</code>. On Linux, this means placing it in the <code>.text</code>
 segment, which is designated for executable instructions. We can achieve this
@@ -449,19 +448,19 @@ pattern</strong> to our madness. (Isn’t it nice? 🤓)</p>
 <p>This <em>almost</em> looks like a <strong>primitive software licensing mechanism</strong>, right?
 (Totally not a sketchy DRM system. 🙃)</p>
 <h3><strong>Is It Secure?</strong></h3>
-<p>Absolutely not. 🔥
-- The obfuscation is <strong>weak</strong> and easy to reverse-engineer.
-- XOR-based security is <strong>laughably</strong> easy to crack.
-- Since function pointers are directly manipulated, this could easily lead to
-  <strong>unexpected behavior or crashes</strong>.</p>
+<p>Absolutely not. 🔥</p>
+<ul>
+<li>The obfuscation is <strong>weak</strong> and easy to reverse-engineer.</li>
+<li>XOR-based security is <strong>laughably</strong> easy to crack.</li>
+<li>Since function pointers are directly manipulated, this could easily lead to
+  <strong>unexpected behavior or crashes</strong>.</li>
+</ul>
 <p>But hey, it’s fun to pretend we’re doing <strong>serious security engineering</strong> while
 writing machine code inside a C string. 😆</p>
 <h2>Conclusion</h2>
 <p>I think we have played for long enough. But, what's the point? Are these ever
-used in the wild? Yes, it is used in the wilderness of the C-level jungle. In
-fact, this is how most shared objects (<code>.so</code>, <code>.dll</code>, or <code>.dylib</code> files) are
-implemented. Some embedded targets will have common functions programmed into
-the ROM while fabrication. And, there are two ways to resolve the function
+used in the wild? Some embedded targets will have common functions programmed
+into the ROM while fabrication. And, there are two ways to resolve the function
 address, write a linker script, or do this gross thing:</p>
 <div class="highlight"><pre><span></span><code><span class="cm">/* vendor_specific_function.c */</span>
 <span class="cp">#define SOME_ROM_ADDRESS (0xBADCODE)</span>
