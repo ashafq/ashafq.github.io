@@ -1,0 +1,524 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="./theme/stylesheet/style.min.css">
+
+
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+          href="./theme/pygments/lovelace.min.css">
+
+
+
+  <link rel="stylesheet" type="text/css" href="./theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="./theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="./theme/font-awesome/css/solid.css">
+
+
+  <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+
+  <!-- Chrome, Firefox OS and Opera -->
+  <meta name="theme-color" content="#333333">
+  <!-- Windows Phone -->
+  <meta name="msapplication-navbutton-color" content="#333333">
+  <!-- iOS Safari -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- Microsoft EDGE -->
+  <meta name="msapplication-TileColor" content="#333333">
+
+  <link href="https://shafq.at/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Ayan Shafqat Atom">
+
+
+
+
+
+
+
+
+
+<meta name="author" content="Ayan Shafqat" />
+<meta name="description" content="C is a fascinating programming language, simple enough to learn in a few days, yet powerful enough to build the world&#39;s most complex systems. With its lightweight runtime, C runs everywhere! From microwave ovens to spacecrafts, and everything in between. Sometimes, I can’t help but wonder: Is the universe …" />
+<meta name="keywords" content="techonology, C, compiler, linker">
+
+
+  <meta property="og:site_name" content="Ayan Shafqat"/>
+  <meta property="og:title" content="Strange Corners of C: Entering The Twilight Zone of the C Compiler"/>
+  <meta property="og:description" content="C is a fascinating programming language, simple enough to learn in a few days, yet powerful enough to build the world&#39;s most complex systems. With its lightweight runtime, C runs everywhere! From microwave ovens to spacecrafts, and everything in between. Sometimes, I can’t help but wonder: Is the universe …"/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:url" content="./strange-corners-of-c.html"/>
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2025-02-10 00:00:00-05:00"/>
+  <meta property="article:modified_time" content="2025-01-19 00:00:00-05:00"/>
+  <meta property="article:author" content="./author/ayan-shafqat.html">
+  <meta property="article:section" content="Programming"/>
+  <meta property="article:tag" content="techonology"/>
+  <meta property="article:tag" content="C"/>
+  <meta property="article:tag" content="compiler"/>
+  <meta property="article:tag" content="linker"/>
+  <meta property="og:image" content="/images/profile.png">
+
+  <title>Ayan Shafqat &ndash; Strange Corners of C: Entering The Twilight Zone of the C Compiler</title>
+
+
+</head>
+<body class="light-theme">
+
+<aside>
+  <div>
+    <a href="./">
+      <img src="/images/profile.png" alt="Ayan Shafqat" title="Ayan Shafqat">
+    </a>
+
+    <h1>
+      <a href="./">Ayan Shafqat</a>
+    </h1>
+
+    <p>My personal website</p>
+
+
+    <nav>
+      <ul class="list">
+
+
+            <li>
+              <a target="_self"
+                 href="./pages/about.html#about">
+                About
+              </a>
+            </li>
+            <li>
+              <a target="_self"
+                 href="./pages/papers.html#papers">
+                Papers
+              </a>
+            </li>
+
+      </ul>
+    </nav>
+
+    <ul class="social">
+      <li>
+        <a class="sc-envelope"
+rel="me"           href="mailto:ayan.x.shafqat@gmail.com"
+           target="_blank">
+          <i class="fa-solid fa-envelope"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-github"
+           href="https://github.com/ashafq"
+           target="_blank">
+          <i class="fa-brands fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-stack-overflow"
+           href="http://stackoverflow.com/users/6744189/ayan-shafqat"
+           target="_blank">
+          <i class="fa-brands fa-stack-overflow"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-linkedin"
+           href="https://www.linkedin.com/in/ayanshafqat"
+           target="_blank">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-rss"
+           href="https://shafq.at/feeds/all.atom.xml"
+           target="_blank">
+          <i class="fa-solid fa-rss"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+</aside>
+  <main>
+
+<nav>
+  <a href="./">Home</a>
+
+  <a href="/archives.html">Archives</a>
+  <a href="/categories.html">Categories</a>
+  <a href="/tags.html">Tags</a>
+
+  <a href="https://shafq.at/feeds/all.atom.xml">Atom</a>
+
+</nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="strange-corners-of-c">Strange Corners of C: Entering The Twilight Zone of the C Compiler</h1>
+    <p>
+      Posted on Mon 10 February 2025 in <a href="./category/programming.html">Programming</a>
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>C is a fascinating programming language, simple enough to learn in a few days,
+yet powerful enough to build the world's most complex systems. With its
+lightweight runtime, C runs everywhere! From microwave ovens to spacecrafts,
+and everything in between. Sometimes, I can’t help but wonder: <em>Is the universe
+itself written in C?</em></p>
+<p>For as long as I can remember, C has been my <code>goto</code> language (see what I did
+there?). I first learning C to write games for DOS (remember those <code>far</code>
+pointers?). Over the years, I have programmed in countless environment using C.
+It is the language  I’d like to think I’ve mastered it. Yet, time and again, I
+encounter some obscure trick or unexpected behavior that shifts my
+understanding of the language.</p>
+<h2>IOCCC</h2>
+<p>One of my favorite pastimes is browsing entries from the <a href="https://www.ioccc.org/">International
+Obfuscated C Code Contest (IOCCC)</a>. This competition
+has produced some of the strangest, most brilliant C programs ever
+written—programs that are deliberately hard to read, but often contain deep
+insights into the language.</p>
+<p>Recently, I stumbled upon an entry from <strong>1984</strong> by Sjoerd Mullender:
+<a href="https://www.ioccc.org/1984/mullender/mullender.c">mullender.c</a>.</p>
+<p>At first glance, the code looks bizarre:</p>
+<div class="highlight"><pre><span></span><code><span class="kt">short</span><span class="w"> </span><span class="n">main</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="mi">277</span><span class="p">,</span><span class="w"> </span><span class="mo">04735</span><span class="p">,</span><span class="w"> </span><span class="mi">-4129</span><span class="p">,</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">477</span><span class="p">,</span><span class="w"> </span><span class="mi">1019</span><span class="p">,</span><span class="w"> </span><span class="mh">0xbef</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">12800</span><span class="p">,</span>
+<span class="w">  </span><span class="mi">-113</span><span class="p">,</span><span class="w"> </span><span class="mi">21119</span><span class="p">,</span><span class="w"> </span><span class="mh">0x52d7</span><span class="p">,</span><span class="w"> </span><span class="mi">-1006</span><span class="p">,</span><span class="w"> </span><span class="mi">-7151</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mh">0x4bc</span><span class="p">,</span><span class="w"> </span><span class="mo">020004</span><span class="p">,</span>
+<span class="w">  </span><span class="mi">14880</span><span class="p">,</span><span class="w"> </span><span class="mi">10541</span><span class="p">,</span><span class="w"> </span><span class="mi">2056</span><span class="p">,</span><span class="w"> </span><span class="mo">04010</span><span class="p">,</span><span class="w"> </span><span class="mi">4548</span><span class="p">,</span><span class="w"> </span><span class="mi">3044</span><span class="p">,</span><span class="w"> </span><span class="mi">-6716</span><span class="p">,</span><span class="w"> </span><span class="mh">0x9</span><span class="p">,</span>
+<span class="w">  </span><span class="mi">4407</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">5568</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">-30460</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mh">0x9</span><span class="p">,</span><span class="w"> </span><span class="mi">5570</span><span class="p">,</span><span class="w"> </span><span class="mi">512</span><span class="p">,</span><span class="w"> </span><span class="mi">-30419</span><span class="p">,</span>
+<span class="w">  </span><span class="mh">0x7e82</span><span class="p">,</span><span class="w"> </span><span class="mo">0760</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mo">02400</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">1280</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">  </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mh">0x8</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;,&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;#&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mo">020</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mo">026</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mh">0x6176</span><span class="p">,</span><span class="w"> </span><span class="mi">120</span><span class="p">,</span><span class="w"> </span><span class="mi">25712</span><span class="p">,</span>
+<span class="w">  </span><span class="sc">&#39;p&#39;</span><span class="p">,</span><span class="w"> </span><span class="mo">072163</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;r&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">29303</span><span class="p">,</span><span class="w"> </span><span class="mi">29801</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;e&#39;</span>
+<span class="p">};</span>
+</code></pre></div>
+
+<p>I thought, "Hey isn't <code>main()</code> suppose be a function?" Apparently not. By the way,
+the code above will only work on a VAX-11 or a PDP-11, which I don't have access
+to. I have <a href="https://lainsystems.com/posts/exploring-mullender-dot-c/">read</a>
+that it prints "<code>:-)</code>" across the screen until it is forced to stop.</p>
+<h2>Understanding The Trick</h2>
+<p>Instead of reproducing it, let’s break down the underlying trick. This entry
+leverages the way compilers, assemblers, and linkers handle <strong>data vs.
+executable code</strong> in low-level architectures. Fun fact, the IOCCC
+later <a href="https://www.ioccc.org/1984/index.html">updated its rules</a> to prohibit
+machine-dependent code after 1984—likely due to programs like this.</p>
+<p>Like most compiled languages, C doesn’t directly produce an executable.
+Instead, it undergoes multiple stages:</p>
+<blockquote>
+<p><strong>Preprocessing</strong> → <strong>Compilation</strong> → <strong>Assembly</strong> → <strong>Linking</strong></p>
+</blockquote>
+<p>Each stage has a specific role:</p>
+<ul>
+<li><strong>Preprocessing</strong>: Handles <code>#include</code> files, macros, and conditional compilation.</li>
+<li><strong>Compilation</strong>: Translates C into assembly.</li>
+<li><strong>Assembly</strong>: Converts assembly into machine code.</li>
+<li><strong>Linking</strong>: Resolves symbols and produces an executable.</li>
+</ul>
+<h3>Inline Assembly</h3>
+<p>All basic stuff. However, compilers have evolved to to add hooks into the
+assembler and linker. For example, <a href="https://gcc.gnu.org/"><code>gcc</code></a> and
+<a href="https://clang.llvm.org/"><code>clang</code></a> allows ways to insert inline assembly,
+enabling developers to bypass the compiler’s usual code generation. It's a way
+to tell the compiler, "Trust me, I know what I’m doing. Just insert this
+directly into the assembly output." For example, we can write a simple program
+that outputs <code>42</code> to the shell. FYI, I run <strong>Arch Linux</strong> on an x86-64 target,
+BTW.</p>
+<div class="highlight"><pre><span></span><code><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">foo</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">asm</span><span class="w"> </span><span class="k">volatile</span><span class="p">(</span><span class="s">&quot;mov $42, %%rax&quot;</span><span class="w"> </span><span class="o">:::</span><span class="w"> </span><span class="s">&quot;rax&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;memory&quot;</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">foo</span><span class="p">();</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+
+<p>This moves <code>42</code> directly into the return register (<code>rax</code> on x86-64).</p>
+<p>If we want to inspect the assembly output, we can instruct the compiler to stop
+after the compilation stage using the <code>-S</code> flag (on gcc and clang). But why not
+place the inline assembly directly inside <code>main()</code>? According to the C
+standard, if <code>main()</code> lacks an explicit <code>return</code> statement, it implicitly
+returns <code>0</code>. This means our carefully crafted assembly code would execute, but
+immediately be replaced by zero and its result wouldn't make it back to the shell.</p>
+<p>Take a look at lines <strong>13–17</strong> (below) in the output—the compiler has inserted our
+assembly code exactly as written. And don't bother trying to outsmart the
+compiler’s optimization settings; at this level, you're venturing into the
+territory of <strong>undefined behavior</strong>.</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>gcc<span class="w">  </span>-S<span class="w"> </span>-o<span class="w"> </span>-<span class="w"> </span>main-1.c<span class="w"> </span><span class="p">|</span><span class="w"> </span>nl<span class="w"> </span>
+<span class="w">     </span><span class="m">1</span><span class="w">      </span>.file<span class="w">   </span><span class="s2">&quot;main-1.c&quot;</span>
+<span class="w">     </span><span class="m">2</span><span class="w">      </span>.text
+<span class="w">     </span><span class="m">3</span><span class="w">      </span>.type<span class="w">   </span>foo,<span class="w"> </span>@function
+<span class="w">     </span><span class="m">4</span><span class="w">  </span>foo:
+<span class="w">     </span><span class="m">5</span><span class="w">  </span>.LFB0:
+<span class="w">     </span><span class="m">6</span><span class="w">      </span>.cfi_startproc
+<span class="w">     </span><span class="m">7</span><span class="w">      </span>endbr64
+<span class="w">     </span><span class="m">8</span><span class="w">      </span>pushq<span class="w">   </span>%rbp
+<span class="w">     </span><span class="m">9</span><span class="w">      </span>.cfi_def_cfa_offset<span class="w"> </span><span class="m">16</span>
+<span class="w">    </span><span class="m">10</span><span class="w">      </span>.cfi_offset<span class="w"> </span><span class="m">6</span>,<span class="w"> </span>-16
+<span class="w">    </span><span class="m">11</span><span class="w">      </span>movq<span class="w">    </span>%rsp,<span class="w"> </span>%rbp
+<span class="w">    </span><span class="m">12</span><span class="w">      </span>.cfi_def_cfa_register<span class="w"> </span><span class="m">6</span>
+<span class="w">    </span><span class="m">13</span><span class="w">  </span><span class="c1">#APP</span>
+<span class="w">    </span><span class="m">14</span><span class="w">  </span><span class="c1"># 1 &quot;main-1.c&quot; 1</span>
+<span class="w">    </span><span class="m">15</span><span class="w">      </span>mov<span class="w"> </span><span class="nv">$42</span>,<span class="w"> </span>%rax
+<span class="w">    </span><span class="m">16</span><span class="w">  </span><span class="c1"># 0 &quot;&quot; 2</span>
+<span class="w">    </span><span class="m">17</span><span class="w">  </span><span class="c1">#NO_APP</span>
+<span class="w">    </span><span class="m">18</span><span class="w">      </span>nop
+<span class="w">    </span><span class="m">19</span><span class="w">      </span>popq<span class="w">    </span>%rbp
+<span class="w">    </span><span class="m">20</span><span class="w">      </span>.cfi_def_cfa<span class="w"> </span><span class="m">7</span>,<span class="w"> </span><span class="m">8</span>
+<span class="w">    </span><span class="m">21</span><span class="w">      </span>ret
+<span class="w">    </span><span class="m">22</span><span class="w">      </span>.cfi_endproc
+<span class="w">    </span><span class="m">23</span><span class="w">  </span>.LFE0:
+&lt;snip&gt;
+</code></pre></div>
+
+<h3>"Inline Linking"</h3>
+<p>We can also bypass the assembler and go directly to the linker. But before
+doing that, we need to determine the exact machine code for a simple <code>int
+main() { return 42; }</code> program. Instead of manually inspecting assembly, we can
+<em>cheat</em>  a little by using
+<a href="https://www.gnu.org/software/binutils/"><code>binutils</code></a>.</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>cat<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt; __EOF__ | gcc -O2 -o - -x c - | objdump -S -</span>
+<span class="s">int main() { return 42; }</span>
+<span class="s">__EOF__</span>
+
+
+-:<span class="w">     </span>file<span class="w"> </span>format<span class="w"> </span>elf64-x86-64
+
+&lt;snip&gt;<span class="w"> </span>...<span class="w"> </span>skipping<span class="w"> </span>unnecessary<span class="w"> </span>details<span class="w"> </span>...
+
+<span class="m">0000000000001040</span><span class="w"> </span>&lt;main&gt;:
+<span class="w">    </span><span class="m">1040</span>:<span class="w">   </span>f3<span class="w"> </span>0f<span class="w"> </span>1e<span class="w"> </span>fa<span class="w">             </span>endbr64
+<span class="w">    </span><span class="m">1044</span>:<span class="w">   </span>b8<span class="w"> </span>2a<span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w">          </span>mov<span class="w">    </span><span class="nv">$0</span>x2a,%eax
+<span class="w">    </span><span class="m">1049</span>:<span class="w">   </span>c3<span class="w">                      </span>ret
+<span class="w">    </span>104a:<span class="w">   </span><span class="m">66</span><span class="w"> </span>0f<span class="w"> </span>1f<span class="w"> </span><span class="m">44</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w">       </span>nopw<span class="w">   </span>0x0<span class="o">(</span>%rax,%rax,1<span class="o">)</span>
+
+&lt;snip&gt;<span class="w"> </span>...<span class="w"> </span>skipping<span class="w"> </span>unnecessary<span class="w"> </span>details<span class="w"> </span>...
+</code></pre></div>
+
+<p>We can safely ignore <code>endbr64</code>, as it's primarily used for security mechanisms
+like Control Flow Enforcement Technology (CET). The essential machine code for
+<code>return 42;</code> is simply moving <code>42</code> (<code>0x2a</code>) into the <code>EAX</code> register, followed
+by a <code>ret</code> instruction. </p>
+<p>Additionally, we can disregard the remaining instructions, as they are inserted
+for alignment purposes. As of this writing, the Linux kernel does not enforce
+function boundary alignment, making them unnecessary for our purposes. </p>
+<p>This leaves us with the following minimal machine code:</p>
+<div class="highlight"><pre><span></span><code><span class="s">&quot;</span><span class="se">\xb8\x2a\0\0\0\0</span><span class="s">&quot;</span><span class="w"> </span><span class="cm">/* mov $0x2a, %eax */</span>
+<span class="s">&quot;</span><span class="se">\xc3</span><span class="s">&quot;</span><span class="w">             </span><span class="cm">/* ret */</span>
+</code></pre></div>
+
+<p>Let's try executing our handcrafted machine code:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>cat<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt; __EOF__ | gcc -x c - &amp;&amp; ./a.out; echo $?</span>
+<span class="s">const char main[] = &quot;\xb8\x2a\0\0\0\0&quot; &quot;\xc3&quot;;</span>
+<span class="s">__EOF__</span>
+<span class="o">[</span><span class="m">1</span><span class="o">]</span><span class="w">    </span><span class="m">119959</span><span class="w"> </span>segmentation<span class="w"> </span>fault<span class="w"> </span><span class="o">(</span>core<span class="w"> </span>dumped<span class="o">)</span><span class="w">  </span>./a.out
+<span class="m">139</span>
+</code></pre></div>
+
+<p>Wait... what? It compiled just fine, but <em>why</em> did it crash with a segmentation fault?  </p>
+<p>Well, at least we have "segments" to "fault" on... right, embedded devs?  </p>
+<p>The issue is that the linker, by default, places <code>const char main[]</code> in the
+<strong><code>.rodata</code></strong> (read-only data) section of memory. This section is marked as
+<strong>non-executable</strong> by the Linux kernel’s memory protection mechanisms. So, when
+the program tries to execute code stored there, <strong>Linux sees this as a security
+violation and immediately kills the process</strong>. </p>
+<p>In other words, our program just got flagged as malware. 🚨  </p>
+<p>We can instruct the linker to place our machine code in the <strong>executable code
+section</strong> instead of <code>.rodata</code>. On Linux, this means placing it in the <code>.text</code>
+segment, which is designated for executable instructions. We can achieve this
+directly in the compiler using the <code>__attribute__</code> keyword, available in both
+<strong>GCC</strong> and <strong>Clang</strong>:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>cat<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt; __EOF__ | gcc -x c - &amp;&amp; ./a.out; echo $?</span>
+<span class="s">__attribute__((section(&quot;.text&quot;)))</span>
+<span class="s">const char main[] = &quot;\xb8\x2a\0\0\0\0&quot; &quot;\xc3&quot;;</span>
+<span class="s">__EOF__</span>
+
+/tmp/ccvXEHQs.s:<span class="w"> </span>Assembler<span class="w"> </span>messages:
+/tmp/ccvXEHQs.s:4:<span class="w"> </span>Warning:<span class="w"> </span>ignoring<span class="w"> </span>changed<span class="w"> </span>section<span class="w"> </span>attributes<span class="w"> </span><span class="k">for</span><span class="w"> </span>.text
+<span class="m">42</span>
+</code></pre></div>
+
+<p>Hey, there's our hand-crafted <strong>42</strong>! 🎉  </p>
+<p>Despite the compiler warning about changing section attributes, the execution
+works because we successfully placed our custom machine code in an executable
+memory section. </p>
+<h2>More Abusive C</h2>
+<p>With this trick, we can do all sorts of things. For instance, here’s a
+“function” that isn’t visible outside its scope—essentially a primitive,
+hardcoded <strong>lambda</strong> in machine code:</p>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">typedef</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">f</span><span class="p">)(</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">);</span>
+<span class="w">  </span><span class="n">__attribute__</span><span class="p">((</span><span class="n">section</span><span class="p">(</span><span class="s">&quot;.text&quot;</span><span class="p">)))</span><span class="w"> </span>
+<span class="w">               </span><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">func_impl</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span>
+<span class="w">               </span><span class="s">&quot;</span><span class="se">\x8d\x04\x37\xc3</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">((</span><span class="n">f</span><span class="p">)(</span><span class="n">func_impl</span><span class="p">))(</span><span class="mi">40</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>However, this approach comes with several limitations. For example:</p>
+<ul>
+<li>We <strong>can’t</strong> call other C functions because we’d need their exact memory
+  addresses.</li>
+<li>We <strong>can’t</strong> access stack memory, so all variables must be stored in
+  registers.</li>
+<li>We <strong>could</strong> have variables, but they’d effectively behave like <code>static</code>
+  variables, meaning <strong>no thread safety</strong>.</li>
+</ul>
+<p>That said, these restrictions won’t stop me from writing a <code>"Hello, World\n"</code>
+program using raw machine code. (Oh, and yes, I use <strong>Arch Linux</strong> on x86-64,
+BTW. 😏)</p>
+<div class="highlight"><pre><span></span><code><span class="n">__attribute__</span><span class="p">((</span><span class="n">section</span><span class="p">(</span><span class="s">&quot;.text&quot;</span><span class="p">)))</span>
+<span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">main</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="cm">/* mov eax, 1    */</span>
+<span class="w">    </span><span class="s">&quot;</span><span class="se">\xb8\x01\0\0\0</span><span class="s">&quot;</span>
+<span class="w">    </span><span class="cm">/* mov edi, 1    */</span>
+<span class="w">    </span><span class="s">&quot;</span><span class="se">\xbf\x01\0\0\0</span><span class="s">&quot;</span>
+<span class="w">    </span><span class="cm">/* lea rsi, [rip+0xa]  (64-bit!) */</span>
+<span class="w">    </span><span class="s">&quot;</span><span class="se">\x48\x8d\x35\x0a\0\0\0</span><span class="s">&quot;</span>
+<span class="w">    </span><span class="cm">/* mov edx, 0x13 */</span>
+<span class="w">    </span><span class="s">&quot;</span><span class="se">\xba\x13\0\0\0</span><span class="s">&quot;</span>
+<span class="w">    </span><span class="cm">/* syscall       */</span>
+<span class="w">    </span><span class="s">&quot;</span><span class="se">\x0f\x05</span><span class="s">&quot;</span>
+<span class="w">    </span><span class="cm">/* xor eax,eax   */</span>
+<span class="w">    </span><span class="s">&quot;</span><span class="se">\x31\xc0</span><span class="s">&quot;</span>
+<span class="w">    </span><span class="cm">/* ret           */</span>
+<span class="w">    </span><span class="s">&quot;</span><span class="se">\xc3</span><span class="s">&quot;</span>
+<span class="w">    </span><span class="cm">/* UTF-8 💩 + space + &quot;Hello, world!\n&quot; = 19 bytes total */</span>
+<span class="w">    </span><span class="s">&quot;</span><span class="se">\xf0\x9f\x92\xa9</span><span class="s"> &quot;</span>
+<span class="w">    </span><span class="s">&quot;Hello, world!</span><span class="se">\n</span><span class="s">&quot;</span>
+<span class="w">    </span><span class="s">&quot;Who says main() has to be a function?&quot;</span><span class="p">;</span>
+</code></pre></div>
+
+<p>Because why not include a hand-crafted <strong>poop emoji 💩</strong> in our binary as well? 🥳</p>
+<h3>But Wait! There's More! 🔥</h3>
+<p>We can take things even further by adding some <em>"security"</em> and a <strong>factory
+pattern</strong> to our madness. (Isn’t it nice? 🤓)</p>
+<div class="highlight"><pre><span></span><code><span class="n">__attribute__</span><span class="p">((</span><span class="n">section</span><span class="p">(</span><span class="s">&quot;.text&quot;</span><span class="p">)))</span><span class="w"> </span>
+<span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">fun_impl</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
+<span class="w">  </span><span class="s">&quot;</span><span class="se">\x8e</span><span class="s">GlsbVdoZEV3cGw=&quot;</span>
+<span class="w">  </span><span class="s">&quot;R2xhZEkgQ2FuIEg=&quot;</span>
+<span class="w">  </span><span class="s">&quot;</span><span class="se">\x8d\x04\x37\xc3</span><span class="s">&quot;</span>
+<span class="w">  </span><span class="s">&quot;ZWxwIHlvdSBvdXQ=&quot;</span>
+<span class="w">  </span><span class="s">&quot;VGhpcyBpcyBBU0N=&quot;</span>
+<span class="w">  </span><span class="s">&quot;SUkgQXJ0ISAgICA=&quot;</span><span class="p">;</span>
+
+<span class="k">typedef</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">fun_t</span><span class="p">)(</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">);</span>
+
+<span class="k">enum</span><span class="w"> </span><span class="n">fun_factory_id</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">ADD_FUNCTION</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">  </span><span class="n">NOT_IMPLEMENTED</span><span class="p">,</span>
+<span class="w">  </span><span class="n">INVALID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="n">fun_t</span><span class="w"> </span><span class="nf">fun_factory</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">license_key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="no">ADD_FUNCTION</span><span class="p">:</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">offset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fun_impl</span><span class="p">[</span><span class="n">ADD_FUNCTION</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">license_key</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">fun_t</span><span class="p">)(</span><span class="n">fun_impl</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">offset</span><span class="p">);</span>
+<span class="w">  </span><span class="k">default</span><span class="o">:</span>
+<span class="w">    </span><span class="k">break</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cp">#define OUR_LICENSE_KEY (0xAE)</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">fun_t</span><span class="w"> </span><span class="n">add_fun</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fun_factory</span><span class="p">(</span><span class="n">ADD_FUNCTION</span><span class="p">,</span><span class="w"> </span><span class="n">OUR_LICENSE_KEY</span><span class="p">);</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">add_fun</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h3><strong>What’s Happening Here?</strong></h3>
+<ul>
+<li>We've <strong>embedded obfuscated data</strong> (a mix of actual machine code and encoded
+  gibberish) in a static text section.</li>
+<li>Instead of directly exposing our "add function," we <strong>use a factory
+  function</strong> that requires a <strong>license key</strong> to retrieve it.</li>
+<li>The license key is used to <strong>XOR</strong> the function offset, adding a basic layer
+  of obfuscation (though let’s be honest, a decent debugger will expose this
+  instantly).</li>
+<li>Our <code>main()</code> function calls the <strong>fun factory</strong>, retrieves the function
+  pointer, and executes it.</li>
+</ul>
+<p>This <em>almost</em> looks like a <strong>primitive software licensing mechanism</strong>, right?
+(Totally not a sketchy DRM system. 🙃)</p>
+<h3><strong>Is It Secure?</strong></h3>
+<p>Absolutely not. 🔥
+- The obfuscation is <strong>weak</strong> and easy to reverse-engineer.
+- XOR-based security is <strong>laughably</strong> easy to crack.
+- Since function pointers are directly manipulated, this could easily lead to
+  <strong>unexpected behavior or crashes</strong>.</p>
+<p>But hey, it’s fun to pretend we’re doing <strong>serious security engineering</strong> while
+writing machine code inside a C string. 😆</p>
+<h2>Conclusion</h2>
+<p>I think we have played for long enough. But, what's the point? Are these
+ever used in the wild? Yes, it is used in the wilderness of the C-level jungle.
+Some embedded targets will have common functions programmed into the ROM
+while fabrication. And, there are two ways to resolve the function address, 
+write a linker script, or do this gross thing:</p>
+<div class="highlight"><pre><span></span><code><span class="cm">/* vendor_specific_function.c */</span>
+<span class="cp">#define SOME_ROM_ADDRESS (0xBADCODE)</span>
+<span class="kt">void</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">vendor_spefic_function</span><span class="p">)(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SOME_ROM_ADDRESS</span><span class="p">;</span>
+</code></pre></div>
+
+<p>I hope you had fun exploring some of the strange corners of the C programming
+language. We’ve seen how C lets you bypass almost every safety mechanism, write
+self-modifying code, and even mess with memory in ways that feel like cheating.</p>
+<p>But as always, with great power comes greater segmentation faults—if your
+environment even has segments to fault on, right?</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="./tag/techonology.html">techonology</a>
+      <a href="./tag/c.html">C</a>
+      <a href="./tag/compiler.html">compiler</a>
+      <a href="./tag/linker.html">linker</a>
+    </p>
+  </div>
+
+
+
+
+
+
+</article>
+
+<footer>
+  <p>All opinions expressed on this site are solely my own and do not necessarily reflect the views or opinions of my current or former employers.</p>
+
+<p>
+  &copy; 2017-2025 Ayan Shafqat  - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.en_US" target="_blank">Creative Commons Attribution-ShareAlike</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p></footer>  </main>
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Ayan Shafqat ",
+  "url" : ".",
+  "image": "/images/profile.png",
+  "description": "Personal website of Ayan Shafqat"
+}
+</script>
+</body>
+</html>

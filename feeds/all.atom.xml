@@ -1,5 +1,308 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Ayan Shafqat</title><link href="https://shafq.at/" rel="alternate"></link><link href="https://shafq.at/feeds/all.atom.xml" rel="self"></link><id>https://shafq.at/</id><updated>2025-02-09T00:00:00-05:00</updated><subtitle>My personal website</subtitle><entry><title>An Alternate Present: Sound Policy, Standardization, and Global Collaboration</title><link href="https://shafq.at/an-alternate-present.html" rel="alternate"></link><published>2025-02-09T00:00:00-05:00</published><updated>2025-02-09T00:00:00-05:00</updated><author><name>Ayan Shafqat</name></author><id>tag:shafq.at,2025-02-09:/an-alternate-present.html</id><summary type="html">&lt;p&gt;It has been just over five year since the government set in motion to breakup
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Ayan Shafqat</title><link href="https://shafq.at/" rel="alternate"></link><link href="https://shafq.at/feeds/all.atom.xml" rel="self"></link><id>https://shafq.at/</id><updated>2025-02-10T00:00:00-05:00</updated><subtitle>My personal website</subtitle><entry><title>Strange Corners of C: Entering The Twilight Zone of the C Compiler</title><link href="https://shafq.at/strange-corners-of-c.html" rel="alternate"></link><published>2025-02-10T00:00:00-05:00</published><updated>2025-01-19T00:00:00-05:00</updated><author><name>Ayan Shafqat</name></author><id>tag:shafq.at,2025-02-10:/strange-corners-of-c.html</id><summary type="html">&lt;p&gt;C is a fascinating programming language, simple enough to learn in a few days,
+yet powerful enough to build the world's most complex systems. With its
+lightweight runtime, C runs everywhere! From microwave ovens to spacecrafts,
+and everything in between. Sometimes, I can’t help but wonder: &lt;em&gt;Is the universe …&lt;/em&gt;&lt;/p&gt;</summary><content type="html">&lt;p&gt;C is a fascinating programming language, simple enough to learn in a few days,
+yet powerful enough to build the world's most complex systems. With its
+lightweight runtime, C runs everywhere! From microwave ovens to spacecrafts,
+and everything in between. Sometimes, I can’t help but wonder: &lt;em&gt;Is the universe
+itself written in C?&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;For as long as I can remember, C has been my &lt;code&gt;goto&lt;/code&gt; language (see what I did
+there?). I first learning C to write games for DOS (remember those &lt;code&gt;far&lt;/code&gt;
+pointers?). Over the years, I have programmed in countless environment using C.
+It is the language  I’d like to think I’ve mastered it. Yet, time and again, I
+encounter some obscure trick or unexpected behavior that shifts my
+understanding of the language.&lt;/p&gt;
+&lt;h2&gt;IOCCC&lt;/h2&gt;
+&lt;p&gt;One of my favorite pastimes is browsing entries from the &lt;a href="https://www.ioccc.org/"&gt;International
+Obfuscated C Code Contest (IOCCC)&lt;/a&gt;. This competition
+has produced some of the strangest, most brilliant C programs ever
+written—programs that are deliberately hard to read, but often contain deep
+insights into the language.&lt;/p&gt;
+&lt;p&gt;Recently, I stumbled upon an entry from &lt;strong&gt;1984&lt;/strong&gt; by Sjoerd Mullender:
+&lt;a href="https://www.ioccc.org/1984/mullender/mullender.c"&gt;mullender.c&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;At first glance, the code looks bizarre:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kt"&gt;short&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;[]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="mi"&gt;277&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mo"&gt;04735&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;-4129&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;25&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;477&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1019&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;0xbef&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;12800&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="mi"&gt;-113&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;21119&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;0x52d7&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;-1006&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;-7151&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;0x4bc&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mo"&gt;020004&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="mi"&gt;14880&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;10541&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2056&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mo"&gt;04010&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;4548&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;3044&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;-6716&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;0x9&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="mi"&gt;4407&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;5568&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;-30460&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;0x9&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;5570&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;512&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;-30419&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="mh"&gt;0x7e82&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mo"&gt;0760&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mo"&gt;02400&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1280&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;0x8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="sc"&gt;&amp;#39;,&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="sc"&gt;&amp;#39;#&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mo"&gt;020&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;30&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mo"&gt;026&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;0x6176&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;120&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;25712&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="sc"&gt;&amp;#39;p&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mo"&gt;072163&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="sc"&gt;&amp;#39;r&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;29303&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;29801&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="sc"&gt;&amp;#39;e&amp;#39;&lt;/span&gt;
+&lt;span class="p"&gt;};&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;I thought, "Hey isn't &lt;code&gt;main()&lt;/code&gt; suppose be a function?" Apparently not. By the way,
+the code above will only work on a VAX-11 or a PDP-11, which I don't have access
+to. I have &lt;a href="https://lainsystems.com/posts/exploring-mullender-dot-c/"&gt;read&lt;/a&gt;
+that it prints "&lt;code&gt;:-)&lt;/code&gt;" across the screen until it is forced to stop.&lt;/p&gt;
+&lt;h2&gt;Understanding The Trick&lt;/h2&gt;
+&lt;p&gt;Instead of reproducing it, let’s break down the underlying trick. This entry
+leverages the way compilers, assemblers, and linkers handle &lt;strong&gt;data vs.
+executable code&lt;/strong&gt; in low-level architectures. Fun fact, the IOCCC
+later &lt;a href="https://www.ioccc.org/1984/index.html"&gt;updated its rules&lt;/a&gt; to prohibit
+machine-dependent code after 1984—likely due to programs like this.&lt;/p&gt;
+&lt;p&gt;Like most compiled languages, C doesn’t directly produce an executable.
+Instead, it undergoes multiple stages:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Preprocessing&lt;/strong&gt; → &lt;strong&gt;Compilation&lt;/strong&gt; → &lt;strong&gt;Assembly&lt;/strong&gt; → &lt;strong&gt;Linking&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Each stage has a specific role:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Preprocessing&lt;/strong&gt;: Handles &lt;code&gt;#include&lt;/code&gt; files, macros, and conditional compilation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Compilation&lt;/strong&gt;: Translates C into assembly.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Assembly&lt;/strong&gt;: Converts assembly into machine code.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Linking&lt;/strong&gt;: Resolves symbols and produces an executable.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Inline Assembly&lt;/h3&gt;
+&lt;p&gt;All basic stuff. However, compilers have evolved to to add hooks into the
+assembler and linker. For example, &lt;a href="https://gcc.gnu.org/"&gt;&lt;code&gt;gcc&lt;/code&gt;&lt;/a&gt; and
+&lt;a href="https://clang.llvm.org/"&gt;&lt;code&gt;clang&lt;/code&gt;&lt;/a&gt; allows ways to insert inline assembly,
+enabling developers to bypass the compiler’s usual code generation. It's a way
+to tell the compiler, "Trust me, I know what I’m doing. Just insert this
+directly into the assembly output." For example, we can write a simple program
+that outputs &lt;code&gt;42&lt;/code&gt; to the shell. FYI, I run &lt;strong&gt;Arch Linux&lt;/strong&gt; on an x86-64 target,
+BTW.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;static&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;asm&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;volatile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;mov $42, %%rax&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:::&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;rax&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;memory&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This moves &lt;code&gt;42&lt;/code&gt; directly into the return register (&lt;code&gt;rax&lt;/code&gt; on x86-64).&lt;/p&gt;
+&lt;p&gt;If we want to inspect the assembly output, we can instruct the compiler to stop
+after the compilation stage using the &lt;code&gt;-S&lt;/code&gt; flag (on gcc and clang). But why not
+place the inline assembly directly inside &lt;code&gt;main()&lt;/code&gt;? According to the C
+standard, if &lt;code&gt;main()&lt;/code&gt; lacks an explicit &lt;code&gt;return&lt;/code&gt; statement, it implicitly
+returns &lt;code&gt;0&lt;/code&gt;. This means our carefully crafted assembly code would execute, but
+immediately be replaced by zero and its result wouldn't make it back to the shell.&lt;/p&gt;
+&lt;p&gt;Take a look at lines &lt;strong&gt;13–17&lt;/strong&gt; (below) in the output—the compiler has inserted our
+assembly code exactly as written. And don't bother trying to outsmart the
+compiler’s optimization settings; at this level, you're venturing into the
+territory of &lt;strong&gt;undefined behavior&lt;/strong&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;gcc&lt;span class="w"&gt;  &lt;/span&gt;-S&lt;span class="w"&gt; &lt;/span&gt;-o&lt;span class="w"&gt; &lt;/span&gt;-&lt;span class="w"&gt; &lt;/span&gt;main-1.c&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;nl&lt;span class="w"&gt; &lt;/span&gt;
+&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="w"&gt;      &lt;/span&gt;.file&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;main-1.c&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="w"&gt;      &lt;/span&gt;.text
+&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;&lt;span class="w"&gt;      &lt;/span&gt;.type&lt;span class="w"&gt;   &lt;/span&gt;foo,&lt;span class="w"&gt; &lt;/span&gt;@function
+&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="m"&gt;4&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;foo:
+&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="m"&gt;5&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;.LFB0:
+&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="m"&gt;6&lt;/span&gt;&lt;span class="w"&gt;      &lt;/span&gt;.cfi_startproc
+&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="m"&gt;7&lt;/span&gt;&lt;span class="w"&gt;      &lt;/span&gt;endbr64
+&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="m"&gt;8&lt;/span&gt;&lt;span class="w"&gt;      &lt;/span&gt;pushq&lt;span class="w"&gt;   &lt;/span&gt;%rbp
+&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="m"&gt;9&lt;/span&gt;&lt;span class="w"&gt;      &lt;/span&gt;.cfi_def_cfa_offset&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;16&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;&lt;span class="w"&gt;      &lt;/span&gt;.cfi_offset&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;6&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;-16
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="m"&gt;11&lt;/span&gt;&lt;span class="w"&gt;      &lt;/span&gt;movq&lt;span class="w"&gt;    &lt;/span&gt;%rsp,&lt;span class="w"&gt; &lt;/span&gt;%rbp
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="m"&gt;12&lt;/span&gt;&lt;span class="w"&gt;      &lt;/span&gt;.cfi_def_cfa_register&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;6&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="m"&gt;13&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c1"&gt;#APP&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="m"&gt;14&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c1"&gt;# 1 &amp;quot;main-1.c&amp;quot; 1&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="m"&gt;15&lt;/span&gt;&lt;span class="w"&gt;      &lt;/span&gt;mov&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$42&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;%rax
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="m"&gt;16&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c1"&gt;# 0 &amp;quot;&amp;quot; 2&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="m"&gt;17&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c1"&gt;#NO_APP&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="m"&gt;18&lt;/span&gt;&lt;span class="w"&gt;      &lt;/span&gt;nop
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="m"&gt;19&lt;/span&gt;&lt;span class="w"&gt;      &lt;/span&gt;popq&lt;span class="w"&gt;    &lt;/span&gt;%rbp
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="m"&gt;20&lt;/span&gt;&lt;span class="w"&gt;      &lt;/span&gt;.cfi_def_cfa&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;7&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;8&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="m"&gt;21&lt;/span&gt;&lt;span class="w"&gt;      &lt;/span&gt;ret
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="m"&gt;22&lt;/span&gt;&lt;span class="w"&gt;      &lt;/span&gt;.cfi_endproc
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="m"&gt;23&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;.LFE0:
+&amp;lt;snip&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;"Inline Linking"&lt;/h3&gt;
+&lt;p&gt;We can also bypass the assembler and go directly to the linker. But before
+doing that, we need to determine the exact machine code for a simple &lt;code&gt;int
+main() { return 42; }&lt;/code&gt; program. Instead of manually inspecting assembly, we can
+&lt;em&gt;cheat&lt;/em&gt;  a little by using
+&lt;a href="https://www.gnu.org/software/binutils/"&gt;&lt;code&gt;binutils&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;cat&lt;span class="w"&gt; &lt;/span&gt;-&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;lt;&amp;lt; __EOF__ | gcc -O2 -o - -x c - | objdump -S -&lt;/span&gt;
+&lt;span class="s"&gt;int main() { return 42; }&lt;/span&gt;
+&lt;span class="s"&gt;__EOF__&lt;/span&gt;
+
+
+-:&lt;span class="w"&gt;     &lt;/span&gt;file&lt;span class="w"&gt; &lt;/span&gt;format&lt;span class="w"&gt; &lt;/span&gt;elf64-x86-64
+
+&amp;lt;snip&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;...&lt;span class="w"&gt; &lt;/span&gt;skipping&lt;span class="w"&gt; &lt;/span&gt;unnecessary&lt;span class="w"&gt; &lt;/span&gt;details&lt;span class="w"&gt; &lt;/span&gt;...
+
+&lt;span class="m"&gt;0000000000001040&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&amp;lt;main&amp;gt;:
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="m"&gt;1040&lt;/span&gt;:&lt;span class="w"&gt;   &lt;/span&gt;f3&lt;span class="w"&gt; &lt;/span&gt;0f&lt;span class="w"&gt; &lt;/span&gt;1e&lt;span class="w"&gt; &lt;/span&gt;fa&lt;span class="w"&gt;             &lt;/span&gt;endbr64
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="m"&gt;1044&lt;/span&gt;:&lt;span class="w"&gt;   &lt;/span&gt;b8&lt;span class="w"&gt; &lt;/span&gt;2a&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;00&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;00&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;00&lt;/span&gt;&lt;span class="w"&gt;          &lt;/span&gt;mov&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nv"&gt;$0&lt;/span&gt;x2a,%eax
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="m"&gt;1049&lt;/span&gt;:&lt;span class="w"&gt;   &lt;/span&gt;c3&lt;span class="w"&gt;                      &lt;/span&gt;ret
+&lt;span class="w"&gt;    &lt;/span&gt;104a:&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="m"&gt;66&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;0f&lt;span class="w"&gt; &lt;/span&gt;1f&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;44&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;00&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;00&lt;/span&gt;&lt;span class="w"&gt;       &lt;/span&gt;nopw&lt;span class="w"&gt;   &lt;/span&gt;0x0&lt;span class="o"&gt;(&lt;/span&gt;%rax,%rax,1&lt;span class="o"&gt;)&lt;/span&gt;
+
+&amp;lt;snip&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;...&lt;span class="w"&gt; &lt;/span&gt;skipping&lt;span class="w"&gt; &lt;/span&gt;unnecessary&lt;span class="w"&gt; &lt;/span&gt;details&lt;span class="w"&gt; &lt;/span&gt;...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;We can safely ignore &lt;code&gt;endbr64&lt;/code&gt;, as it's primarily used for security mechanisms
+like Control Flow Enforcement Technology (CET). The essential machine code for
+&lt;code&gt;return 42;&lt;/code&gt; is simply moving &lt;code&gt;42&lt;/code&gt; (&lt;code&gt;0x2a&lt;/code&gt;) into the &lt;code&gt;EAX&lt;/code&gt; register, followed
+by a &lt;code&gt;ret&lt;/code&gt; instruction. &lt;/p&gt;
+&lt;p&gt;Additionally, we can disregard the remaining instructions, as they are inserted
+for alignment purposes. As of this writing, the Linux kernel does not enforce
+function boundary alignment, making them unnecessary for our purposes. &lt;/p&gt;
+&lt;p&gt;This leaves us with the following minimal machine code:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\xb8\x2a\0\0\0\0&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="cm"&gt;/* mov $0x2a, %eax */&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\xc3&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;             &lt;/span&gt;&lt;span class="cm"&gt;/* ret */&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Let's try executing our handcrafted machine code:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;cat&lt;span class="w"&gt; &lt;/span&gt;-&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;lt;&amp;lt; __EOF__ | gcc -x c - &amp;amp;&amp;amp; ./a.out; echo $?&lt;/span&gt;
+&lt;span class="s"&gt;const char main[] = &amp;quot;\xb8\x2a\0\0\0\0&amp;quot; &amp;quot;\xc3&amp;quot;;&lt;/span&gt;
+&lt;span class="s"&gt;__EOF__&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="m"&gt;119959&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;segmentation&lt;span class="w"&gt; &lt;/span&gt;fault&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;core&lt;span class="w"&gt; &lt;/span&gt;dumped&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;./a.out
+&lt;span class="m"&gt;139&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Wait... what? It compiled just fine, but &lt;em&gt;why&lt;/em&gt; did it crash with a segmentation fault?  &lt;/p&gt;
+&lt;p&gt;Well, at least we have "segments" to "fault" on... right, embedded devs?  &lt;/p&gt;
+&lt;p&gt;The issue is that the linker, by default, places &lt;code&gt;const char main[]&lt;/code&gt; in the
+&lt;strong&gt;&lt;code&gt;.rodata&lt;/code&gt;&lt;/strong&gt; (read-only data) section of memory. This section is marked as
+&lt;strong&gt;non-executable&lt;/strong&gt; by the Linux kernel’s memory protection mechanisms. So, when
+the program tries to execute code stored there, &lt;strong&gt;Linux sees this as a security
+violation and immediately kills the process&lt;/strong&gt;. &lt;/p&gt;
+&lt;p&gt;In other words, our program just got flagged as malware. 🚨  &lt;/p&gt;
+&lt;p&gt;We can instruct the linker to place our machine code in the &lt;strong&gt;executable code
+section&lt;/strong&gt; instead of &lt;code&gt;.rodata&lt;/code&gt;. On Linux, this means placing it in the &lt;code&gt;.text&lt;/code&gt;
+segment, which is designated for executable instructions. We can achieve this
+directly in the compiler using the &lt;code&gt;__attribute__&lt;/code&gt; keyword, available in both
+&lt;strong&gt;GCC&lt;/strong&gt; and &lt;strong&gt;Clang&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;cat&lt;span class="w"&gt; &lt;/span&gt;-&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;lt;&amp;lt; __EOF__ | gcc -x c - &amp;amp;&amp;amp; ./a.out; echo $?&lt;/span&gt;
+&lt;span class="s"&gt;__attribute__((section(&amp;quot;.text&amp;quot;)))&lt;/span&gt;
+&lt;span class="s"&gt;const char main[] = &amp;quot;\xb8\x2a\0\0\0\0&amp;quot; &amp;quot;\xc3&amp;quot;;&lt;/span&gt;
+&lt;span class="s"&gt;__EOF__&lt;/span&gt;
+
+/tmp/ccvXEHQs.s:&lt;span class="w"&gt; &lt;/span&gt;Assembler&lt;span class="w"&gt; &lt;/span&gt;messages:
+/tmp/ccvXEHQs.s:4:&lt;span class="w"&gt; &lt;/span&gt;Warning:&lt;span class="w"&gt; &lt;/span&gt;ignoring&lt;span class="w"&gt; &lt;/span&gt;changed&lt;span class="w"&gt; &lt;/span&gt;section&lt;span class="w"&gt; &lt;/span&gt;attributes&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;.text
+&lt;span class="m"&gt;42&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Hey, there's our hand-crafted &lt;strong&gt;42&lt;/strong&gt;! 🎉  &lt;/p&gt;
+&lt;p&gt;Despite the compiler warning about changing section attributes, the execution
+works because we successfully placed our custom machine code in an executable
+memory section. &lt;/p&gt;
+&lt;h2&gt;More Abusive C&lt;/h2&gt;
+&lt;p&gt;With this trick, we can do all sorts of things. For instance, here’s a
+“function” that isn’t visible outside its scope—essentially a primitive,
+hardcoded &lt;strong&gt;lambda&lt;/strong&gt; in machine code:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;typedef&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;__attribute__&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;section&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;.text&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;
+&lt;span class="w"&gt;               &lt;/span&gt;&lt;span class="k"&gt;static&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;const&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;func_impl&lt;/span&gt;&lt;span class="p"&gt;[]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
+&lt;span class="w"&gt;               &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\x8d\x04\x37\xc3&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="n"&gt;func_impl&lt;/span&gt;&lt;span class="p"&gt;))(&lt;/span&gt;&lt;span class="mi"&gt;40&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;However, this approach comes with several limitations. For example:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;We &lt;strong&gt;can’t&lt;/strong&gt; call other C functions because we’d need their exact memory
+  addresses.&lt;/li&gt;
+&lt;li&gt;We &lt;strong&gt;can’t&lt;/strong&gt; access stack memory, so all variables must be stored in
+  registers.&lt;/li&gt;
+&lt;li&gt;We &lt;strong&gt;could&lt;/strong&gt; have variables, but they’d effectively behave like &lt;code&gt;static&lt;/code&gt;
+  variables, meaning &lt;strong&gt;no thread safety&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;That said, these restrictions won’t stop me from writing a &lt;code&gt;"Hello, World\n"&lt;/code&gt;
+program using raw machine code. (Oh, and yes, I use &lt;strong&gt;Arch Linux&lt;/strong&gt; on x86-64,
+BTW. 😏)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;__attribute__&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;section&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;.text&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+&lt;span class="k"&gt;const&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;[]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="cm"&gt;/* mov eax, 1    */&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\xb8\x01\0\0\0&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="cm"&gt;/* mov edi, 1    */&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\xbf\x01\0\0\0&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="cm"&gt;/* lea rsi, [rip+0xa]  (64-bit!) */&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\x48\x8d\x35\x0a\0\0\0&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="cm"&gt;/* mov edx, 0x13 */&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\xba\x13\0\0\0&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="cm"&gt;/* syscall       */&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\x0f\x05&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="cm"&gt;/* xor eax,eax   */&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\x31\xc0&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="cm"&gt;/* ret           */&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\xc3&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="cm"&gt;/* UTF-8 💩 + space + &amp;quot;Hello, world!\n&amp;quot; = 19 bytes total */&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\xf0\x9f\x92\xa9&lt;/span&gt;&lt;span class="s"&gt; &amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Hello, world!&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Who says main() has to be a function?&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Because why not include a hand-crafted &lt;strong&gt;poop emoji 💩&lt;/strong&gt; in our binary as well? 🥳&lt;/p&gt;
+&lt;h3&gt;But Wait! There's More! 🔥&lt;/h3&gt;
+&lt;p&gt;We can take things even further by adding some &lt;em&gt;"security"&lt;/em&gt; and a &lt;strong&gt;factory
+pattern&lt;/strong&gt; to our madness. (Isn’t it nice? 🤓)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;__attribute__&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;section&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;.text&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;
+&lt;span class="k"&gt;const&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;fun_impl&lt;/span&gt;&lt;span class="p"&gt;[]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\x8e&lt;/span&gt;&lt;span class="s"&gt;GlsbVdoZEV3cGw=&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;R2xhZEkgQ2FuIEg=&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\x8d\x04\x37\xc3&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;ZWxwIHlvdSBvdXQ=&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;VGhpcyBpcyBBU0N=&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;SUkgQXJ0ISAgICA=&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="k"&gt;typedef&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;fun_t&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="k"&gt;enum&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;fun_factory_id&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;ADD_FUNCTION&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;NOT_IMPLEMENTED&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;INVALID&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;-1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="p"&gt;};&lt;/span&gt;
+
+&lt;span class="n"&gt;fun_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;fun_factory&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;license_key&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;switch&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;case&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;ADD_FUNCTION&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kt"&gt;unsigned&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;offset&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;fun_impl&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;ADD_FUNCTION&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;license_key&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fun_t&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="n"&gt;fun_impl&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;offset&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;default&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="cp"&gt;#define OUR_LICENSE_KEY (0xAE)&lt;/span&gt;
+
+&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;fun_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;add_fun&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;fun_factory&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ADD_FUNCTION&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;OUR_LICENSE_KEY&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;add_fun&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;40&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;&lt;strong&gt;What’s Happening Here?&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;We've &lt;strong&gt;embedded obfuscated data&lt;/strong&gt; (a mix of actual machine code and encoded
+  gibberish) in a static text section.&lt;/li&gt;
+&lt;li&gt;Instead of directly exposing our "add function," we &lt;strong&gt;use a factory
+  function&lt;/strong&gt; that requires a &lt;strong&gt;license key&lt;/strong&gt; to retrieve it.&lt;/li&gt;
+&lt;li&gt;The license key is used to &lt;strong&gt;XOR&lt;/strong&gt; the function offset, adding a basic layer
+  of obfuscation (though let’s be honest, a decent debugger will expose this
+  instantly).&lt;/li&gt;
+&lt;li&gt;Our &lt;code&gt;main()&lt;/code&gt; function calls the &lt;strong&gt;fun factory&lt;/strong&gt;, retrieves the function
+  pointer, and executes it.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This &lt;em&gt;almost&lt;/em&gt; looks like a &lt;strong&gt;primitive software licensing mechanism&lt;/strong&gt;, right?
+(Totally not a sketchy DRM system. 🙃)&lt;/p&gt;
+&lt;h3&gt;&lt;strong&gt;Is It Secure?&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;Absolutely not. 🔥
+- The obfuscation is &lt;strong&gt;weak&lt;/strong&gt; and easy to reverse-engineer.
+- XOR-based security is &lt;strong&gt;laughably&lt;/strong&gt; easy to crack.
+- Since function pointers are directly manipulated, this could easily lead to
+  &lt;strong&gt;unexpected behavior or crashes&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;But hey, it’s fun to pretend we’re doing &lt;strong&gt;serious security engineering&lt;/strong&gt; while
+writing machine code inside a C string. 😆&lt;/p&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;I think we have played for long enough. But, what's the point? Are these
+ever used in the wild? Yes, it is used in the wilderness of the C-level jungle.
+Some embedded targets will have common functions programmed into the ROM
+while fabrication. And, there are two ways to resolve the function address, 
+write a linker script, or do this gross thing:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="cm"&gt;/* vendor_specific_function.c */&lt;/span&gt;
+&lt;span class="cp"&gt;#define SOME_ROM_ADDRESS (0xBADCODE)&lt;/span&gt;
+&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;vendor_spefic_function&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;SOME_ROM_ADDRESS&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;I hope you had fun exploring some of the strange corners of the C programming
+language. We’ve seen how C lets you bypass almost every safety mechanism, write
+self-modifying code, and even mess with memory in ways that feel like cheating.&lt;/p&gt;
+&lt;p&gt;But as always, with great power comes greater segmentation faults—if your
+environment even has segments to fault on, right?&lt;/p&gt;</content><category term="Programming"></category><category term="techonology"></category><category term="C"></category><category term="compiler"></category><category term="linker"></category></entry><entry><title>An Alternate Present: Sound Policy, Standardization, and Global Collaboration</title><link href="https://shafq.at/an-alternate-present.html" rel="alternate"></link><published>2025-02-09T00:00:00-05:00</published><updated>2025-02-09T00:00:00-05:00</updated><author><name>Ayan Shafqat</name></author><id>tag:shafq.at,2025-02-09:/an-alternate-present.html</id><summary type="html">&lt;p&gt;It has been just over five year since the government set in motion to breakup
 up tech monopolies. It was not a dramatic revolution, but enacting a series of
 incremental policy updates, revising tax codes, and introducing new guidelines
 for technology that touches every facet of our lives. Although this …&lt;/p&gt;</summary><content type="html">&lt;p&gt;It has been just over five year since the government set in motion to breakup
