@@ -132,7 +132,7 @@ main() { return 42; }&lt;/code&gt; program. Instead of manually inspecting assem
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;We can ignore &lt;code&gt;endbr64&lt;/code&gt;, as it's not relevant for what we want to do. I also
-don't know why it's there (&lt;a href="https://stackoverflow.com/a/69226244/6744189"&gt;&lt;em&gt;something something security, I guess&lt;/em&gt;&lt;/a&gt;. The essential machine code for
+don't know why it's there (&lt;a href="https://stackoverflow.com/a/69226244/6744189"&gt;&lt;em&gt;something something security, I guess&lt;/em&gt;&lt;/a&gt;). The essential machine code for
 &lt;code&gt;return 42;&lt;/code&gt; is simply moving &lt;code&gt;42&lt;/code&gt; (&lt;code&gt;0x2a&lt;/code&gt;) into the &lt;code&gt;EAX&lt;/code&gt; register, followed
 by a &lt;code&gt;ret&lt;/code&gt; instruction. &lt;/p&gt;
 &lt;p&gt;Additionally, we can disregard the remaining instructions, as they are inserted

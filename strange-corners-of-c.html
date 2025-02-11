@@ -301,7 +301,7 @@ main() { return 42; }</code> program. Instead of manually inspecting assembly, w
 </code></pre></div>
 
 <p>We can ignore <code>endbr64</code>, as it's not relevant for what we want to do. I also
-don't know why it's there (<a href="https://stackoverflow.com/a/69226244/6744189"><em>something something security, I guess</em></a>. The essential machine code for
+don't know why it's there (<a href="https://stackoverflow.com/a/69226244/6744189"><em>something something security, I guess</em></a>). The essential machine code for
 <code>return 42;</code> is simply moving <code>42</code> (<code>0x2a</code>) into the <code>EAX</code> register, followed
 by a <code>ret</code> instruction. </p>
 <p>Additionally, we can disregard the remaining instructions, as they are inserted
