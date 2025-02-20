@@ -1,0 +1,864 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="./theme/stylesheet/style.min.css">
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs'; </script>
+
+
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+          href="./theme/pygments/lovelace.min.css">
+
+
+
+  <link rel="stylesheet" type="text/css" href="./theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="./theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="./theme/font-awesome/css/solid.css">
+
+
+  <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+
+  <!-- Chrome, Firefox OS and Opera -->
+  <meta name="theme-color" content="#333333">
+  <!-- Windows Phone -->
+  <meta name="msapplication-navbutton-color" content="#333333">
+  <!-- iOS Safari -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- Microsoft EDGE -->
+  <meta name="msapplication-TileColor" content="#333333">
+
+  <link href="https://shafq.at/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Ayan Shafqat Atom">
+
+
+
+
+
+
+
+
+
+<meta name="author" content="Ayan Shafqat" />
+<meta name="description" content="Disclaimer: This article took quite a while to prepare. Although I’ve made every effort to fact-check and ensure the accuracy of the content, there may still be errors. If you notice any mistakes, please feel free to reach out and let me know! I like writing programs that run …" />
+<meta name="keywords" content="dsp, signal-processing, iir, filters">
+
+
+  <meta property="og:site_name" content="Ayan Shafqat"/>
+  <meta property="og:title" content="Vectorizing IIR Filters: What are you Recursing?"/>
+  <meta property="og:description" content="Disclaimer: This article took quite a while to prepare. Although I’ve made every effort to fact-check and ensure the accuracy of the content, there may still be errors. If you notice any mistakes, please feel free to reach out and let me know! I like writing programs that run …"/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:url" content="./vectorizing-iir-filters.html"/>
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2025-02-12 00:00:00-05:00"/>
+  <meta property="article:modified_time" content="2025-02-12 00:00:00-05:00"/>
+  <meta property="article:author" content="./author/ayan-shafqat.html">
+  <meta property="article:section" content="signal-processing"/>
+  <meta property="article:tag" content="dsp"/>
+  <meta property="article:tag" content="signal-processing"/>
+  <meta property="article:tag" content="iir"/>
+  <meta property="article:tag" content="filters"/>
+  <meta property="og:image" content="/images/profile.png">
+
+  <title>Ayan Shafqat &ndash; Vectorizing IIR Filters: What are you Recursing?</title>
+
+
+</head>
+<body class="light-theme">
+
+<aside>
+  <div>
+    <a href="./">
+      <img src="/images/profile.png" alt="Ayan Shafqat" title="Ayan Shafqat">
+    </a>
+
+    <h1>
+      <a href="./">Ayan Shafqat</a>
+    </h1>
+
+    <p>My personal website</p>
+
+
+    <nav>
+      <ul class="list">
+
+
+            <li>
+              <a target="_self"
+                 href="./pages/about.html#about">
+                About
+              </a>
+            </li>
+            <li>
+              <a target="_self"
+                 href="./pages/papers.html#papers">
+                Papers
+              </a>
+            </li>
+
+      </ul>
+    </nav>
+
+    <ul class="social">
+      <li>
+        <a class="sc-envelope"
+rel="me"           href="mailto:ayan.x.shafqat@gmail.com"
+           target="_blank">
+          <i class="fa-solid fa-envelope"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-github"
+           href="https://github.com/ashafq"
+           target="_blank">
+          <i class="fa-brands fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-stack-overflow"
+           href="http://stackoverflow.com/users/6744189/ayan-shafqat"
+           target="_blank">
+          <i class="fa-brands fa-stack-overflow"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-linkedin"
+           href="https://www.linkedin.com/in/ayanshafqat"
+           target="_blank">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-rss"
+           href="https://shafq.at/feeds/all.atom.xml"
+           target="_blank">
+          <i class="fa-solid fa-rss"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+</aside>
+  <main>
+
+<nav>
+  <a href="./">Home</a>
+
+  <a href="/archives.html">Archives</a>
+  <a href="/categories.html">Categories</a>
+  <a href="/tags.html">Tags</a>
+
+  <a href="https://shafq.at/feeds/all.atom.xml">Atom</a>
+
+</nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="vectorizing-iir-filters">Vectorizing IIR Filters: What are you Recursing?</h1>
+    <p>
+      Posted on Wed 12 February 2025 in <a href="./category/signal-processing.html">signal-processing</a>
+
+    </p>
+  </header>
+
+
+  <div>
+    <blockquote>
+<p><strong>Disclaimer:</strong> This article took quite a while to prepare. Although I’ve
+made every effort to fact-check and ensure the accuracy of the content, there
+may still be errors. If you notice any mistakes, please feel free to reach
+out and let me know!</p>
+</blockquote>
+<p>I like writing programs that run fast (and accurate). Knowing when to
+compromise on accuracy for performance is a very difficult task, but it can be
+achieved with enough time, dedication, and a sprinkle of <em>Zen</em>. Over the course
+of my career, I had the pleasure of taking algorithms and CPU ISA documents,
+and mash them together into something spectacular. By "<em>spectacular,</em>" I mean
+innovation that lead to longer battery life, cooler CPU temperature, and the
+satisfaction of fully utilizing every transistor on the chip. One algorithm
+that I always had to port over various CPU architecture was the <strong>IIR filter</strong>.
+It is primarily used for audio equalization, which is a crucial algorithm in
+most audio products today.</p>
+<p><a href="https://en.wikipedia.org/wiki/Infinite_impulse_response">IIR or Infinite Response Filters</a>
+are mathematically defined as:</p>
+<div class="math">$$
+y(n) + \sum_{k=1}^{M-1}{a_{k} y(n - k)} = \sum_{k=0}^{N-1}{b_{k} x(n - k)}
+$$</div>
+<p><strong>Note:</strong> Wikipedia uses different notation. I am redefining them to be
+consistent with the rest of the post.</p>
+<p>In the equation above:</p>
+<ul>
+<li><span class="math">\(n\)</span> is discrete time sequence: <span class="math">\(n \in \mathbb{Z}\)</span></li>
+<li><span class="math">\(x(n)\)</span> is the discrete-time input signal</li>
+<li><span class="math">\(y(n)\)</span> is the output</li>
+<li><span class="math">\(a_k\)</span>  are feedback or denominator coefficients</li>
+<li><span class="math">\(b_k\)</span>  are feed-forward or numerator coefficients</li>
+<li><span class="math">\(a_k\)</span> and <span class="math">\(b_k\)</span> shapes the filter’s behavior (like lowpass, highpass, etc.)</li>
+</ul>
+<p>I won’t dive too deep into IIR fundamentals here as there are plenty of
+excellent resources available:</p>
+<ol>
+<li><strong><a href="https://eeweb.engineering.nyu.edu/iselesni/EL713/iir/iir.pdf">Selesnick, Infinite-Impulse Response Digital
+   Filters</a>:</strong>
+   Lecture notes covering the basics of IIR filter design.</li>
+<li><strong><a href="https://ccrma.stanford.edu/~jos/filters/Elementary_Filter_Sections.html">CCRMA, Elementary Filter
+   Sections</a>:</strong>
+   A discussion on various elementary filter sections for digital filtering.</li>
+<li><strong><a href="https://schaumont.dyn.wpi.edu/ece4703b20/lecture5.html">WPI, L5: IIR Filters and Their
+   Implementation</a>:</strong>
+   Lecture notes focusing on the practical aspects of implementing IIR filters.</li>
+</ol>
+<p>In summary, here are some distilled guidelines for efficient IIR filter
+implementations:</p>
+<ol>
+<li>
+<p><strong>Second-Order Sections (SOS):</strong>
+   Break the filter into second-order stages to mitigate numerical instability.
+   While other topologies exist, such as the <a href="https://www.cytomic.com/files/dsp/SvfLinearTrapOptimised.pdf">State Variable Filter
+   (SVF)</a>, this
+   discussion focuses on SOS implementations.</p>
+</li>
+<li>
+<p><strong>Floating-Point Implementations:</strong>
+   Opt for the transposed direct form II topology to enhance numerical
+   stability. There’s a wealth of literature on this topic, so further
+   exploration can yield additional insights.</p>
+</li>
+<li>
+<p><strong>Fixed-Point Implementations:</strong>
+   Use the direct form I topology for fixed-point designs, as there are no
+   internal overflows. Reserve direct form II for cases where memory
+   constraints are particularly severe.</p>
+</li>
+<li>
+<p><strong>Regular Coefficient Testing:</strong>
+   IIR filters can (and <em>will</em>) drift into instability over time with certain
+   inputs. It’s wise to periodically test, and if necessary, reset the filter
+   coefficients to ensure continued stability.</p>
+</li>
+</ol>
+<p>Most modern amplifier SoCs include dedicated hardware accelerators for IIR
+filters. Memory-mapped registers can be configured with the desired filter
+coefficients. Some DSPs even offer dual accumulators to separately maintain
+feed-forward and feedback states before merging the results. In contrast,
+general-purpose CPUs are designed for parallel execution using pipeline stages
+and SIMD instruction sets. Standard C implementations of IIR filters rarely
+exploit this parallelism due to inherent data dependencies. To bridge this gap,
+we must leverage compiler intrinsic functions and some DSP math, which is the
+main focus of this post.</p>
+<h2>Biquads: 2<sup>nd</sup> Order IIR Filters (SOS)</h2>
+<p><a href="https://en.wikipedia.org/wiki/Digital_biquad_filter">Biquads</a> are second-order
+IIR filters commonly used as building blocks for higher-order designs. They are
+named "biquad" because their transfer function in the Z-domain consists of two
+quadratic polynomials:</p>
+<div class="math">$$
+H(z) = \frac{b_0 + b_1 z^{-1} + b_2 z^{-2}}{a_0 + a_1 z^{-1} + a_2 z^{-2}}
+$$</div>
+<p>In the time domain, the filter is described by the difference equation:</p>
+<div class="math">$$ a_0 y(n) = b_0 x(n) + b_1 x(n - 1) + b_2 x(n - 2) - a_1 y(n - 1) - a_2 y(n - 2)
+$$</div>
+<p>Typically, <span class="math">\(a_0\)</span> is normalized to <span class="math">\(1\)</span>, because divisions are <em>computationally
+expensive</em>.</p>
+<p>For floating-point implementations, the transposed direct form topology is
+preferred over direct form I due to its superior numerical stability. Moreover,
+the transposed direct form II structure reduces memory usage by consolidating
+four delay elements into two. In this form, the filter equations can be
+reformulated as:</p>
+<div class="math">$$
+y(n) = b_0 x(n) + w_1 \\
+w_1 = b_1 x(n) - a_1 y(n) + w_2 \\
+w_2 = b_2 x(n) - a_2 y(n)
+$$</div>
+<p>Below is a sample C function that processes a block of samples using this
+formulation:</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">process_biquad</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">coeff</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">input</span><span class="p">,</span>
+<span class="w">                    </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">output</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">num_frames</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// Load coefficients</span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">b0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">coeff</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">b1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">coeff</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">b2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">coeff</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">a1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">coeff</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">a2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">coeff</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+
+<span class="w">  </span><span class="c1">// Load states</span>
+<span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">w1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">w2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+
+<span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">num_frames</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">    </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">w1</span><span class="p">;</span>
+<span class="w">    </span><span class="n">w1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">b1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">a1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">w2</span><span class="p">;</span>
+<span class="w">    </span><span class="n">w2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">b2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">a1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">y</span><span class="p">);</span>
+<span class="w">    </span><span class="n">output</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="c1">// Save states</span>
+<span class="w">  </span><span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong>Memory Map for the Function Arguments:</strong></p>
+<ul>
+<li><strong><code>coeff</code></strong>: An array of floats representing the filter coefficients in the
+  order <span class="math">\(\{b_0, b_1, b_2, a_1, a_2\}\)</span>. <span class="math">\(a_0\)</span> is assumed to be <span class="math">\(1\)</span> and is
+  therefore omitted.</li>
+<li><strong><code>state</code></strong>: The delay buffer containing the state variables <span class="math">\(\{w_1, w_2\}\)</span>.</li>
+<li><strong><code>input</code></strong>: Input buffer containing <code>num_frames</code> samples.</li>
+<li><strong><code>output</code></strong>: Output buffer that will hold <code>num_frames</code> processed samples.</li>
+<li><strong><code>num_frames</code></strong>: The number of samples (or frames) to process.</li>
+</ul>
+<h2>SIMD Level 1: Process Multiple Channels</h2>
+<p>A straightforward SIMD optimization is to utilize 2-lane SIMD registers to
+process multiple biquad channels concurrently. This technique is implemented in
+my <a href="https://github.com/ashafq/A5Eq.lv2">A5Eq.lv2</a> plugin project, where I use
+double-precision SIMD with both SSE (for x86) and NEON (for ARM) to process two
+channels simultaneously. The general idea is shown in the figure below:</p>
+<pre class="mermaid">
+graph LR;
+
+   input_left --> H0L(H<sub>0,L</sub>)
+   input_right --> H0R(H<sub>0,R</sub>)
+   H0L --> H1L(H<sub>1,L</sub>)
+   H0R --> H1R(H<sub>1,R</sub>)
+   H1L --> HKL(...)
+   H1R --> HKR(...)
+
+   HKL --> HNL(H<sub>M,L</sub>)
+   HKR --> HNR(H<sub>M,R</sub>)
+
+   HNL --> output_left
+   HNR --> output_right
+</pre>
+
+<p>Since LV2 audio buffers are non-interleaved, an extra step is required to
+interleave and later de-interleave the buffer for SIMD processing. However, for
+filters with more than four stages (i.e., 8<sup>th</sup> order filters or
+higher), the overhead from interleaving is negligible compared to the
+performance benefits. The basic idea of the implmenetaion is shown below:</p>
+<pre class="mermaid">
+graph LR;
+
+   input_left --> Interleave
+   input_right --> Interleave
+
+   Interleave --> H0(H<sub>0,L</sub><br><br>H<sub>0,R</sub>)
+   H0 --> H1(H<sub>1,L</sub><br><br>H<sub>1,R</sub>)
+   H1 -.-> H2(H<sub>M,L</sub><br><br>H<sub>N,R</sub>)
+
+   H2 --> D(De-interleave)
+
+   D --> output_left
+   D --> output_right
+</pre>
+
+<p>For implementation details, check out the stereo biquad filter code in
+<a href="https://github.com/ashafq/a5eq.lv2/blob/main/src/dsp_biquad.hpp#L77">A5Eq.lv2/src/dsp_biquad.hpp:77</a>.
+This project uses the same sets of coefficients across both channels,
+but it can be easliy adapted to have different coefficients across
+multiple channels with an update of how tuning coefficients are stored.</p>
+<p>Although, <a href="https://github.com/ashafq/a5eq.lv2/">A5Eq</a> uses the same sets of
+coefficients across both channels, it can be easily modified for a true
+multi-channel filter architecture. The memory mmap of the coefficients for
+stereo SIMD are as follows. Note the coefficients are interleaved:</p>
+<div class="highlight"><pre><span></span><code><span class="n">coeff</span><span class="w"> </span><span class="o">=</span>
+<span class="p">{</span>
+<span class="c1">// Left,    Right</span>
+<span class="w">    </span><span class="n">b00</span><span class="p">,</span><span class="w">      </span><span class="n">b01</span>
+<span class="w">    </span><span class="n">b10</span><span class="p">,</span><span class="w">      </span><span class="n">b11</span>
+<span class="w">    </span><span class="n">b20</span><span class="p">,</span><span class="w">      </span><span class="n">b21</span>
+<span class="w">    </span><span class="n">a10</span><span class="p">,</span><span class="w">      </span><span class="n">a11</span>
+<span class="w">    </span><span class="n">a20</span><span class="p">,</span><span class="w">      </span><span class="n">a21</span>
+<span class="p">};</span>
+
+<span class="n">state</span><span class="w"> </span><span class="o">=</span>
+<span class="p">{</span>
+<span class="c1">// Left,    Right</span>
+<span class="w">    </span><span class="n">w10</span><span class="p">,</span><span class="w">      </span><span class="n">w11</span>
+<span class="w">    </span><span class="n">w20</span><span class="p">,</span><span class="w">      </span><span class="n">w21</span>
+<span class="p">};</span>
+</code></pre></div>
+
+<h2>SIMD Level 2: Crossover Filters</h2>
+<p>Modern CPUs feature multiple SIMD lanes. For example, on the <strong>x86/AMD64</strong>
+architecture, <a href="https://en.wikipedia.org/wiki/Streaming_SIMD_Extensions">SSE</a>
+offers 4-lanes of float vectors,
+<a href="https://en.wikipedia.org/wiki/Advanced_Vector_Extensions">AVX</a> offers 8,
+<a href="https://en.wikipedia.org/wiki/AVX-512">AVX-512</a> offers 16. On <strong>ARM</strong>,
+<a href="https://en.wikipedia.org/wiki/ARM_architecture_family#Advanced_SIMD_(NEON)">NEON</a>
+typically offers 4-lanes, with optional SVE feature that can process 64
+elements. We can exploit this to perform parallel filtering. Although the
+underlying math remains unchanged, we can restructure the code and data into
+parallel nodes that align with the SIMD lanes. One effective approach is to use
+a crossover structure that scales to any power of two. For example, consider
+this four-band crossover filter:</p>
+<pre class="mermaid">
+graph LR;
+   input --> LP0
+   input --> HP0
+
+   LP0 --> LP1L
+   LP0 --> HP1L
+
+   HP0 --> LP1H
+   HP0 --> HP1H
+
+   LP1L --> output_ll
+   HP1L --> output_lh
+   LP1H --> output_hl
+   HP1H --> output_hh
+</pre>
+
+<p>In this design, reusing the crossover section produces a tree-like hierarchy,
+enabling a divide-and-conquer approach. This allows each branch of the tree to
+be processed concurrently, effectively leveraging the full width of the SIMD
+lanes.</p>
+<p>For instance, suppose you have a biquad filter implementation that processes
+four lanes simultaneously:</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">crossover_kernel</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">coeff</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">state</span><span class="p">,</span>
+<span class="w">                      </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">output</span><span class="p">,</span>
+<span class="w">                      </span><span class="kt">size_t</span><span class="w"> </span><span class="n">num_frames</span><span class="p">);</span>
+</code></pre></div>
+
+<p>This function will process the following biquad filter denoted <span class="math">\(H_{0..3}\)</span>:</p>
+<pre class="mermaid">
+graph LR;
+   x_l --> H_0
+   x_l --> H_1
+   x_r --> H_2
+   x_r --> H_3
+   H_0 --> y_1
+   H_1 --> y_2
+   H_2 --> y_3
+   H_3 --> y_4
+</pre>
+
+<p>One possible implementation is available in this <a href="https://gist.github.com/ashafq/cdd23025719faae97a83db945df77288#file-x1-c-L127">Github
+Gist</a>,
+where a stereo signal is processed concurrently by four filters. The input is
+arranged as <span class="math">\(\{x_l, x_l, x_r, x_r\}\)</span>.</p>
+<p>Building on that foundation, we can construct the entire crossover structure
+by cascading multiple stages of this kernel. Each stage splits the incoming
+signal into low and high-frequency components, with the outputs from one stage
+serving as the inputs for the next.</p>
+<p>In the code below, the scratch buffer is used to store intermediate results,
+ensuring that data is properly aligned for SIMD operations. This structure
+dramatically improves performance by processing multiple bands in parallel.
+There are ways to minimize scratch buffer usage by utilizing a queue with <em>a
+worst-case period</em>. But, that is left <em>as an exercise for the reader</em>.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">process_crossover</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">coeff</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">states</span><span class="p">,</span>
+<span class="w">                       </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">output</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">scratch</span><span class="p">,</span>
+<span class="w">                       </span><span class="kt">size_t</span><span class="w"> </span><span class="n">num_frames</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">radix</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="cm">/*</span>
+<span class="cm">   * `radix` is defined as log2(output_bands). Since, there are four fitlers</span>
+<span class="cm">   * utilizing 4-SIMD lanes, number of stages is half of radix.</span>
+<span class="cm">   */</span>
+
+<span class="w">  </span><span class="n">assert</span><span class="p">(</span><span class="n">radix</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+<span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">num_stages</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">radix</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+
+<span class="w">  </span><span class="cm">/*</span>
+<span class="cm">   * Preprocess the input buffer:</span>
+<span class="cm">   * Since the crossover kernel processes a stereo pair (2 samples) per frame,</span>
+<span class="cm">   * duplicate each mono sample into two lanes.</span>
+<span class="cm">   */</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">frame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">frame</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">num_frames</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">frame</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">scratch</span><span class="p">[</span><span class="n">frame</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="p">[</span><span class="n">frame</span><span class="p">];</span>
+<span class="w">    </span><span class="n">scratch</span><span class="p">[</span><span class="n">frame</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="p">[</span><span class="n">frame</span><span class="p">];</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="cm">/*</span>
+<span class="cm">   * Each biquad filter section is defined by 5 groups of coefficients,</span>
+<span class="cm">   * with 4 coefficients per SIMD lane (thus 5 * 4 coefficients per set).</span>
+<span class="cm">   */</span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">coeffs_per_set</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+
+<span class="w">  </span><span class="cm">/*</span>
+<span class="cm">   * Similarly, each biquad filter uses 2 sets for its state,</span>
+<span class="cm">   * with 4 state values per set.</span>
+<span class="cm">   */</span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">states_per_set</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+
+<span class="w">  </span><span class="cm">/*</span>
+<span class="cm">   * The kernel outputs 4 channels (SIMD lanes) per filter stage, while</span>
+<span class="cm">   * the input to the kernel has 2 channels (from the duplicated mono input).</span>
+<span class="cm">   *</span>
+<span class="cm">   * Hence, the &quot;block&quot; sizes for each set are defined as:</span>
+<span class="cm">   *   - block_per_set_in: 2 channels * num_frames</span>
+<span class="cm">   *   - block_per_set_out: 4 channels * num_frames</span>
+<span class="cm">   */</span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">block_per_set_out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">num_frames</span><span class="p">;</span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">block_per_set_in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">num_frames</span><span class="p">;</span>
+
+<span class="w">  </span><span class="cm">/* Some offset counters to keep track of pointers */</span>
+<span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">coeff_offset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">state_offset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">scratch_offset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="w">  </span><span class="cm">/* Num sets start at 1, and then doubles every stage */</span>
+<span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">num_sets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">stage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">stage</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">num_stages</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">stage</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">num_sets</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">set</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">coeff_ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">coeff</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">coeff_offset</span><span class="p">;</span>
+<span class="w">      </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">state_ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">state_offset</span><span class="p">;</span>
+<span class="w">      </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">scratch_ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scratch</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">scratch_offset</span><span class="p">;</span>
+
+<span class="w">      </span><span class="cm">/*</span>
+<span class="cm">       * Compute input pointer for this set:</span>
+<span class="cm">       * Each set uses a contiguous block of &#39;block_per_set_in&#39; samples in the</span>
+<span class="cm">       * scratch buffer.</span>
+<span class="cm">       */</span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">input_ptr</span><span class="w"> </span><span class="o">=</span>
+<span class="w">          </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="p">)(</span><span class="n">scratch_ptr</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">set</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">block_per_set_in</span><span class="p">));</span>
+
+<span class="w">      </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">output_ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">stage</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">num_stages</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="cm">/*</span>
+<span class="cm">         * For the final stage, write the filter output directly into the output</span>
+<span class="cm">         * buffer.</span>
+<span class="cm">         */</span>
+<span class="w">        </span><span class="n">output_ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">set</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">block_per_set_out</span><span class="p">);</span>
+<span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="cm">/*</span>
+<span class="cm">         * For intermediate stages, write the output back into the scratch</span>
+<span class="cm">         * buffer. This output region is located after the current input block.</span>
+<span class="cm">         */</span>
+<span class="w">        </span><span class="n">output_ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scratch_ptr</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">set</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">block_per_set_out</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                     </span><span class="p">(</span><span class="n">num_sets</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">block_per_set_in</span><span class="p">);</span>
+<span class="w">      </span><span class="p">}</span>
+
+<span class="w">      </span><span class="n">crossover_kernel</span><span class="p">(</span><span class="n">coeff_ptr</span><span class="p">,</span><span class="w"> </span><span class="n">state_ptr</span><span class="p">,</span><span class="w"> </span><span class="n">input_ptr</span><span class="p">,</span><span class="w"> </span><span class="n">output_ptr</span><span class="p">,</span><span class="w"> </span><span class="n">num_frame</span><span class="p">);</span>
+<span class="w">      </span><span class="cm">/*</span>
+<span class="cm">       * Advance the coefficient and state offsets to point to the next filter set.</span>
+<span class="cm">       */</span>
+<span class="w">      </span><span class="n">coeff_offset</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">coeffs_per_set</span><span class="p">;</span>
+<span class="w">      </span><span class="n">state_offset</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">states_per_set</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="cm">/*</span>
+<span class="cm">     * After processing all sets for this stage, move the scratch offset</span>
+<span class="cm">     * to the next available block (i.e. after all input blocks of this stage).</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="n">scratch_offset</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">num_sets</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">block_per_set_in</span><span class="p">;</span>
+<span class="w">    </span><span class="n">num_sets</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h3>Parameter Breakdown</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>coeff</code></strong></td>
+<td>Pointer to filter coefficients (size: <code>5 * 4 * TOTAL_SETS</code>).</td>
+</tr>
+<tr>
+<td><strong><code>state</code></strong></td>
+<td>Pointer to filter state buffer (size: <code>2 * 4 * TOTAL_SETS</code>).</td>
+</tr>
+<tr>
+<td><strong><code>input</code></strong></td>
+<td>Pointer to the mono input signal (<code>num_frames</code> elements).</td>
+</tr>
+<tr>
+<td><strong><code>output</code></strong></td>
+<td>Pointer to the processed output buffer (<code>num_frames * bands</code>).</td>
+</tr>
+<tr>
+<td><strong><code>scratch</code></strong></td>
+<td>Pointer to a temporary buffer for intermediate results.</td>
+</tr>
+<tr>
+<td><strong><code>num_frames</code></strong></td>
+<td>The number of input frames (samples).</td>
+</tr>
+<tr>
+<td><strong><code>radix</code></strong></td>
+<td>Defines the structure and number of stages (<code>&gt;= 2</code>).</td>
+</tr>
+</tbody>
+</table>
+<p>For a binary tree of height <code>RADIX</code>, the total number of nodes (filter) is
+given by <span class="math">\(2^{\text{RADIX}+1} - 1\)</span>. In C, this can be defined as:</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#define TOTAL_SETS ((1 &lt;&lt; (RADIX + 1)) - 1)</span>
+</code></pre></div>
+
+<p>The coefficient array is organized as a sequence of "sets," each corresponding
+to a node in the crossover filter tree. The memory map of the coefficient array
+is shown below. Note, initial low-pass and high-pass filters are repeated twice
+to take advantage of the SIMD architecture:</p>
+<div class="highlight"><pre><span></span><code>; Set 0
+;    LP0,     LP0,     HP0,     HP0
+   b0(0),    b0(1),   b0(2),  b0(3),
+   b1(0),    b1(1),   b1(2),  b1(3),
+   b2(0),    b2(1),   b2(2),  b2(3),
+   a1(0),    a1(1),   a1(2),  a1(3),
+   a2(0),    a2(1),   a2(2),  a2(3),
+; Set 1
+;   LP1L,     HP1L,    LP1H,   HP1H
+   b0(0),    b0(1),   b0(2),  b0(3),
+   b1(0),    b1(1),   b1(2),  b1(3),
+   b2(0),    b2(1),   b2(2),  b2(3),
+   a1(0),    a1(1),   a1(2),  a1(3),
+   a2(0),    a2(1),   a2(2),  a2(3),
+...
+</code></pre></div>
+
+<p>The scratch buffer size is given by:</p>
+<div class="highlight"><pre><span></span><code>SCRATCH_SIZE = 4 <span class="gs">* TOTAL_SETS *</span> FRAME_SIZE
+</code></pre></div>
+
+<p>For instance, with <code>TOTAL_SETS = 16</code> (from <code>RADIX = 2</code>) and <code>FRAMES = 8</code>, the
+scratch buffer contains <code>16 * 4 * 8 = 512</code> floats.</p>
+<p><code>radix</code> is <span class="math">\(log_2(bands)\)</span>, so for 4 band crossover, <code>radix = 2</code>.</p>
+<h3>Tuning the Crossover</h3>
+<p>For a crossover filter with <strong>M bands</strong> (where <span class="math">\(M\)</span>is a power of two), there
+will be <strong><span class="math">\(M - 1\)</span> critical crossover frequencies</strong> that define the transitions
+between adjacent bands. The classic <a href="https://www.youtube.com/watch?v=FAdmpAZTH_M">fence vs. post
+problem</a>, thanks Matt Parker! We
+are not concerned about the posts at the two ends, since they correspond to DC
+and nyquist frequency. These frequencies can be represented as:</p>
+<div class="math">$$
+F_c = \{f_{DC}, f_0, f_1, \dots, f_{M-2}, f_{Ny}\}
+$$</div>
+<p>For example, in a <strong>4-band crossover</strong>, the critical frequencies are:</p>
+<div class="math">$$
+F_c = \{ f_0, f_1, f_2 \}
+$$</div>
+<p>The crossover process follows a hierarchical structure, where the first split
+occurs at <strong><span class="math">\(f_1\)</span></strong>, dividing the signal into two bands. Each subsequent stage
+refines these bands further, processing <strong><span class="math">\(f_0\)</span></strong> and <strong><span class="math">\(f_2\)</span></strong> in a <strong>top-down
+order</strong> within the crossover tree.</p>
+<p>A systematic way to determine the processing sequence is by <strong>traversing the
+crossover tree in top-down order</strong>, where the root node (highest-level split) is
+processed first, followed by its child nodes. Implementing this traversal
+method is left as an <strong>exercise for the reader</strong>. I believe in you!</p>
+<h2>SIMD Level 3: Parallel SOS</h2>
+<p>Alright, <em>final stretch</em>! We have explored some niche ways of utilizing SIMD
+instruction sets. But, this method is my favorite because it transforms a
+recursive filter into a parallel structure, which is mathematically elegant. We
+want to take something that is recursive and convert into something parallel.</p>
+<p>Our goal is to take a cascade of second‐order sections (SOS):</p>
+<pre class="mermaid">
+graph LR;
+   x --> H0(H<sub>0</sub>)
+   H0 --> H1(H<sub>1</sub>)
+   H1 --> H2(H<sub>2</sub>)
+   H2 --> H3(H<sub>3</sub>)
+   H3 --> y
+</pre>
+
+<p>and recast it as a parallel combination:</p>
+<pre class="mermaid">
+graph LR;
+   x --> H0(H'<sub>0</sub>)
+   x --> H1(H'<sub>1</sub>)
+   x --> H2(H'<sub>2</sub>)
+   x --> H3(H'<sub>3</sub>)
+
+   H0 --> A(+)
+   H1 --> A
+   H2 --> A
+   H3 --> A
+
+   A --> y
+</pre>
+
+<p>We know that an IIR filter's transfer function can be written as a ratio of two
+polynomials:</p>
+<div class="math">$$
+H(z) = \frac{b_0 + b_1 z^{-1} + b_2 z^{-2} + \dots + b_{N} z^{-N}}
+            {a_0 + a_1 z^{-1} + a_2 z^{-2} + \dots + a_{M} z^{-M}}
+$$</div>
+<p>We also know that for any polynomial of <span class="math">\(N\)</span> degree, there are <span class="math">\(N\)</span> roots.
+Setting the numerator to zero yields the <strong>zeros</strong> of the system. Likewise,
+setting the denominator to zero gives the <strong>poles</strong>. We can express the
+transfer function in its factored form as:</p>
+<div class="math">$$
+H(z) = \frac{(z - c_0) (z - c_1) (z - c_2) \dots (z - c_N)}
+            {(z - p_0) (z - p_1) (z - p_2) \dots (z - p_M)}
+$$</div>
+<p>We can rearrange the transfer function into a partial-fraction expansion. For a
+strictly proper filter:</p>
+<div class="math">$$
+H(z) = \frac{r_1}{1 - p_1\,z^{-1}} + \frac{r_3}{1 - p_2\,z^{-1}} + \cdots + \frac{r_Q}{1 - p_Q\,z^{-1}}
+$$</div>
+<p>where each ( r_k ) is the residue corresponding to the pole <span class="math">\(p_k\)</span>.
+Fortunately, both <a href="https://scipy.org/">SciPy</a> and
+<a href="https://www.mathworks.com/products/matlab.html">MATLAB</a> offer the <code>residuez</code>
+function to compute these coefficients, and we don't have do pre-calculus by
+hand:</p>
+<ul>
+<li><a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.residuez.html#scipy.signal.residuez">SciPy's scipy.signal.residuez</a></li>
+<li><a href="https://www.mathworks.com/help/signal/ref/residuez.html">MATLAB's residuez</a></li>
+</ul>
+<p>For real-valued filters, the poles (and corresponding residues) occur in
+complex–conjugate pairs. Suppose we have a conjugate pair given by</p>
+<div class="math">$$
+\frac{r}{1-p\,z^{-1}} \quad \text{and} \quad \frac{r^*}{1-p^*\,z^{-1}}.
+$$</div>
+<p>Because the overall system is linear, we add these terms:</p>
+<div class="math">$$
+H'(z) = \frac{r}{1-p\,z^{-1}} + \frac{r^*}{1-p^*\,z^{-1}}.
+$$</div>
+<p>Given our original formulation of SOS:</p>
+<div class="math">$$
+H(z)=\frac{b_0 + b_1\,z^{-1} + b_2\,z^{-2}}{1 + a_1\,z^{-1} + a_2\,z^{-2}},
+$$</div>
+<p>After doing a lot of algebra, we derive:</p>
+<ul>
+<li><span class="math">\(b_0 = 2\,\Re\{r\}\)</span></li>
+<li><span class="math">\(b_1 = -2\,\Re\{r\,p^*\}\)</span></li>
+<li><span class="math">\(b_2 = 0\)</span> (since there is no <span class="math">\(z^{-2}\)</span> term in the numerator)</li>
+<li><span class="math">\(a_1 = -2\,\Re\{p\}\)</span></li>
+<li><span class="math">\(a_2 = |p|^2\)</span></li>
+</ul>
+<p>If two real poles are encountered instead, they can be grouped similarly by
+adding the corresponding first-order terms. And if an unpaired real pole
+remains, it can be padded to form a first-order branch represented in
+second-order form.</p>
+<p>This parallel SOS structure allows you to process multiple second-order
+sections simultaneously using SIMD, effectively converting a recursive
+(cascade) IIR filter into a parallel structure. For an implementation example,
+check out my <a href="https://gist.github.com/ashafq/0db953125a033b783c6e100acd5e64d9">Github
+Gist</a></p>
+<h2>Conclusion</h2>
+<p>I genuinely enjoyed exploring and writing about these concepts. While I
+dedicated a lot of time to fact-checking, proofs, and testing, I cannot
+guarantee that every detail is perfect. If you spot any errors or have
+suggestions for improvement, please let me know via email. And if you
+appreciate nerdy deep dives into technical topics like this, consider
+supporting my work via <a href="https://github.com/sponsors/ashafq/">GitHub Sponsors</a>.</p>
+<hr>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="./tag/dsp.html">dsp</a>
+      <a href="./tag/signal-processing.html">signal-processing</a>
+      <a href="./tag/iir.html">iir</a>
+      <a href="./tag/filters.html">filters</a>
+    </p>
+  </div>
+
+
+
+
+
+
+</article>
+
+<footer>
+  <p>All opinions expressed on this site are solely my own and do not necessarily reflect the views or opinions of my current or former employers.</p>
+
+<p>
+  &copy; 2017-2025 Ayan Shafqat  - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.en_US" target="_blank">Creative Commons Attribution-ShareAlike</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p></footer>  </main>
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Ayan Shafqat ",
+  "url" : ".",
+  "image": "/images/profile.png",
+  "description": "Personal website of Ayan Shafqat"
+}
+</script>
+</body>
+</html>
