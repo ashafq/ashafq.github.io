@@ -1,5 +1,298 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Ayan Shafqat - Ayan Shafqat</title><link href="https://shafq.at/" rel="alternate"></link><link href="https://shafq.at/feeds/ayan-shafqat.atom.xml" rel="self"></link><id>https://shafq.at/</id><updated>2025-02-12T00:00:00-05:00</updated><subtitle>My personal website</subtitle><entry><title>Vectorizing IIR Filters: What are you Recursing?</title><link href="https://shafq.at/vectorizing-iir-filters.html" rel="alternate"></link><published>2025-02-12T00:00:00-05:00</published><updated>2025-02-12T00:00:00-05:00</updated><author><name>Ayan Shafqat</name></author><id>tag:shafq.at,2025-02-12:/vectorizing-iir-filters.html</id><summary type="html">&lt;blockquote&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Ayan Shafqat - Ayan Shafqat</title><link href="https://shafq.at/" rel="alternate"></link><link href="https://shafq.at/feeds/ayan-shafqat.atom.xml" rel="self"></link><id>https://shafq.at/</id><updated>2025-03-27T00:00:00-04:00</updated><subtitle>My personal website</subtitle><entry><title>Fixed-Point Tutorial #2</title><link href="https://shafq.at/fixed-point-tutorial-2.html" rel="alternate"></link><published>2025-03-27T00:00:00-04:00</published><updated>2025-03-27T00:00:00-04:00</updated><author><name>Ayan Shafqat</name></author><id>tag:shafq.at,2025-03-27:/fixed-point-tutorial-2.html</id><summary type="html">&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;I've received a lot of feedback on my blog posts over the past few months. I'm
+humbled and grateful for the suggestions, and I always look forward to hearing
+from readers. You'll often see that I leave my mistakes in the posts along with
+the corrections, giving credit where …&lt;/p&gt;</summary><content type="html">&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;I've received a lot of feedback on my blog posts over the past few months. I'm
+humbled and grateful for the suggestions, and I always look forward to hearing
+from readers. You'll often see that I leave my mistakes in the posts along with
+the corrections, giving credit where it's due. I'm thrilled (and a little
+nervous) to know that people are using my tutorial to learn about fixed-point
+signal processing! This post is a continuation of my &lt;a href="https://shafq.at/introduction-to-fixed-point-signal-processing.html"&gt;original
+tutorial&lt;/a&gt;. I will add on a few
+things that I feel are necessary to understand about fixed-point signal
+processing that may not have been clear before.&lt;/p&gt;
+&lt;h2&gt;The Fundamental Rules of Binary Arithmetic&lt;/h2&gt;
+&lt;p&gt;Computers work with finite and computatble numbers, as stated by Alan Turing.
+That means we must reserve a finite number of bits to represent and compute
+these numbers. Fixed-point computation, commonly implemented using two’s
+complement integers, follows certain rules that govern how bits are allocated
+for arithmetic operations:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Given two integers &lt;strong&gt;a&lt;sub&gt;1&lt;/sub&gt;&lt;/strong&gt; and &lt;strong&gt;a&lt;sub&gt;2&lt;/sub&gt;&lt;/strong&gt; with bit widths
+  of &lt;strong&gt;N&lt;sub&gt;1&lt;/sub&gt;&lt;/strong&gt; and &lt;strong&gt;N&lt;sub&gt;2&lt;/sub&gt;&lt;/strong&gt; respectively, the &lt;strong&gt;product&lt;/strong&gt;,
+  &lt;strong&gt;&lt;span class="math"&gt;\(a_1 \times a_2\)&lt;/span&gt;&lt;/strong&gt; will require &lt;span class="math"&gt;\(N_1 + N_2\)&lt;/span&gt; &lt;strong&gt;bits&lt;/strong&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The &lt;strong&gt;sum&lt;/strong&gt;, &lt;span class="math"&gt;\(a_1 + a_2\)&lt;/span&gt;, will require &lt;strong&gt;&lt;code&gt;max(N₁, N₂) + 1&lt;/code&gt; bits&lt;/strong&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The &lt;strong&gt;difference&lt;/strong&gt;, &lt;span class="math"&gt;\(a_1 − a_2\)&lt;/span&gt;, will require &lt;strong&gt;&lt;code&gt;max(N₁, N₂) + 1&lt;/code&gt; bits&lt;/strong&gt; (same as
+  addition, since subtraction is addition of a negated value).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The &lt;strong&gt;quotient&lt;/strong&gt;, &lt;span class="math"&gt;\(a_1 \div a_2\)&lt;/span&gt;, will result in a value with approximately &lt;strong&gt;&lt;code&gt;N₁ −
+  N₂&lt;/code&gt; bits&lt;/strong&gt; (though the actual bit width needed depends on desired precision and
+  scaling).&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In the &lt;a href="https://shafq.at/introduction-to-fixed-point-signal-processing.html"&gt;previous fixed-point
+post&lt;/a&gt;, I discussed the &lt;code&gt;Qm.n&lt;/code&gt;
+format, where &lt;code&gt;n&lt;/code&gt; is the number of bits reserved for the fractional part and
+&lt;code&gt;m&lt;/code&gt; is the number of bits reserved for the integer part. To summarize: in a
+16-bit signed integer (&lt;code&gt;int16_t&lt;/code&gt;), if we set the scaling point at bit 14 (i.e.,
+&lt;code&gt;Q2.14&lt;/code&gt;), it means 2 bits are used for the integer part (including the sign),
+and 14 bits are used for the fractional part.&lt;/p&gt;
+&lt;p&gt;Also note: in the &lt;code&gt;Qm.n&lt;/code&gt; notation, the sum of &lt;code&gt;m&lt;/code&gt; and &lt;code&gt;n&lt;/code&gt; should equal the
+total bit-width of the type.&lt;/p&gt;
+&lt;p&gt;With that in mind, we can now expand on the fundamentals using the &lt;code&gt;Q&lt;/code&gt;
+notation:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;The &lt;strong&gt;product&lt;/strong&gt; of two fixed-point numbers, &lt;code&gt;Qa.b&lt;/code&gt; and &lt;code&gt;Qc.d&lt;/code&gt;, results in a
+  number of format &lt;code&gt;Q(a + c).(b + d)&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Example:&lt;/em&gt; &lt;code&gt;Q1.15 × Q1.15 → Q2.30&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The &lt;strong&gt;sum&lt;/strong&gt; of two fixed-point numbers requires aligning their &lt;code&gt;Q&lt;/code&gt; points and
+  results in the &lt;strong&gt;maximum&lt;/strong&gt; &lt;code&gt;Q&lt;/code&gt; format of the two, plus &lt;strong&gt;one extra bit&lt;/strong&gt; for
+  potential carry.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Example:&lt;/em&gt; &lt;code&gt;Q1.15 + Q2.14 → Q2.15&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Subtraction&lt;/strong&gt; follows the same rule as addition.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Division&lt;/strong&gt; is... well, we’ll get to that soon.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Division&lt;/h2&gt;
+&lt;p&gt;I didn’t cover division in the previous post because, in real-time DSP
+environments, division is generally discouraged. It’s slow and can be costly on
+embedded systems. Also, it introduces the risk of divide-by-zero errors. But,
+if you’re stuck having to do it, here’s how to think about it.&lt;/p&gt;
+&lt;p&gt;Remember long division from grade school? Suppose you wanted three decimal
+places in the result. Take the example: &lt;code&gt;1234 ÷ 1000&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;If we’re working in base-10 and want three decimal places of precision, we
+scale the numerator by &lt;strong&gt;10³&lt;/strong&gt;:  &lt;code&gt;1234 → 1234000&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Now divide: &lt;code&gt;1234000 ÷ 1000 = 1234&lt;/code&gt;, which we interpret as &lt;code&gt;1.234&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;In binary (base-2), the principle is exactly the same. Suppose you're dividing
+a &lt;code&gt;Q1.15&lt;/code&gt; number by another &lt;code&gt;Q1.15&lt;/code&gt; number, and you want to maintain 15 bits of
+fractional precision in the result. To achieve that, you first &lt;strong&gt;left-shift&lt;/strong&gt;
+the numerator by 15 bits (i.e., multiply it by &lt;span class="math"&gt;\(2^{15}\)&lt;/span&gt;) before performing the
+integer division. That means you need &lt;strong&gt;30 bits&lt;/strong&gt; in the numerator to hold the
+intermediate value safely:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kt"&gt;int32_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;quotient&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="kt"&gt;int32_t&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="n"&gt;numerator&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;denominator&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This will give you a &lt;code&gt;Q17.15&lt;/code&gt;-formatted result.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;But why shift the numerator?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Dividing by a small number like &lt;code&gt;0.001&lt;/code&gt; is equivalent to multiplying by a large
+number. In this case, &lt;span class="math"&gt;\(\frac{1}{0.001} = 1000\)&lt;/span&gt;. To understand this better, let’s
+continue to look at a decimal analogy:&lt;/p&gt;
+&lt;p&gt;Suppose we’re working with a decimal scaling factor of &lt;span class="math"&gt;\(10^2\)&lt;/span&gt;, and we want to
+compute &lt;code&gt;123.45 ÷ 67.89&lt;/code&gt;. Here’s how we’d do it:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Scale both numbers&lt;/strong&gt; by &lt;span class="math"&gt;\(10^2\)&lt;/span&gt; to preserve precision:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;123.45 → 12345&lt;/code&gt;&lt;br&gt;
+ &lt;code&gt;67.89 → 6789&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;To ensure the result has the &lt;strong&gt;same scaling factor&lt;/strong&gt;, we need to &lt;strong&gt;shift the
+  numerator&lt;/strong&gt; by another factor of &lt;span class="math"&gt;\(10^2\)&lt;/span&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;12345 × 100 = 1234500&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Now divide:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;1234500 ÷ 6789 = 181&lt;/code&gt; (truncating any fractional part)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Rescale the result:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;181 → 1.81&lt;/code&gt;, which matches the actual division result.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;&lt;a href="https://en.wikipedia.org/wiki/Rounding"&gt;Rounding&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Rounding is a big topic, and I won’t pretend to be an expert. There are many
+rounding behaviors, but one of the most common is &lt;a href="https://en.wikipedia.org/wiki/Rounding"&gt;Banker's
+Rounding&lt;/a&gt;. I’ll try to illustrate this
+using fixed-point arithmetic.&lt;/p&gt;
+&lt;p&gt;Let’s revisit the division example, but this time with rounding:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;After scaling the numerator and denominator, we add &lt;strong&gt;additional scaling&lt;/strong&gt;
+   to the numerator. Instead of scaling by &lt;span class="math"&gt;\(10^2\)&lt;/span&gt;, let’s scale by &lt;span class="math"&gt;\(10^3\)&lt;/span&gt; for
+   an additional rounding digit:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;12345 × 1000 = 12345000&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Now divide:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;12345000 ÷ 6789 = 1818  (truncating the fractional part)&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;To apply rounding, add the rounding factor, which is &lt;code&gt;5&lt;/code&gt; at this scale:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;1818 + 5 = 1823&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Remove the extra scaling by dividing by 10:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;1823 ÷ 10 = 182 (truncating the fractional part)&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Rescale the result back to fixed-point:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;182 → 1.82&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Which gives us the correct result with rounding applied.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This can be extended to binary using a few additional operations,
+which is shown below for a &lt;code&gt;Q1.15&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kt"&gt;int32_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;scaled_numerator&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int32_t&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="n"&gt;numerator&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="kt"&gt;int32_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;intermediate_quotient&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;scaled_numerator&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;denominator&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="kt"&gt;int32_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;quotient_rounded&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;intermediate_quotient&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;0x1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;For a more generic divide, we can write a function like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="cp"&gt;#include&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="cpf"&gt;&amp;lt;stdint.h&amp;gt;&lt;/span&gt;
+
+&lt;span class="cp"&gt;#define Q_NOT_REAL INT16_C(0x8000)&lt;/span&gt;
+
+&lt;span class="kt"&gt;int16_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;q15_divide&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int16_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;numerator&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;int16_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;denominator&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;                   &lt;/span&gt;&lt;span class="kt"&gt;unsigned&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;result_q&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result_q&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;||&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;denominator&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Q_NOT_REAL&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="kt"&gt;int32_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int32_t&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="n"&gt;numerator&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="kt"&gt;int32_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;den&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int32_t&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="n"&gt;denominator&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c1"&gt;// Left shift the numerator to preserve precision during division&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="kt"&gt;int32_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;scaled_num&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result_q&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="kt"&gt;int32_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;intermediate&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;scaled_num&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;den&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c1"&gt;// Rounding: add 1 &amp;lt;&amp;lt; 0 (i.e., 1) since we shifted by +1 bit&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="kt"&gt;int32_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;rounded&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;intermediate&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c1"&gt;// Optionally clamp to int16_t range&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rounded&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;INT16_MAX&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;INT16_MAX&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rounded&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;INT16_MIN&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;INT16_MIN&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;else&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int16_t&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="n"&gt;rounded&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Practical Considerations of Fixed-Point Processing&lt;/h2&gt;
+&lt;p&gt;This section focuses on some general rules and lessons learned when deploying
+algorithms in fixed-point environments. It’s also worth discussing practical
+considerations—such as project timelines, expectations, and hardware
+constraints.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Double your project timeline when targeting fixed-point&lt;/strong&gt;&lt;br&gt;
+  Developing a fixed-point algorithm is effectively a &lt;strong&gt;two-step&lt;/strong&gt; process:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Implement the algorithm in floating-point.&lt;/li&gt;
+&lt;li&gt;Re-implement it in fixed-point.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Once both versions are complete, you'll need to run &lt;strong&gt;regression tests&lt;/strong&gt; to
+ensure the results do not diverge significantly. If you've budgeted six
+months for a floating-point implementation, be realistic and plan for &lt;strong&gt;a
+full year&lt;/strong&gt; when fixed-point is involved.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Claim:&lt;/strong&gt; &lt;em&gt;"Fixed-point is always faster than floating-point"&lt;/em&gt;
+  &lt;strong&gt;Not necessarily!&lt;/strong&gt; It depends entirely on the &lt;strong&gt;hardware architecture&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;For example, a
+&lt;a href="https://en.wikipedia.org/wiki/Microcontroller"&gt;microcontroller&lt;/a&gt; with a
+hardware &lt;strong&gt;FPU (Floating Point Unit)&lt;/strong&gt; may actually &lt;strong&gt;run floating-point code
+faster&lt;/strong&gt; than fixed-point emulation. If your target lacks DSP-style features
+(e.g., wide accumulators, single-cycle multiply-accumulate, barrel shifters,
+etc.), then porting to fixed-point might not give you the performance or
+power savings you're expecting.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Be prepared to dive into assembly or use compiler intrinsics&lt;/strong&gt;
+  This cannot be overstated. To fully optimize fixed-point performance, you
+  often need to work &lt;strong&gt;closer to the metal&lt;/strong&gt;, either by writing &lt;strong&gt;assembly&lt;/strong&gt; for
+  your target or by leveraging &lt;strong&gt;compiler intrinsics&lt;/strong&gt; that map directly to
+  specialized instructions.&lt;/p&gt;
+&lt;p&gt;Some toolchains support Embedded-C extensions for fixed-point arithmetic,
+such as &lt;a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1169.pdf"&gt;n1169&lt;/a&gt;.
+If your compiler supports this, &lt;strong&gt;take advantage of it&lt;/strong&gt;. It can significantly
+improve code clarity and portability, while retaining performance.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Thank you again for your feedback! I hope you found this post valuable and
+insightful. I would love to keep this two-way communication going. So, feel
+free to reach out with suggestions, corrections, or ideas for future posts. I’m
+not perfect, and I’m never afraid to be wrong. Every bit of feedback helps me
+(and others) learn and grow.&lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="signal-processing"></category><category term="dsp"></category><category term="signal-processing"></category><category term="fixed-point"></category></entry><entry><title>Vectorizing IIR Filters: What are you Recursing?</title><link href="https://shafq.at/vectorizing-iir-filters.html" rel="alternate"></link><published>2025-02-12T00:00:00-05:00</published><updated>2025-02-12T00:00:00-05:00</updated><author><name>Ayan Shafqat</name></author><id>tag:shafq.at,2025-02-12:/vectorizing-iir-filters.html</id><summary type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;Disclaimer:&lt;/strong&gt; This article took quite a while to prepare. Although I’ve
 made every effort to fact-check and ensure the accuracy of the content, there
 may still be errors. If you notice any mistakes, please feel free to reach

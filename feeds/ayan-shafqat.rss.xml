@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Ayan Shafqat - Ayan Shafqat</title><link>https://shafq.at/</link><description>My personal website</description><lastBuildDate>Wed, 12 Feb 2025 00:00:00 -0500</lastBuildDate><item><title>Vectorizing IIR Filters: What are you Recursing?</title><link>https://shafq.at/vectorizing-iir-filters.html</link><description>&lt;blockquote&gt;
+<rss version="2.0"><channel><title>Ayan Shafqat - Ayan Shafqat</title><link>https://shafq.at/</link><description>My personal website</description><lastBuildDate>Thu, 27 Mar 2025 00:00:00 -0400</lastBuildDate><item><title>Fixed-Point Tutorial #2</title><link>https://shafq.at/fixed-point-tutorial-2.html</link><description>&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;I've received a lot of feedback on my blog posts over the past few months. I'm
+humbled and grateful for the suggestions, and I always look forward to hearing
+from readers. You'll often see that I leave my mistakes in the posts along with
+the corrections, giving credit where …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Ayan Shafqat</dc:creator><pubDate>Thu, 27 Mar 2025 00:00:00 -0400</pubDate><guid isPermaLink="false">tag:shafq.at,2025-03-27:/fixed-point-tutorial-2.html</guid><category>signal-processing</category><category>dsp</category><category>signal-processing</category><category>fixed-point</category></item><item><title>Vectorizing IIR Filters: What are you Recursing?</title><link>https://shafq.at/vectorizing-iir-filters.html</link><description>&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;Disclaimer:&lt;/strong&gt; This article took quite a while to prepare. Although I’ve
 made every effort to fact-check and ensure the accuracy of the content, there
 may still be errors. If you notice any mistakes, please feel free to reach

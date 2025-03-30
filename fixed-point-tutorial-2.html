@@ -1,0 +1,543 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="./theme/stylesheet/style.min.css">
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs'; </script>
+
+
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+          href="./theme/pygments/lovelace.min.css">
+
+
+
+  <link rel="stylesheet" type="text/css" href="./theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="./theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="./theme/font-awesome/css/solid.css">
+
+
+  <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+
+  <!-- Chrome, Firefox OS and Opera -->
+  <meta name="theme-color" content="#333333">
+  <!-- Windows Phone -->
+  <meta name="msapplication-navbutton-color" content="#333333">
+  <!-- iOS Safari -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- Microsoft EDGE -->
+  <meta name="msapplication-TileColor" content="#333333">
+
+  <link href="https://shafq.at/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Ayan Shafqat Atom">
+
+
+
+
+
+
+
+
+
+<meta name="author" content="Ayan Shafqat" />
+<meta name="description" content="Introduction I&#39;ve received a lot of feedback on my blog posts over the past few months. I&#39;m humbled and grateful for the suggestions, and I always look forward to hearing from readers. You&#39;ll often see that I leave my mistakes in the posts along with the corrections, giving credit where …" />
+<meta name="keywords" content="dsp, signal-processing, fixed-point">
+
+
+  <meta property="og:site_name" content="Ayan Shafqat"/>
+  <meta property="og:title" content="Fixed-Point Tutorial #2"/>
+  <meta property="og:description" content="Introduction I&#39;ve received a lot of feedback on my blog posts over the past few months. I&#39;m humbled and grateful for the suggestions, and I always look forward to hearing from readers. You&#39;ll often see that I leave my mistakes in the posts along with the corrections, giving credit where …"/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:url" content="./fixed-point-tutorial-2.html"/>
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2025-03-27 00:00:00-04:00"/>
+  <meta property="article:modified_time" content=""/>
+  <meta property="article:author" content="./author/ayan-shafqat.html">
+  <meta property="article:section" content="signal-processing"/>
+  <meta property="article:tag" content="dsp"/>
+  <meta property="article:tag" content="signal-processing"/>
+  <meta property="article:tag" content="fixed-point"/>
+  <meta property="og:image" content="/images/profile.png">
+
+  <title>Ayan Shafqat &ndash; Fixed-Point Tutorial #2</title>
+
+
+</head>
+<body class="light-theme">
+
+<aside>
+  <div>
+    <a href="./">
+      <img src="/images/profile.png" alt="Ayan Shafqat" title="Ayan Shafqat">
+    </a>
+
+    <h1>
+      <a href="./">Ayan Shafqat</a>
+    </h1>
+
+    <p>My personal website</p>
+
+
+    <nav>
+      <ul class="list">
+
+
+            <li>
+              <a target="_self"
+                 href="./pages/about.html#about">
+                About
+              </a>
+            </li>
+            <li>
+              <a target="_self"
+                 href="./pages/papers.html#papers">
+                Papers
+              </a>
+            </li>
+
+      </ul>
+    </nav>
+
+    <div style="margin: 0; padding: 0;">
+      <iframe
+        src="https://github.com/sponsors/ashafq/button"
+        title="Sponsor ashafq"
+        height="32"
+        width="114"
+        style="border: 0; border-radius: 10px;"
+      ></iframe>
+    </div>
+
+    <div style="margin: 0; padding: 10px;">
+      <a href='https://ko-fi.com/ashafq'
+         target='_blank'>
+        <img height='36'
+            style='border:0px; height:36px; border-radius: 0px;'
+            src='https://storage.ko-fi.com/cdn/kofi6.png?v=6'
+            border='0'
+            alt='Buy Me a Coffee at ko-fi.com' />
+      </a>
+    </div>
+
+    <div style="margin: 0; padding: 10px;">
+    <ul class="social">
+      <li>
+        <a class="sc-envelope"
+rel="me"           href="mailto:ayan.x.shafqat@gmail.com"
+           target="_blank">
+          <i class="fa-solid fa-envelope"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-github"
+           href="https://github.com/ashafq"
+           target="_blank">
+          <i class="fa-brands fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-stack-overflow"
+           href="http://stackoverflow.com/users/6744189/ayan-shafqat"
+           target="_blank">
+          <i class="fa-brands fa-stack-overflow"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-linkedin"
+           href="https://www.linkedin.com/in/ayanshafqat"
+           target="_blank">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-mastodon"
+rel="me"           href="https://hachyderm.io/@ashafq"
+           target="_blank">
+          <i class="fa-brands fa-mastodon"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-rss"
+           href="https://shafq.at/feeds/all.atom.xml"
+           target="_blank">
+          <i class="fa-solid fa-rss"></i>
+        </a>
+      </li>
+    </ul>
+    </div>
+  </div>
+
+</aside>
+  <main>
+
+<nav>
+  <a href="./">Home</a>
+
+  <a href="/archives.html">Archives</a>
+  <a href="/categories.html">Categories</a>
+  <a href="/tags.html">Tags</a>
+
+  <a href="https://shafq.at/feeds/all.atom.xml">Atom</a>
+
+</nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="fixed-point-tutorial-2">Fixed-Point Tutorial #2</h1>
+    <p>
+      Posted on Thu 27 March 2025 in <a href="./category/signal-processing.html">signal-processing</a>
+
+    </p>
+  </header>
+
+
+  <div>
+    <h2>Introduction</h2>
+<p>I've received a lot of feedback on my blog posts over the past few months. I'm
+humbled and grateful for the suggestions, and I always look forward to hearing
+from readers. You'll often see that I leave my mistakes in the posts along with
+the corrections, giving credit where it's due. I'm thrilled (and a little
+nervous) to know that people are using my tutorial to learn about fixed-point
+signal processing! This post is a continuation of my <a href="./introduction-to-fixed-point-signal-processing.html">original
+tutorial</a>. I will add on a few
+things that I feel are necessary to understand about fixed-point signal
+processing that may not have been clear before.</p>
+<h2>The Fundamental Rules of Binary Arithmetic</h2>
+<p>Computers work with finite and computatble numbers, as stated by Alan Turing.
+That means we must reserve a finite number of bits to represent and compute
+these numbers. Fixed-point computation, commonly implemented using two’s
+complement integers, follows certain rules that govern how bits are allocated
+for arithmetic operations:</p>
+<ul>
+<li>
+<p>Given two integers <strong>a<sub>1</sub></strong> and <strong>a<sub>2</sub></strong> with bit widths
+  of <strong>N<sub>1</sub></strong> and <strong>N<sub>2</sub></strong> respectively, the <strong>product</strong>,
+  <strong><span class="math">\(a_1 \times a_2\)</span></strong> will require <span class="math">\(N_1 + N_2\)</span> <strong>bits</strong>.</p>
+</li>
+<li>
+<p>The <strong>sum</strong>, <span class="math">\(a_1 + a_2\)</span>, will require <strong><code>max(N₁, N₂) + 1</code> bits</strong>.</p>
+</li>
+<li>
+<p>The <strong>difference</strong>, <span class="math">\(a_1 − a_2\)</span>, will require <strong><code>max(N₁, N₂) + 1</code> bits</strong> (same as
+  addition, since subtraction is addition of a negated value).</p>
+</li>
+<li>
+<p>The <strong>quotient</strong>, <span class="math">\(a_1 \div a_2\)</span>, will result in a value with approximately <strong><code>N₁ −
+  N₂</code> bits</strong> (though the actual bit width needed depends on desired precision and
+  scaling).</p>
+</li>
+</ul>
+<p>In the <a href="./introduction-to-fixed-point-signal-processing.html">previous fixed-point
+post</a>, I discussed the <code>Qm.n</code>
+format, where <code>n</code> is the number of bits reserved for the fractional part and
+<code>m</code> is the number of bits reserved for the integer part. To summarize: in a
+16-bit signed integer (<code>int16_t</code>), if we set the scaling point at bit 14 (i.e.,
+<code>Q2.14</code>), it means 2 bits are used for the integer part (including the sign),
+and 14 bits are used for the fractional part.</p>
+<p>Also note: in the <code>Qm.n</code> notation, the sum of <code>m</code> and <code>n</code> should equal the
+total bit-width of the type.</p>
+<p>With that in mind, we can now expand on the fundamentals using the <code>Q</code>
+notation:</p>
+<ul>
+<li>
+<p>The <strong>product</strong> of two fixed-point numbers, <code>Qa.b</code> and <code>Qc.d</code>, results in a
+  number of format <code>Q(a + c).(b + d)</code>.</p>
+<p><em>Example:</em> <code>Q1.15 × Q1.15 → Q2.30</code></p>
+</li>
+<li>
+<p>The <strong>sum</strong> of two fixed-point numbers requires aligning their <code>Q</code> points and
+  results in the <strong>maximum</strong> <code>Q</code> format of the two, plus <strong>one extra bit</strong> for
+  potential carry.</p>
+<p><em>Example:</em> <code>Q1.15 + Q2.14 → Q2.15</code></p>
+</li>
+<li>
+<p><strong>Subtraction</strong> follows the same rule as addition.</p>
+</li>
+<li>
+<p><strong>Division</strong> is... well, we’ll get to that soon.</p>
+</li>
+</ul>
+<h2>Division</h2>
+<p>I didn’t cover division in the previous post because, in real-time DSP
+environments, division is generally discouraged. It’s slow and can be costly on
+embedded systems. Also, it introduces the risk of divide-by-zero errors. But,
+if you’re stuck having to do it, here’s how to think about it.</p>
+<p>Remember long division from grade school? Suppose you wanted three decimal
+places in the result. Take the example: <code>1234 ÷ 1000</code>.</p>
+<p>If we’re working in base-10 and want three decimal places of precision, we
+scale the numerator by <strong>10³</strong>:  <code>1234 → 1234000</code>.</p>
+<p>Now divide: <code>1234000 ÷ 1000 = 1234</code>, which we interpret as <code>1.234</code>.</p>
+<p>In binary (base-2), the principle is exactly the same. Suppose you're dividing
+a <code>Q1.15</code> number by another <code>Q1.15</code> number, and you want to maintain 15 bits of
+fractional precision in the result. To achieve that, you first <strong>left-shift</strong>
+the numerator by 15 bits (i.e., multiply it by <span class="math">\(2^{15}\)</span>) before performing the
+integer division. That means you need <strong>30 bits</strong> in the numerator to hold the
+intermediate value safely:</p>
+<div class="highlight"><pre><span></span><code><span class="kt">int32_t</span><span class="w"> </span><span class="n">quotient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="kt">int32_t</span><span class="p">)</span><span class="n">numerator</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">15</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">denominator</span><span class="p">;</span>
+</code></pre></div>
+
+<p>This will give you a <code>Q17.15</code>-formatted result.</p>
+<p><strong>But why shift the numerator?</strong></p>
+<p>Dividing by a small number like <code>0.001</code> is equivalent to multiplying by a large
+number. In this case, <span class="math">\(\frac{1}{0.001} = 1000\)</span>. To understand this better, let’s
+continue to look at a decimal analogy:</p>
+<p>Suppose we’re working with a decimal scaling factor of <span class="math">\(10^2\)</span>, and we want to
+compute <code>123.45 ÷ 67.89</code>. Here’s how we’d do it:</p>
+<ul>
+<li>
+<p><strong>Scale both numbers</strong> by <span class="math">\(10^2\)</span> to preserve precision:</p>
+<p><code>123.45 → 12345</code><br>
+ <code>67.89 → 6789</code></p>
+</li>
+<li>
+<p>To ensure the result has the <strong>same scaling factor</strong>, we need to <strong>shift the
+  numerator</strong> by another factor of <span class="math">\(10^2\)</span>:</p>
+<p><code>12345 × 100 = 1234500</code></p>
+</li>
+<li>
+<p>Now divide:</p>
+<p><code>1234500 ÷ 6789 = 181</code> (truncating any fractional part)</p>
+</li>
+<li>
+<p>Rescale the result:</p>
+<p><code>181 → 1.81</code>, which matches the actual division result.</p>
+</li>
+</ul>
+<h2><a href="https://en.wikipedia.org/wiki/Rounding">Rounding</a></h2>
+<p>Rounding is a big topic, and I won’t pretend to be an expert. There are many
+rounding behaviors, but one of the most common is <a href="https://en.wikipedia.org/wiki/Rounding">Banker's
+Rounding</a>. I’ll try to illustrate this
+using fixed-point arithmetic.</p>
+<p>Let’s revisit the division example, but this time with rounding:</p>
+<ol>
+<li>
+<p>After scaling the numerator and denominator, we add <strong>additional scaling</strong>
+   to the numerator. Instead of scaling by <span class="math">\(10^2\)</span>, let’s scale by <span class="math">\(10^3\)</span> for
+   an additional rounding digit:</p>
+<p><code>12345 × 1000 = 12345000</code></p>
+</li>
+<li>
+<p>Now divide:</p>
+<p><code>12345000 ÷ 6789 = 1818  (truncating the fractional part)</code></p>
+</li>
+<li>
+<p>To apply rounding, add the rounding factor, which is <code>5</code> at this scale:</p>
+<p><code>1818 + 5 = 1823</code></p>
+</li>
+<li>
+<p>Remove the extra scaling by dividing by 10:</p>
+<p><code>1823 ÷ 10 = 182 (truncating the fractional part)</code></p>
+</li>
+<li>
+<p>Rescale the result back to fixed-point:</p>
+<p><code>182 → 1.82</code></p>
+<p>Which gives us the correct result with rounding applied.</p>
+</li>
+</ol>
+<p>This can be extended to binary using a few additional operations,
+which is shown below for a <code>Q1.15</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kt">int32_t</span><span class="w"> </span><span class="n">scaled_numerator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">int32_t</span><span class="p">)</span><span class="n">numerator</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="mi">15</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="kt">int32_t</span><span class="w"> </span><span class="n">intermediate_quotient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scaled_numerator</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">denominator</span><span class="p">;</span>
+<span class="kt">int32_t</span><span class="w"> </span><span class="n">quotient_rounded</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">intermediate_quotient</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">0x1</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</code></pre></div>
+
+<p>For a more generic divide, we can write a function like this:</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdint.h&gt;</span>
+
+<span class="cp">#define Q_NOT_REAL INT16_C(0x8000)</span>
+
+<span class="kt">int16_t</span><span class="w"> </span><span class="nf">q15_divide</span><span class="p">(</span><span class="kt">int16_t</span><span class="w"> </span><span class="n">numerator</span><span class="p">,</span><span class="w"> </span><span class="kt">int16_t</span><span class="w"> </span><span class="n">denominator</span><span class="p">,</span>
+<span class="w">                   </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">result_q</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result_q</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">15</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">denominator</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Q_NOT_REAL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">int32_t</span><span class="p">)</span><span class="n">numerator</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">den</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">int32_t</span><span class="p">)</span><span class="n">denominator</span><span class="p">;</span>
+
+<span class="w">  </span><span class="c1">// Left shift the numerator to preserve precision during division</span>
+<span class="w">  </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">scaled_num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">num</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">result_q</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+
+<span class="w">  </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">intermediate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scaled_num</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">den</span><span class="p">;</span>
+
+<span class="w">  </span><span class="c1">// Rounding: add 1 &lt;&lt; 0 (i.e., 1) since we shifted by +1 bit</span>
+<span class="w">  </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">rounded</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">intermediate</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+
+<span class="w">  </span><span class="c1">// Optionally clamp to int16_t range</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rounded</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">INT16_MAX</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">INT16_MAX</span><span class="p">;</span>
+<span class="w">  </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rounded</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">INT16_MIN</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">INT16_MIN</span><span class="p">;</span>
+<span class="w">  </span><span class="k">else</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="kt">int16_t</span><span class="p">)</span><span class="n">rounded</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h2>Practical Considerations of Fixed-Point Processing</h2>
+<p>This section focuses on some general rules and lessons learned when deploying
+algorithms in fixed-point environments. It’s also worth discussing practical
+considerations—such as project timelines, expectations, and hardware
+constraints.</p>
+<ul>
+<li>
+<p><strong>Double your project timeline when targeting fixed-point</strong><br>
+  Developing a fixed-point algorithm is effectively a <strong>two-step</strong> process:</p>
+<ol>
+<li>Implement the algorithm in floating-point.</li>
+<li>Re-implement it in fixed-point.</li>
+</ol>
+<p>Once both versions are complete, you'll need to run <strong>regression tests</strong> to
+ensure the results do not diverge significantly. If you've budgeted six
+months for a floating-point implementation, be realistic and plan for <strong>a
+full year</strong> when fixed-point is involved.</p>
+</li>
+<li>
+<p><strong>Claim:</strong> <em>"Fixed-point is always faster than floating-point"</em>
+  <strong>Not necessarily!</strong> It depends entirely on the <strong>hardware architecture</strong>.</p>
+<p>For example, a
+<a href="https://en.wikipedia.org/wiki/Microcontroller">microcontroller</a> with a
+hardware <strong>FPU (Floating Point Unit)</strong> may actually <strong>run floating-point code
+faster</strong> than fixed-point emulation. If your target lacks DSP-style features
+(e.g., wide accumulators, single-cycle multiply-accumulate, barrel shifters,
+etc.), then porting to fixed-point might not give you the performance or
+power savings you're expecting.</p>
+</li>
+<li>
+<p><strong>Be prepared to dive into assembly or use compiler intrinsics</strong>
+  This cannot be overstated. To fully optimize fixed-point performance, you
+  often need to work <strong>closer to the metal</strong>, either by writing <strong>assembly</strong> for
+  your target or by leveraging <strong>compiler intrinsics</strong> that map directly to
+  specialized instructions.</p>
+<p>Some toolchains support Embedded-C extensions for fixed-point arithmetic,
+such as <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1169.pdf">n1169</a>.
+If your compiler supports this, <strong>take advantage of it</strong>. It can significantly
+improve code clarity and portability, while retaining performance.</p>
+</li>
+</ul>
+<h2>Conclusion</h2>
+<p>Thank you again for your feedback! I hope you found this post valuable and
+insightful. I would love to keep this two-way communication going. So, feel
+free to reach out with suggestions, corrections, or ideas for future posts. I’m
+not perfect, and I’m never afraid to be wrong. Every bit of feedback helps me
+(and others) learn and grow.</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="./tag/dsp.html">dsp</a>
+      <a href="./tag/signal-processing.html">signal-processing</a>
+      <a href="./tag/fixed-point.html">fixed-point</a>
+    </p>
+  </div>
+
+
+
+
+
+
+</article>
+
+<footer>
+  <p>All opinions expressed on this site are solely my own and do not necessarily reflect the views or opinions of my current or former employers.</p>
+
+<p>
+  &copy; 2017-2025 Ayan Shafqat  - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.en_US" target="_blank">Creative Commons Attribution-ShareAlike</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p></footer>  </main>
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Ayan Shafqat ",
+  "url" : ".",
+  "image": "/images/profile.png",
+  "description": "Personal website of Ayan Shafqat"
+}
+</script>
+</body>
+</html>
